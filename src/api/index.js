@@ -3,6 +3,7 @@ import { Router } from "express";
 
 import postMessages from "./handlers/messages";
 import appointments from "./handlers/appointments";
+import postReplies from "./handlers/replies";
 
 import getTemplates from "./handlers/templates/get";
 
@@ -32,6 +33,7 @@ export default ({ config, db }) => {
     });
 
     api.get("/templates", getTemplates);
+    api.post("/reply/:phoneNumber", postReplies);
 
     return api;
 };
