@@ -1,7 +1,8 @@
 import { version } from "../../package.json";
 import { Router } from "express";
 import templates from "./templates";
-import postAppointments from "./routes/appointments/post";
+import {postAppointments} from "./routes/appointments/post";
+import { postMessages } from "./routes/messages/post";
 
 export default ({ config, db }) => {
     let api = Router();
@@ -13,7 +14,9 @@ export default ({ config, db }) => {
         res.json({ version });
     });
 
-  api.post("/appointments", postAppointments);
+    api.post("/appointments", postAppointments);
+
+    api.post("/appointments/:id/messages", postMessages);
 
     api.get("/ping", (req, res) => {
         res.json("pong");
