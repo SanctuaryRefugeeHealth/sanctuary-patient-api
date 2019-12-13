@@ -1,8 +1,9 @@
 import { version } from "../../package.json";
 import { Router } from "express";
 import templates from "./templates";
-import {postAppointments} from "./routes/appointments/post";
-import { postMessages } from "./routes/messages/post";
+import postAppointments from "./handlers/appointments/post";
+import postMessages from "./handlers/messages/post";
+import patchAppointments from "./handlers/appointments/patch";
 
 export default ({ config, db }) => {
     let api = Router();
@@ -16,7 +17,8 @@ export default ({ config, db }) => {
 
     api.post("/appointments", postAppointments);
 
-    api.post("/appointments/:id/messages", postMessages);
+    api.post("/appointments/:appointmentId/messages", postMessages);
+    api.patch("/appointments/:appointmentId", patchAppointments);
 
     api.get("/ping", (req, res) => {
         res.json("pong");
