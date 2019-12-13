@@ -1,4 +1,5 @@
 export default (req, res) => {
-    console.log(req.body)
+    const {location, patientName, specialistName, date} = req.body;
+    console.log(location, patientName, specialistName, date);
     res.status(201).send({success: true});
 }
