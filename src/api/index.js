@@ -4,7 +4,7 @@ import templates from "./templates";
 import postMessages from "./handlers/messages";
 import appointments from "./handlers/appointments";
 
-const {patchAppointments, postAppointments} = appointments;
+const { patchAppointments, postAppointments, getAppointments } = appointments;
 
 export default ({ config, db }) => {
     let api = Router();
@@ -16,11 +16,17 @@ export default ({ config, db }) => {
         res.json({ version });
     });
 
-    api.post("/appointments", postAppointments);
+    // -- Appointments
 
-    api.post("/appointments/:appointmentId/messages", postMessages);
+    api.get("/appointments", getAppointments);
+    api.post("/appointments", postAppointments);
     api.patch("/appointments/:appointmentId", patchAppointments);
 
+    // -- Messages
+
+    api.post("/appointments/:appointmentId/messages", postMessages);
+
+    // -- Ping
     api.get("/ping", (req, res) => {
         res.json("pong");
     });
