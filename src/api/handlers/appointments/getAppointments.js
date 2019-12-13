@@ -1,16 +1,11 @@
-const { db } = require("../../../db");
+const { db } = require("../../../../knex");
 
 export default (req, res) => {
     const { phoneNumber } = req.query;
 
-    const appointments = patientPhoneNumber
-        ? db("appointments")
-              .select("*")
-              .where("patientPhoneNumber", phoneNumber)
-              .execute()
-        : db("appointments")
-              .select("*")
-              .execute();
-
-    res.status(200).send(appointments);
+    const appointments = db("appointments")
+        .select("*")
+        .then(result => {
+            res.status(200).send(result);
+        });
 };
