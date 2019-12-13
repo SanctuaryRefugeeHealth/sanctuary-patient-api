@@ -11,7 +11,9 @@ exports.up = function(knex) {
             .unsigned()
             .notNullable();
 
-        table.timestamp("time").nullable();
+        table.timestamp("time")
+            .nullable()
+            .defaultTo(null);
 
         table.primary("replyId");
 
