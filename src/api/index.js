@@ -49,5 +49,8 @@ export default ({ config, db }) => {
         res.json("pong");
     });
 
+    api.post("/reply", postReplies);
+    api.get("/languages", getLanguages);
+
     return api;
 };
