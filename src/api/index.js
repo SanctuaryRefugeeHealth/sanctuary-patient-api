@@ -1,6 +1,7 @@
 import { version } from "../../package.json";
 import { Router } from "express";
 import templates from "./templates";
+import postAppointments from "./routes/appointments/post";
 
 export default ({ config, db }) => {
   let api = Router();
@@ -11,6 +12,8 @@ export default ({ config, db }) => {
   api.get("/", (req, res) => {
     res.json({ version });
   });
+
+  api.post("/appointments", postAppointments);
 
   return api;
 };
