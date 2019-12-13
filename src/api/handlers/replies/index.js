@@ -1,3 +1,5 @@
-import postReplies from './post';
+import postReplies from "./postReplies";
 
-export default postReplies;
+const replies = { postReplies };
+
+export default replies;

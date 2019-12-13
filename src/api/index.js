@@ -1,13 +1,15 @@
 import { version } from "../../package.json";
 import { Router } from "express";
 
-import postMessages from "./handlers/messages";
+import messages from "./handlers/messages";
 import appointments from "./handlers/appointments";
-import postReplies from "./handlers/replies";
-
-import getTemplates from "./handlers/templates/get";
+import replies from "./handlers/replies";
+import templates from "./handlers/templates";
 
 const { patchAppointments, postAppointments, getAppointments } = appointments;
+const { getMessages, postMessages } = messages;
+const { postReplies } = replies;
+const { getTemplates } = templates;
 
 export default ({ config, db }) => {
     let api = Router();
@@ -25,6 +27,7 @@ export default ({ config, db }) => {
 
     // -- Messages
 
+    api.get("/appointments/:appointmentId/messages", getMessages);
     api.post("/appointments/:appointmentId/messages", postMessages);
 
     // -- Ping

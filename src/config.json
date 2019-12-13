@@ -1,5 +1,10 @@
 {
 	"port": 8080,
 	"bodyLimit": "100kb",
-	"corsHeaders": ["Link"]
+	"corsHeaders": ["Link"],
+	"twilioConfig": {
+		"number": "+17204106667",
+		"accountSid": "",
+		"authToken": ""
+	}
 }
