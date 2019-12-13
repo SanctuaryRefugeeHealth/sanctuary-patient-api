@@ -1,9 +1,6 @@
 exports.up = function(knex) {
     return knex.schema.createTable("Appointments", table => {
-        table
-            .integer("appointmentId")
-            .unsigned()
-            .notNullable();
+        table.increments("appointmentId").notNullable();
 
         table.text("patientName").notNullable();
 
@@ -22,8 +19,6 @@ exports.up = function(knex) {
         table.text("appointmentTime").notNullable();
 
         table.boolean("appointmentIsConfirmed");
-
-        table.primary("appointmentId");
 
         table.charset("utf8");
     });

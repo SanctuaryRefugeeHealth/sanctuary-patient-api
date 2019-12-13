@@ -1,11 +1,14 @@
-const { db } = require("../../../db");
+const { db } = require("../../../../knex");
 
 export default (req, res) => {
     const { appointmentId } = req.params;
 
-    const { confirmed } = req.body;
+    const { appointmentIsConfirmed } = req.body;
 
-    // TODO: update appointment
-
-    res.status(200).send({ success: true });
+    const result = db("appointments")
+        .where({ appointmentId })
+        .update({ appointmentIsConfirmed })
+        .then(result => {
+            res.status(201).send({ success: true });
+        });
 };
