@@ -1,7 +1,9 @@
 export default (req, res) => {
-    const { message } = req.body;
     const { phoneNumber } = req.params;
-    console.log(message, phoneNumber);
+
+    const { message } = req.body;
+
+    // TODO: Create reply
 
     res.send({ success: true });
 };

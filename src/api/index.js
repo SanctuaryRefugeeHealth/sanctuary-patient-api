@@ -4,14 +4,14 @@ import { Router } from "express";
 import messages from "./handlers/messages";
 import appointments from "./handlers/appointments";
 import replies from "./handlers/replies";
-import templates from "./handlers/templates";
 import languages from "./handlers/languages";
+import messageTemplates from "./handlers/templates";
 
 const { patchAppointments, postAppointments, getAppointments } = appointments;
 const { getMessages, postMessages } = messages;
 const { postReplies } = replies;
-const { getTemplates } = templates;
 const { getLanguages } = languages;
+const { getMessageTemplates } = messageTemplates;
 
 export default ({ config, db }) => {
     let api = Router();
@@ -32,14 +32,22 @@ export default ({ config, db }) => {
     api.get("/appointments/:appointmentId/messages", getMessages);
     api.post("/appointments/:appointmentId/messages", postMessages);
 
+    // -- Message Templates
+
+    api.get("/templates", getMessageTemplates);
+
+    // -- Replies
+
+    api.post("/reply/:phoneNumber", postReplies);
+
+    // -- Languages
+
+    api.get("/languages", getLanguages);
+
     // -- Ping
     api.get("/ping", (req, res) => {
         res.json("pong");
     });
-
-    api.get("/templates", getTemplates);
-    api.post("/reply/:phoneNumber", postReplies);
-    api.get("/languages", getLanguages);
 
     return api;
 };

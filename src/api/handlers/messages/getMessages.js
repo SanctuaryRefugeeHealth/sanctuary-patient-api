@@ -1,12 +1,12 @@
 export default (req, res) => {
-    console.log(req.body);
+    const { appointmentId } = req.params;
 
-    // Demo data
-    res.status(200).send([
+    // TODO: Fetch messages and replies for appointmentId
+    const messages = [
         {
             messageId: 1,
             appointmentId: 1,
-            templateName: "Appointment Confirmation",
+            templateName: "Appointment Reminder",
             messageBody: "Hello World",
             timeSent: "2019-12-13 14:10:00",
             language: "english"
@@ -19,5 +19,8 @@ export default (req, res) => {
             timeSent: "2019-12-13 14:10:00",
             language: "arabic"
         }
-    ]);
+    ];
+
+    // Demo data
+    res.status(200).send(messages);
 };

@@ -1,8 +1,6 @@
 export default (req, res) => {
-    console.log(req.body);
-
-    // Demo data
-    res.status(200).send([
+    // TODO: Fetch appointments
+    const appointments = [
         {
             appointmentId: 1,
             patientName: "Michael Scott",
@@ -27,5 +25,8 @@ export default (req, res) => {
             appointmentTime: "2020-02-14 11:30:00",
             appointmentIsConfirmed: false
         }
-    ]);
+    ];
+
+    // Demo data
+    res.status(200).send(appointments);
 };

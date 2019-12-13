@@ -1,6 +1,9 @@
 export default (req, res) => {
+    const { appointmentId } = req.params;
+
     const { confirmed } = req.body;
-    const appointmentId = req.params;
-    console.log(confirmed, appointmentId);
+
+    // TODO: update appointment
+
     res.status(200).send({ success: true });
 };
