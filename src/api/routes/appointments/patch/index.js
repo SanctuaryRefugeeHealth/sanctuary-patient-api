@@ -1,4 +1,4 @@
 export default (req, res) => {
     console.log(req.body);
-    res.status(201).send({ success: true });
+    res.status(200).send({ success: true });
 };
