@@ -1,3 +1,5 @@
+const { db } = require("../../../db");
+
 export default (req, res) => {
     const { appointmentId } = req.params;
 
