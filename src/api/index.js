@@ -1,13 +1,11 @@
 import { version } from "../../package.json";
 import { Router } from "express";
-import templates from "./templates";
 import postAppointments from "./routes/appointments/post";
 import patchAppointments from "./routes/appointments/patch";
+import getTemplates from "./routes/templates/get";
 
 export default ({ config, db }) => {
     let api = Router();
-
-    api.use("/templates", templates({ config, db }));
 
     // perhaps expose some API metadata at the root
     api.get("/", (req, res) => {
@@ -20,6 +18,8 @@ export default ({ config, db }) => {
     api.get("/ping", (req, res) => {
         res.json("pong");
     });
+
+    api.get("/templates", getTemplates);
 
     return api;
 };
