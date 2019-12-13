@@ -19,7 +19,7 @@ exports.up = function(knex) {
             .nullable()
             .defaultTo(null);
 
-        table.text("language").notNullable();
+        table.enu("language", ["english", "arabic", "spanish"]);
 
         table
             .foreign(["appointmentId"], "fk-messages-appointments-1")

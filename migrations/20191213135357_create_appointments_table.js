@@ -9,7 +9,7 @@ exports.up = function(knex) {
 
         table.text("patientPhoneNumber").notNullable();
 
-        table.text("patientLanguage").notNullable();
+        table.enu("patientLanguage", ["english", "arabic", "spanish"]);
 
         table.text("practitionerName").notNullable();
 
@@ -21,7 +21,7 @@ exports.up = function(knex) {
 
         table.text("appointmentTime").notNullable();
 
-        table.text("appointmentIsConfirmed").notNullable();
+        table.boolean("appointmentIsConfirmed");
 
         table.charset("utf8");
     });
