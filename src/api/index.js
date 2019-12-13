@@ -3,10 +3,11 @@ import { Router } from "express";
 
 import postMessages from "./handlers/messages";
 import appointments from "./handlers/appointments";
+import postReplies from "./handlers/replies";
 
 import getTemplates from "./handlers/templates/get";
 
-const {patchAppointments, postAppointments} = appointments;
+const { patchAppointments, postAppointments, getAppointments } = appointments;
 
 export default ({ config, db }) => {
     let api = Router();
@@ -16,16 +17,23 @@ export default ({ config, db }) => {
         res.json({ version });
     });
 
-    api.post("/appointments", postAppointments);
+    // -- Appointments
 
-    api.post("/appointments/:appointmentId/messages", postMessages);
+    api.get("/appointments", getAppointments);
+    api.post("/appointments", postAppointments);
     api.patch("/appointments/:appointmentId", patchAppointments);
 
+    // -- Messages
+
+    api.post("/appointments/:appointmentId/messages", postMessages);
+
+    // -- Ping
     api.get("/ping", (req, res) => {
         res.json("pong");
     });
 
     api.get("/templates", getTemplates);
+    api.post("/reply/:phoneNumber", postReplies);
 
     return api;
 };
