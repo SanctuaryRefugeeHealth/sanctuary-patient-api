@@ -1,9 +1,10 @@
+import { sendMessage } from "../../../services/twilioClient"
+
 export default (req, res) => {
-    const { phoneNumber } = req.params;
+    const {From: fromPhoneNumber, Body: message} = req.body;
+    const receivedAt = Date.now();
+    console.log(fromPhoneNumber, message, receivedAt)
+   sendMessage(fromPhoneNumber, 'Thank you for replying!');
 
-    const { message } = req.body;
-
-    // TODO: Create reply
-
-    res.send({ success: true });
+    res.send({success: true})
 };
