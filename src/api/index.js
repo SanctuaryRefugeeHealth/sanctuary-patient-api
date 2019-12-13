@@ -1,9 +1,10 @@
 import { version } from "../../package.json";
 import { Router } from "express";
 import templates from "./templates";
-import postAppointments from "./handlers/appointments/post";
-import postMessages from "./handlers/messages/post";
-import patchAppointments from "./handlers/appointments/patch";
+import postMessages from "./handlers/messages";
+import appointments from "./handlers/appointments";
+
+const {patchAppointments, postAppointments} = appointments;
 
 export default ({ config, db }) => {
     let api = Router();
