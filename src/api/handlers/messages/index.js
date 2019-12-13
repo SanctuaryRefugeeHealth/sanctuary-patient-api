@@ -1,3 +1,9 @@
-import postMessages from './post';
+import postMessages from "./postMessages";
+import getMessages from "./getMessages";
 
-export default postMessages;
+const messages = {
+    postMessages,
+    getMessages
+};
+
+export default messages;
