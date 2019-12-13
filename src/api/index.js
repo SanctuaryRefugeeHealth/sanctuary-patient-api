@@ -4,16 +4,20 @@ import templates from "./templates";
 import postAppointments from "./routes/appointments/post";
 
 export default ({ config, db }) => {
-  let api = Router();
+    let api = Router();
 
-  api.use("/templates", templates({ config, db }));
+    api.use("/templates", templates({ config, db }));
 
-  // perhaps expose some API metadata at the root
-  api.get("/", (req, res) => {
-    res.json({ version });
-  });
+    // perhaps expose some API metadata at the root
+    api.get("/", (req, res) => {
+        res.json({ version });
+    });
 
   api.post("/appointments", postAppointments);
 
-  return api;
+    api.get("/ping", (req, res) => {
+        res.json("pong");
+    });
+
+    return api;
 };
