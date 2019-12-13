@@ -23,6 +23,8 @@ exports.up = function(knex) {
 
         table.boolean("appointmentIsConfirmed");
 
+        table.primary("appointmentId");
+
         table.charset("utf8");
     });
 };
