@@ -5,11 +5,13 @@ import messages from "./handlers/messages";
 import appointments from "./handlers/appointments";
 import replies from "./handlers/replies";
 import templates from "./handlers/templates";
+import languages from "./handlers/languages";
 
 const { patchAppointments, postAppointments, getAppointments } = appointments;
 const { getMessages, postMessages } = messages;
 const { postReplies } = replies;
 const { getTemplates } = templates;
+const { getLanguages } = languages;
 
 export default ({ config, db }) => {
     let api = Router();
@@ -37,6 +39,7 @@ export default ({ config, db }) => {
 
     api.get("/templates", getTemplates);
     api.post("/reply/:phoneNumber", postReplies);
+    api.get("/languages", getLanguages);
 
     return api;
 };

@@ -1,6 +1,9 @@
 exports.up = function(knex) {
     return knex.schema.createTable("Replies", table => {
-        table.text("replyId").notNullable();
+        table
+            .integer("replyId")
+            .unsigned()
+            .notNullable();
 
         table.text("phoneNumber").notNullable();
 
@@ -12,6 +15,8 @@ exports.up = function(knex) {
             .notNullable();
 
         table.timestamp("time").nullable();
+
+        table.primary("replyId");
 
         table
             .foreign(["appointmentId"], "fk-replies-appointments-1")
