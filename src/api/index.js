@@ -3,14 +3,18 @@ import { Router } from "express";
 import templates from "./templates";
 
 export default ({ config, db }) => {
-  let api = Router();
+    let api = Router();
 
-  api.use("/templates", templates({ config, db }));
+    api.use("/templates", templates({ config, db }));
 
-  // perhaps expose some API metadata at the root
-  api.get("/", (req, res) => {
-    res.json({ version });
-  });
+    // perhaps expose some API metadata at the root
+    api.get("/", (req, res) => {
+        res.json({ version });
+    });
 
-  return api;
+    api.get("/ping", (req, res) => {
+        res.json("pong");
+    });
+
+    return api;
 };
