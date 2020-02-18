@@ -1,7 +1,32 @@
+const { db } = require("../../../../knex");
+
 export default (req, res) => {
-    const { location, patientName, specialistName, date } = req.body;
+    const {
+        date,
+        location,
+        patientLanguage,
+        patientName,
+        practitionerClinicName,
+        patientPhoneNumber,
+        practitionerPhoneNumber,
+        specialistName
+    } = req.body;
 
-    // TODO: create appointment
+    const appointment = {
+        patientName,
+        patientPhoneNumber,
+        patientLanguage,
+        practitionerName: specialistName,
+        practitionerClinicName,
+        practitionerAddress: location,
+        practitionerPhoneNumber,
+        appointmentTime: date,
+        appointmentIsConfirmed: false
+    };
 
-    res.status(201).send({ success: true });
+    const result = db("appointments")
+        .insert(appointment)
+        .then(result => {
+            res.status(201).send({ success: true });
+        });
 };

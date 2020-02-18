@@ -1,9 +1,6 @@
 exports.up = function(knex) {
-    return knex.schema.createTable("Replies", table => {
-        table
-            .integer("replyId")
-            .unsigned()
-            .notNullable();
+    return knex.schema.createTable("replies", table => {
+        table.increments("appointmentId").notNullable();
 
         table.text("phoneNumber").notNullable();
 

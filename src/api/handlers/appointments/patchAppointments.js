@@ -1,9 +1,14 @@
+const { db } = require("../../../../knex");
+
 export default (req, res) => {
     const { appointmentId } = req.params;
 
-    const { confirmed } = req.body;
+    const { isConfirmed } = req.body;
 
-    // TODO: update appointment
-
-    res.status(200).send({ success: true });
+    const result = db("appointments")
+        .where({ appointmentId })
+        .update({ appointmentIsConfirmed: isConfirmed })
+        .then(result => {
+            res.status(201).send({ success: true });
+        });
 };
