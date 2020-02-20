@@ -1,14 +1,14 @@
-version: '3'
+version: "3.7"
 
 services:
   nodejs:
     build:
       context: .
-      dockerfile: Dockerfile
-    # image: nodejs
-    # container_name: nodejs
+      target: prod
+    image: sanctuary-api
+    container_name: sanctuary-api
     restart: unless-stopped
-    # env_file: .env
+    env_file: .env
     environment:
       - MYSQL_USERNAME=root
       - MYSQL_PASSWORD=password
@@ -22,13 +22,14 @@ services:
     #   - node_modules:/home/node/app/node_modules
     networks:
       - app-network
-    # command: ./wait-for.sh db:27017 -- /home/node/app/node_modules/.bin/nodemon app.js 
+    command: ./wait-for.sh db:3306 -- npm run start:prod
+    depends_on:
+      - db
 
   db:
     image: mysql:5.7
     container_name: db
     restart: unless-stopped
-    # env_file: .env
     ports:
       - "3306:3306"
     expose:
@@ -36,10 +37,10 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=sanctuary_dev
-    volumes:     
+    volumes:
       - dbdata:/data/db
     networks:
-      - app-network  
+      - app-network
 
 networks:
   app-network:
