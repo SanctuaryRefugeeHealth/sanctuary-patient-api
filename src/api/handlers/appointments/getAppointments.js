@@ -1,11 +1,20 @@
 const { db } = require("../../../../knex");
 
 export default (req, res) => {
-    const { phoneNumber } = req.query;
+  const { phoneNumber } = req.query;
 
-    const appointments = db("appointments")
+  console.log(phoneNumber);
+
+  const appointments = phoneNumber
+    ? db("appointments")
+        .select("*")
+        .where("patientPhoneNumber", phoneNumber)
+        .then(result => {
+          res.status(200).send(result);
+        })
+    : db("appointments")
         .select("*")
         .then(result => {
-            res.status(200).send(result);
+          res.status(200).send(result);
         });
 };
