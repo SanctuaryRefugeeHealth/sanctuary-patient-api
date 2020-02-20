@@ -1,6 +1,6 @@
 exports.up = function(knex) {
     return knex.schema.createTable("replies", table => {
-        table.increments("appointmentId").notNullable();
+        table.increments("replyId").notNullable();
 
         table.text("phoneNumber").notNullable();
 
@@ -15,17 +15,15 @@ exports.up = function(knex) {
             .nullable()
             .defaultTo(null);
 
-        table.primary("replyId");
-
         table
             .foreign(["appointmentId"], "fk-replies-appointments-1")
             .references(["appointmentId"])
-            .inTable("Appointments");
+            .inTable("appointments");
 
         table.charset("utf8");
     });
 };
 
 exports.down = function(knex) {
-    return knex.schema.dropTableIfExists("Replies");
+    return knex.schema.dropTableIfExists("replies");
 };
