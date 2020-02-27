@@ -18,8 +18,6 @@ exports.up = function(knex) {
 
         table.enu("language", ["english", "arabic", "spanish"]);
 
-        table.primary("messageId");
-
         table
             .foreign(["appointmentId"], "fk-messages-appointments-1")
             .references(["appointmentId"])
