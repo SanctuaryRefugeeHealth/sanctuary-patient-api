@@ -15,11 +15,17 @@ RUN npm run build
 
 # RUNTIME IMAGE
 
-FROM node:12.13.1-alpine
+FROM node:12.13.1-alpine as prod
 
 WORKDIR /usr/src/app
 
 COPY package.json ./
+
+COPY knex* ./
+
+COPY migrations ./migrations
+
+COPY wait-for.sh ./
 
 RUN npm install --production
 
