@@ -19,6 +19,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.13.3",
     "knex": "^0.20.10",
+    "moment": "^2.24.0",
     "morgan": "^1.8.0",
     "mustache": "^3.1.0",
     "mysql": "^2.1.0",
@@ -36,7 +37,7 @@
   "eslintConfig": {
     "extends": "eslint:recommended",
     "parserOptions": {
-      "ecmaVersion": 7,
+      "ecmaVersion": 8,
       "sourceType": "module"
     },
     "env": {
