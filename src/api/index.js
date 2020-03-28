@@ -13,6 +13,7 @@ const { postReplies } = replies;
 const { getLanguages } = languages;
 const { getMessageTemplates } = messageTemplates;
 
+// eslint-disable-next-line no-unused-vars
 export default ({ config, db }) => {
     let api = Router();
 
