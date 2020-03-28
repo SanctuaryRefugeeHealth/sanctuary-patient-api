@@ -1,4 +1,4 @@
-const { db } = require("../../../../knex");
+import { db } from "../../../../knex";
 
 export default (req, res) => {
   const { appointmentId } = req.params;
