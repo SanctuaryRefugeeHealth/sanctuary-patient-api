@@ -1,11 +1,9 @@
-const { db } = require("../../../../knex");
+import { db } from "../../../../knex";
 
 export default (req, res) => {
   const { phoneNumber } = req.query;
 
-  console.log(phoneNumber);
-
-  const appointments = phoneNumber
+  phoneNumber
     ? db("appointments")
         .select("*")
         .where("patientPhoneNumber", phoneNumber)
