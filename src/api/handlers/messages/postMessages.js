@@ -1,14 +1,16 @@
 import moment from "moment";
 
-const { db } = require("../../../../knex");
+import { db } from "../../../../knex";
 import TemplatesModel from "../../../models/templates";
 
 export default async (req, res) => {
   const { appointmentId } = req.params;
 
   const { templateId, languageId } = req.body;
-
-  const appointment = await db("appointments")
+  
+  let appointment;
+  try {
+    appointment = await db("appointments")
     .select(
       "appointmentTime",
       "patientName",
@@ -17,10 +19,10 @@ export default async (req, res) => {
     )
     .where("appointmentId", appointmentId)
     .first()
-    .then(result => result)
-    .catch(err => {
-      res.status(500).send(err);
-    });
+    .then(result => result);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 
   const template = TemplatesModel.getById(templateId);
   const messageBody = TemplatesModel.generateMessage(templateId, languageId, appointment);
@@ -34,14 +36,15 @@ export default async (req, res) => {
     timeSent: moment().format("YYYY-MM-DD HH:mm:ss")
   };
 
-  db("messages")
+  try {
+    db("messages")
     .insert(message)
     .then(() => {
-      res.status(201).send({ success: true });
+      res.status(201).send(message);
     })
-    .catch(err => {
-      res.status(500).send(err);
-    });
+  } catch (err) {
+    res.status(500).send(err);
+  }
 
   // TODO: Send sms message
   // Not sure if we want to create a transation and only commit once we get confirmation from twilio
