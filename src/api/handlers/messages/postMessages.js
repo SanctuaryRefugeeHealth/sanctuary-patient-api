@@ -1,7 +1,7 @@
 import moment from "moment";
-
 import { db } from "../../../../knex";
 import TemplatesModel from "../../../models/templates";
+
 
 export default async (req, res) => {
   const { appointmentId } = req.params;
@@ -12,11 +12,12 @@ export default async (req, res) => {
   try {
     appointment = await db("appointments")
     .select(
+      "patients.name as patientName",
       "appointmentTime",
-      "patientName",
       "practitionerAddress",
       "practitionerClinicName"
     )
+    .innerJoin("patients", "appointments.patientId", "patients.id")
     .where("appointmentId", appointmentId)
     .first()
     .then(result => result);
