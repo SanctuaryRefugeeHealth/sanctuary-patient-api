@@ -4,7 +4,7 @@ exports.up = function (knex) {
   return knex.schema.createTable("patients", (table) => {
     table.increments("id").primary();
     table.text("name");
-    table.text("phone_number");
+    table.text("phoneNumber");
     table.enum("language", ["english","arabic","spanish"]);
   })
     // Get all patients and add foreign key to appointments table
@@ -12,19 +12,19 @@ exports.up = function (knex) {
       return Promise.all([
         knex.select("appointmentId", "patientName", "patientPhoneNumber", "patientLanguage").from("appointments"),
         knex.schema.table("appointments", (table) => {
-          table.integer("patient_id").unsigned();
-          table.foreign("patient_id").references("patients.id").onDelete("cascade");
+          table.integer("patientId").unsigned();
+          table.foreign("patientId").references("patients.id").onDelete("cascade");
         })
       ])
     })
     // Insert all patients from appointments into patient table and update the foreign key in appointments
     .then(([patients]) => 
       Promise.all(patients.map((patient) => {
-        return knex("patients").insert({name: patient.patientName, phone_number: patient.patientPhoneNumber, language: patient.patientLanguage})
+        return knex("patients").insert({name: patient.patientName, phoneNumber: patient.patientPhoneNumber, language: patient.patientLanguage})
           .then((patientId) => {
             return knex("appointments")
               .where("appointmentId", "=", patient.appointmentId)
-              .update({ patient_id: patientId});
+              .update({ patientId: patientId});
           });
       }))
     )
@@ -39,7 +39,7 @@ exports.up = function (knex) {
 exports.down = function(knex) {
   // Get patients; Put the removed columns back into appointments
   return Promise.all([
-    knex.select("*").from("appointments").innerJoin("patients", "appointments.patient_id", "patients.id"),
+    knex.select("*").from("appointments").innerJoin("patients", "appointments.patientId", "patients.id"),
     knex.schema.table("appointments", (table) => {
       table.text("patientName");
       table.text("patientPhoneNumber");
@@ -52,15 +52,15 @@ exports.down = function(knex) {
         appointments.map((appointment) => {
           return knex("appointments")
             .where("appointmentId", "=", appointment.appointmentId)
-            .update({ patientName: appointment.name, patientPhoneNumber: appointment.phone_number, patientLanguage: appointment.language});
+            .update({ patientName: appointment.name, patientPhoneNumber: appointment.phoneNumber, patientLanguage: appointment.language});
         })
       )
     )
     // Remove the foreign key
     .then(() => 
       knex.schema.table("appointments", (table) => {
-        table.dropForeign("patient_id");
-        table.dropColumn("patient_id");
+        table.dropForeign("patientId");
+        table.dropColumn("patientId");
       })
     )
     // Drop the new table
