@@ -2,6 +2,7 @@ import moment from "moment";
 
 import { db } from "../../../../knex";
 import TemplatesModel from "../../../models/templates";
+import { sendMessage } from "../../../services/twilioClient";
 
 export default async (req, res) => {
   const { appointmentId } = req.params;
@@ -11,17 +12,29 @@ export default async (req, res) => {
   let appointment;
   try {
     appointment = await db("appointments")
-    .select(
-      "appointmentTime",
-      "patientName",
-      "practitionerAddress",
-      "practitionerClinicName"
-    )
-    .where("appointmentId", appointmentId)
-    .first()
-    .then(result => result);
-  } catch (err) {
-    res.status(500).send(err);
+      .select(
+        "appointmentTime",
+        "patientName",
+        "patientPhoneNumber",
+        "practitionerAddress",
+        "practitionerClinicName"
+      )
+      .where("appointmentId", appointmentId)
+      .first()
+      .then(result => result);
+  } catch (error) {
+    res.status(500).send({
+      error,
+      message: `Could not retrieve appointment for ID ${appointmentId}`
+    });
+    return;
+  }
+
+  if (!appointment) {
+    res.status(404).send({
+      message: `No appointment found for ID ${appointmentId}`
+    });
+    return;
   }
 
   const template = TemplatesModel.getById(templateId);
@@ -37,16 +50,26 @@ export default async (req, res) => {
   };
 
   try {
-    db("messages")
-    .insert(message)
-    .then(() => {
-      res.status(201).send(message);
-    })
-  } catch (err) {
-    res.status(500).send(err);
+    await sendMessage(appointment.patientPhoneNumber, messageBody);
+  } catch (error) {
+    res.status(500).send({
+      error,
+      message: "Could not send text reminder"
+    });
+    return;
   }
 
-  // TODO: Send sms message
-  // Not sure if we want to create a transation and only commit once we get confirmation from twilio
-  // Or write the message to the DB and include a "successful" field, updating after twilio response
+  try {
+    db("messages")
+      .insert(message)
+      .then(() => {
+        res.status(201).send(message);
+      })
+  } catch (error) {
+    res.status(500).send({
+      error,
+      message: "Could not save message to database"
+    });
+    return;
+  }
 };
