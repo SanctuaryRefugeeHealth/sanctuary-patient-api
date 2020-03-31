@@ -1,17 +1,19 @@
-import { version } from "../../package.json";
 import { Router } from "express";
-
-import messages from "./handlers/messages";
+import { version } from "../../package.json";
 import appointments from "./handlers/appointments";
-import replies from "./handlers/replies";
+import auth from "./handlers/auth";
 import languages from "./handlers/languages";
+import messages from "./handlers/messages";
+import replies from "./handlers/replies";
 import messageTemplates from "./handlers/templates";
+
 
 const { patchAppointments, postAppointments, getAppointments } = appointments;
 const { getMessages, postMessages } = messages;
 const { postReplies } = replies;
 const { getLanguages } = languages;
 const { getMessageTemplates } = messageTemplates;
+const { getToken, authenticate } = auth;
 
 // eslint-disable-next-line no-unused-vars
 export default ({ config, db }) => {
@@ -20,6 +22,16 @@ export default ({ config, db }) => {
     // perhaps expose some API metadata at the root
     api.get("/", (req, res) => {
         res.json({ version });
+    });
+
+
+    // Get an auth token
+    // To protect the route, add middleware 'authenticate'
+    // api.get("/appointments", getAppointments); => api.get("/appointments", autheitcate, getAppointments);
+    api.post("/auth", getToken);
+    // Simple protected route.
+    api.get("/user/me", authenticate, (req, res) => {
+      return res.send("Protect me!")
     });
 
     // -- Appointments
