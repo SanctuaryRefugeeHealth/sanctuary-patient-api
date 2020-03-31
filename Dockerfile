@@ -1,14 +1,14 @@
 FROM node:12.13.1-alpine as build
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package*.json ./
 
-COPY babel.config.js ./
-
-RUN npm install
+RUN npm ci
 
 COPY ./src ./src
+
+COPY babel.config.js ./
 
 RUN npm run build
 
@@ -17,7 +17,7 @@ RUN npm run build
 
 FROM node:12.13.1-alpine as prod
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package.json ./
 
@@ -27,10 +27,10 @@ COPY migrations ./migrations
 
 COPY wait-for.sh ./
 
-RUN npm install --production
+COPY --from=build /app/node_modules node_modules
 
-COPY --from=build /usr/src/app/dist ./dist
+COPY --from=build /app/dist dist
 
 EXPOSE 8080
 
-CMD [ "npm", "start" ]
+CMD ["npm", "run", "serve"]
