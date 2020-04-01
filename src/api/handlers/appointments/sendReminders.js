@@ -19,7 +19,7 @@ export default async (req, res) => {
   } catch (error) {
     res.status(500).send({
       error,
-      message: `Could not retrieve appointments for ${daysFromNow(2)}`
+      message: `Could not retrieve appointments for ${daysFromNow(1)}`
     });
   }
 
@@ -74,7 +74,7 @@ export default async (req, res) => {
     .then((result) => res.status(200).send(result))
     .catch((error) => res.status(500).send({ 
         error,
-        message: `Could not send reminders for ${daysFromNow(7)}`
+        message: `Could not send reminders for ${daysFromNow(1)}`
       })
     );
 };
