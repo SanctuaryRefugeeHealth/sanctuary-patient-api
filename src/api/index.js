@@ -7,7 +7,12 @@ import replies from "./handlers/replies";
 import languages from "./handlers/languages";
 import messageTemplates from "./handlers/templates";
 
-const { patchAppointments, postAppointments, getAppointments } = appointments;
+const { 
+  patchAppointments, 
+  postAppointments, 
+  getAppointments,
+  sendReminders
+} = appointments;
 const { getMessages, postMessages } = messages;
 const { postReplies } = replies;
 const { getLanguages } = languages;
@@ -15,43 +20,47 @@ const { getMessageTemplates } = messageTemplates;
 
 // eslint-disable-next-line no-unused-vars
 export default ({ config, db }) => {
-    let api = Router();
+  let api = Router();
 
-    // perhaps expose some API metadata at the root
-    api.get("/", (req, res) => {
-        res.json({ version });
-    });
+  // perhaps expose some API metadata at the root
+  api.get("/", (req, res) => {
+    res.json({ version });
+  });
 
-    // -- Appointments
+  // -- Appointments
 
-    api.get("/appointments", getAppointments);
-    api.post("/appointments", postAppointments);
-    api.patch("/appointments/:appointmentId", patchAppointments);
+  api.get("/appointments", getAppointments);
+  api.post("/appointments", postAppointments);
+  api.patch("/appointments/:appointmentId", patchAppointments);
 
-    // -- Messages
+  // -- Bulk messages
 
-    api.get("/appointments/:appointmentId/messages", getMessages);
-    api.post("/appointments/:appointmentId/messages", postMessages);
+  api.get("/appointments/sendReminders", sendReminders);
 
-    // -- Message Templates
+  // -- Messages
 
-    api.get("/templates", getMessageTemplates);
+  api.get("/appointments/:appointmentId/messages", getMessages);
+  api.post("/appointments/:appointmentId/messages", postMessages);
 
-    // -- Replies
+  // -- Message Templates
 
-    api.post("/reply/:phoneNumber", postReplies);
+  api.get("/templates", getMessageTemplates);
 
-    // -- Languages
+  // -- Replies
 
-    api.get("/languages", getLanguages);
+  api.post("/reply/:phoneNumber", postReplies);
 
-    // -- Ping
-    api.get("/ping", (req, res) => {
-        res.json("pong");
-    });
+  // -- Languages
 
-    api.post("/reply", postReplies);
-    api.get("/languages", getLanguages);
+  api.get("/languages", getLanguages);
 
-    return api;
+  // -- Ping
+  api.get("/ping", (req, res) => {
+      res.json("pong");
+  });
+
+  api.post("/reply", postReplies);
+  api.get("/languages", getLanguages);
+
+  return api;
 };
