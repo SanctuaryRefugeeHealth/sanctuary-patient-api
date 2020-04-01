@@ -1,13 +1,14 @@
 
 const random_name = require("node-random-name");
 
+// https://stackoverflow.com/questions/563406/add-days-to-javascript-date
 const addDays = (date, days) => {
   var result = new Date(date);
   result.setDate(result.getDate() + days);
   return result;
 };
 
-exports.seed = function(knex) {
+exports.seed = (knex) => {
   return knex("appointments").del()
     .then(() => {
       const promises = [];
