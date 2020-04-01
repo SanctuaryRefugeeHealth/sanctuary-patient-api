@@ -1,5 +1,4 @@
 import moment from "moment";
-
 import { db } from "../../../../knex";
 import TemplatesModel from "../../../models/templates";
 
