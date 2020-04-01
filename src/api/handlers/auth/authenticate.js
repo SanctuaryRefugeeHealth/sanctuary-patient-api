@@ -7,14 +7,10 @@ import { jwtConfig } from "../../../config";
 export function authenticate(req, res, next) {
   // check header or url parameters or post parameters for token
   let token = req.headers["x-access-token"] || req.headers.authorization;
-  if (!token) return res.json({ success: false, message: "Unauthorized." });
+  if (!token) return res.status(401).send({ success: false, message: "Unauthorized." });
   if (token.startsWith("Bearer ")) {
     // Remove Bearer from string
     token = token.slice(7, token.length);
-  }
-
-  if (!token) {
-    return res.json({ success: false, message: "Expired token." });
   }
 
   let decoded = null;
@@ -26,6 +22,5 @@ export function authenticate(req, res, next) {
 
   // Can also set the JWT as a cookie and "refresh" the expiry time so every protected call refreshes the token.
   req.decoded = decoded;
-
   return next();
 }

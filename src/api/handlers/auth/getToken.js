@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { db } from "../../../../knex";
 import { jwtConfig } from "../../../config";
@@ -5,37 +6,36 @@ import { jwtConfig } from "../../../config";
 /*
  * Create a token for a user.
  */
-export async function getToken(req, res, next) {
+export async function getToken(req, res) {
   let user = null;
+  const { email, password } = req.body;
 
   try {
     user = await db("users")
-    .select("email", "password")
-    .where("email", req.body.email)
-    .first();
+      .select("email", "password")
+      .where("email", email)
+      .first();
   } catch (error) {
-    return res.json({ success: false, message: "Authentication failed. User not found." });
+    return res.status(401).send({ success: false, message: "Authentication failed. User not found." });
   }
 
   if (!user) {
-    return res.json({ success: false, message: "Authentication failed. User not found." });
+    return res.status(401).send({ success: false, message: "Authentication failed. User not found." });
   }
 
-  if (user.password !== req.body.password) {
-    return res.json({ success: false, message: "Authentication failed. Wrong password." });
+  if (!bcrypt.compareSync(password, user.password)) {
+    return res.status(401).send({ success: false, message: "Authentication failed. Wrong password." });
   }
 
   const payload = {
     userEmail: user.email,
   };
   const token = jwt.sign(payload, jwtConfig.jwtSecret, {
-    expiresIn: 1440,
+    expiresIn: jwtConfig.jwtTokenExpiry,
   });
   
-  res.json({
+  return res.json({
     success: true,
     token,
   });
-  
-  return next();
 }
