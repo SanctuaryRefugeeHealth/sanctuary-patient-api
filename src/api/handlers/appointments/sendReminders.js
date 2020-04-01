@@ -31,7 +31,7 @@ export default async (req, res) => {
     return new Promise((resolve) => {
       sendMessage(appointment.patientPhoneNumber, messageBody)
         .then(() => resolve(appointment))
-        // TODO: don't resolve this, send it to a log aggregator
+        // TODO: don't resolve this, create a log or send a notification to someone
         .catch((error) => resolve({
             error,
             appointmentId: appointment.id
