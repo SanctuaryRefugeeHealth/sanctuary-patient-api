@@ -10,11 +10,13 @@
     "build": "babel src -s -D -d dist",
     "start": "pm2-dev --interpreter babel-node src",
     "start:dev": "npm run migrate && npm start",
-    "serve": "pm2 start dist"
+    "serve": "pm2 start dist",
+    "seed": "knex seed:run"
   },
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^4.0.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.13.3",
     "compression": "^1.5.2",
     "cors": "^2.7.1",
