@@ -10,21 +10,16 @@ services:
     restart: unless-stopped
     env_file: .env
     environment:
-      - MYSQL_USERNAME=root
-      - MYSQL_PASSWORD=password
       - MYSQL_HOSTNAME=db
-      - MYSQL_PORT=3306
-      - MYSQL_DB=sanctuary_dev
     ports:
       - "80:8080"
-    # volumes:
-    #   - .:/home/node/app
-    #   - node_modules:/home/node/app/node_modules
+    volumes:
+      - .:/app
     networks:
       - app-network
-    command: ./wait-for.sh db:3306 -- npm run start:prod
     depends_on:
       - db
+    command: sh -c "./wait-for.sh db:3306 -- npm run start:dev"
 
   db:
     image: mysql:5.7
