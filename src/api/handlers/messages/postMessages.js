@@ -19,8 +19,7 @@ export default async (req, res) => {
         "practitionerClinicName"
       )
       .where("appointmentId", appointmentId)
-      .first()
-      .then(result => result);
+      .first();
   } catch (error) {
     res.status(500).send({
       error,
@@ -58,12 +57,9 @@ export default async (req, res) => {
     return;
   }
 
+  let insertedMessageId;
   try {
-    db("messages")
-      .insert(message)
-      .then(() => {
-        res.status(201).send(message);
-      })
+    insertedMessageId = await db("messages").insert(message);
   } catch (error) {
     res.status(500).send({
       error,
@@ -71,4 +67,6 @@ export default async (req, res) => {
     });
     return;
   }
+
+  return res.status(201).send({messageId: insertedMessageId[0]});
 };
