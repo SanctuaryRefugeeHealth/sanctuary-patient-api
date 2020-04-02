@@ -15,7 +15,7 @@ export default async (req, res) => {
     appointments = await db("appointments")
       .select("*")
       .where("appointmentTime", ">=", daysFromNow(1))
-      .where("appointmentTime", "<", daysFromNow(2));
+      .where("appointmentTime", "<", daysFromNow(3));
   } catch (error) {
     res.status(500).send({
       error,
