@@ -11,7 +11,8 @@
     "start": "pm2-dev --interpreter babel-node src",
     "start:dev": "npm run migrate && npm start",
     "serve": "pm2 start dist",
-    "seed": "node -r dotenv/config ./node_modules/knex/bin/cli.js seed:run"
+    "seed": "node -r dotenv/config ./node_modules/knex/bin/cli.js seed:run",
+    "lambda": "node -e \"(async () => {console.log(await require('./lambda/lambda').handler({}));})();\""
   },
   "license": "MIT",
   "dependencies": {
