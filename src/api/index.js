@@ -1,11 +1,18 @@
 import { Router } from "express";
 import { version } from "../../package.json";
-import { getAppointments, patchAppointments, postAppointments } from "./handlers/appointments";
-import { getToken } from "./handlers/auth";
-import { getLanguages } from "./handlers/languages";
-import { getMessages, postMessages } from "./handlers/messages";
-import { postReplies } from "./handlers/replies";
-import { getMessageTemplates } from "./handlers/templates";
+import appointments from "./handlers/appointments";
+import auth from "./handlers/auth";
+import languages from "./handlers/languages";
+import messages from "./handlers/messages";
+import replies from "./handlers/replies";
+import messageTemplates from "./handlers/templates";
+
+const { patchAppointments, postAppointments, getAppointments } = appointments;
+const { getMessages, postMessages } = messages;
+const { postReplies } = replies;
+const { getLanguages } = languages;
+const { getMessageTemplates } = messageTemplates;
+const { getToken } = auth;
 
 // eslint-disable-next-line no-unused-vars
 export default ({ config, db }) => {
@@ -16,16 +23,10 @@ export default ({ config, db }) => {
         res.json({ version });
     });
 
-    // Begin unprotected routes
-    // Get auth token for user
+
+    // Get an auth token
     api.post("/auth", getToken);
-     // -- Ping
-    api.get("/ping", (req, res) => {
-        res.json("pong");
-    });
-    // End unprotected routes
-
-
+    
     // -- Appointments
 
     api.get("/appointments", getAppointments);
@@ -48,7 +49,12 @@ export default ({ config, db }) => {
     // -- Languages
 
     api.get("/languages", getLanguages);
-    
+
+    // -- Ping
+    api.get("/ping", (req, res) => {
+        res.json("pong");
+    });
+
     api.post("/reply", postReplies);
     api.get("/languages", getLanguages);
 

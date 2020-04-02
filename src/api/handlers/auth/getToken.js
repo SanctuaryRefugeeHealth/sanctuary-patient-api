@@ -16,7 +16,7 @@ export async function getToken(req, res) {
       .where("email", email)
       .first();
   } catch (error) {
-    return res.status(401).send({ success: false, message: "Authentication failed. User not found." });
+    return res.status(500).send({ success: false, message: "Authentication failed. User not found." });
   }
 
   if (!user) {
