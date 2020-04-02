@@ -27,43 +27,38 @@ export default ({ config, db }) => {
 
     // Get an auth token
     // To protect the route, add middleware 'authenticate'
-    // api.get("/appointments", getAppointments); => api.get("/appointments", autheitcate, getAppointments);
     api.post("/auth", getToken);
-    // Simple protected route.
-    api.get("/user/me", authenticate, (req, res) => {
-      return res.send("Protect me!")
-    });
 
     // -- Appointments
 
-    api.get("/appointments", getAppointments);
-    api.post("/appointments", postAppointments);
-    api.patch("/appointments/:appointmentId", patchAppointments);
+    api.get("/appointments", authenticate, getAppointments);
+    api.post("/appointments", authenticate, postAppointments);
+    api.patch("/appointments/:appointmentId", authenticate, patchAppointments);
 
     // -- Messages
 
-    api.get("/appointments/:appointmentId/messages", getMessages);
-    api.post("/appointments/:appointmentId/messages", postMessages);
+    api.get("/appointments/:appointmentId/messages", authenticate, getMessages);
+    api.post("/appointments/:appointmentId/messages", authenticate, postMessages);
 
     // -- Message Templates
 
-    api.get("/templates", getMessageTemplates);
+    api.get("/templates", authenticate, getMessageTemplates);
 
     // -- Replies
 
-    api.post("/reply/:phoneNumber", postReplies);
+    api.post("/reply/:phoneNumber", authenticate, postReplies);
 
     // -- Languages
 
-    api.get("/languages", getLanguages);
+    api.get("/languages", authenticate, getLanguages);
 
     // -- Ping
     api.get("/ping", (req, res) => {
         res.json("pong");
     });
 
-    api.post("/reply", postReplies);
-    api.get("/languages", getLanguages);
+    api.post("/reply", authenticate, postReplies);
+    api.get("/languages", authenticate, getLanguages);
 
     return api;
 };
