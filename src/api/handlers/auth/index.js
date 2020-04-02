@@ -1,6 +1,5 @@
-import { authenticate } from "./authenticate";
 import { getToken } from "./getToken";
 
-const auth = { getToken, authenticate };
+const auth = { getToken };
 
 export default auth;
