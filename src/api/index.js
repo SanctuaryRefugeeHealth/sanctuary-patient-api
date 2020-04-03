@@ -1,10 +1,10 @@
-import { version } from "../../package.json";
 import { Router } from "express";
-
-import messages from "./handlers/messages";
+import { version } from "../../package.json";
 import appointments from "./handlers/appointments";
-import replies from "./handlers/replies";
+import auth from "./handlers/auth";
 import languages from "./handlers/languages";
+import messages from "./handlers/messages";
+import replies from "./handlers/replies";
 import messageTemplates from "./handlers/templates";
 
 const { patchAppointments, postAppointments, getAppointments } = appointments;
@@ -12,6 +12,7 @@ const { getMessages, postMessages } = messages;
 const { postReplies } = replies;
 const { getLanguages } = languages;
 const { getMessageTemplates } = messageTemplates;
+const { getToken } = auth;
 
 // eslint-disable-next-line no-unused-vars
 export default ({ config, db }) => {
@@ -22,6 +23,10 @@ export default ({ config, db }) => {
         res.json({ version });
     });
 
+
+    // Get an auth token
+    api.post("/auth", getToken);
+    
     // -- Appointments
 
     api.get("/appointments", getAppointments);
