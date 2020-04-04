@@ -62,6 +62,7 @@ export default async (req, res) => {
           error,
           message: "Could not save message to database"
         });
+        return;
       }
       res.status(200).send({
         insertedAppointmentId,
