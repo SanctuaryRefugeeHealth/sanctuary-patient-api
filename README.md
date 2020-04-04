@@ -17,3 +17,16 @@ To run the API locally you need first to build and run docker container:
 ### Docker Build Image
 
     docker build -t sanctuary/api .
+
+### Access the API
+
+    npm run seed
+    POST http://localhost:80/api/auth
+    {
+      "email": "one@test.com",
+      "password": "sanctuary"
+    }
+
+  In subsequent requests, add the token from the response of the above request to your headers
+
+    Authorization: Bearer `token`

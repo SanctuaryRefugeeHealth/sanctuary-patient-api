@@ -6,6 +6,7 @@ import languages from "./handlers/languages";
 import messages from "./handlers/messages";
 import replies from "./handlers/replies";
 import messageTemplates from "./handlers/templates";
+import user from "./handlers/users";
 
 const { patchAppointments, postAppointments, getAppointments } = appointments;
 const { getMessages, postMessages } = messages;
@@ -13,6 +14,7 @@ const { postReplies } = replies;
 const { getLanguages } = languages;
 const { getMessageTemplates } = messageTemplates;
 const { getToken } = auth;
+const { createUser } = user;
 
 // eslint-disable-next-line no-unused-vars
 export default ({ config, db }) => {
@@ -26,7 +28,10 @@ export default ({ config, db }) => {
 
     // Get an auth token
     api.post("/auth", getToken);
-    
+
+    // -- User
+    api.put("/user", createUser);
+
     // -- Appointments
 
     api.get("/appointments", getAppointments);
