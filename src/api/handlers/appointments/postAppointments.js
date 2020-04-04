@@ -39,8 +39,7 @@ export default async (req, res) => {
     return;
   }
 
-  // const language = LanguagesModel.getByLanguageString(patientLanguage);
-  const language = 1;
+  const language = LanguagesModel.getByLanguageString(patientLanguage);
   const template = TemplatesModel.getById(1);
   const messageBody = TemplatesModel.generateMessage(1, language.id, appointment);
 
