@@ -19,8 +19,9 @@ export default async (req, res) => {
   } catch (error) {
     res.status(500).send({
       error,
-      message: `Could not retrieve appointments for ${daysFromNow(1)}`
+      message: `Could not retrieve appointments for ${daysFromNow(1)} and ${daysFromNow(2)}`
     });
+    return;
   }
 
   const appointmentsPromises = appointments.map(appointment => {
@@ -44,29 +45,29 @@ export default async (req, res) => {
       timeSent: moment().format("YYYY-MM-DD HH:mm:ss")
     };
 
-    return new Promise((resolve) => {
-      sendMessage(patientPhoneNumber, messageBody)
-        .then(async () => {
-          let messageId;
-          try {
-            messageId = await db("messages").insert(message);
-          } catch (error) {
-            res.status(500).send({
-              error,
-              message: "Could not save message to database"
-            });
-          }
-          return resolve({
-            appointmentId,
-            messageId: messageId[0]
-          });
-        })
-        // TODO: don't resolve this, create a log or send a notification to someone
-        .catch((error) => resolve({
-            error,
-            appointmentId
-          })
-        );
+    return new Promise(async (resolve) => {
+      try {
+        await sendMessage(patientPhoneNumber, messageBody);
+      } catch (error) {
+        return resolve({
+          error,
+          message: `Failed to send appointment reminder to ${patientPhoneNumber}`
+        });
+      }
+
+      let messageId;
+      try {
+        messageId = await db("messages").insert(message);
+      } catch (error) {
+        return resolve({
+          error,
+          message: "Could not save message to database"
+        });
+      }
+      return resolve({
+        appointmentId,
+        messageId: messageId[0]
+      });
     });
   });
 
