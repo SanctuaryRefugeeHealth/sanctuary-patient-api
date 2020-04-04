@@ -52,11 +52,12 @@ export default async (req, res) => {
     timeSent: moment().format("YYYY-MM-DD HH:mm:ss")
   };
 
-  await sendMessage(patientPhoneNumber, messageBody)
-    .catch((error) => {
-      res.status(500).send({ error, message: "Failed to send appointment reminder"});
-      return;
-    });
+  try {
+    await sendMessage(patientPhoneNumber, messageBody);
+  } catch (error) {
+    res.status(500).send({ error, message: "Failed to send appointment reminder"});
+    return;
+  }
 
   let messageId;
   try {
@@ -68,6 +69,7 @@ export default async (req, res) => {
     });
     return;
   }
+
   res.status(200).send({
     insertedAppointmentId,
     messageId: messageId[0]
