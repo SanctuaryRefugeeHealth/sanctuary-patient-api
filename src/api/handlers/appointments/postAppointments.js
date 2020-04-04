@@ -39,7 +39,8 @@ export default async (req, res) => {
     return;
   }
 
-  const language = LanguagesModel.getByLanguageString(patientLanguage);
+  // const language = LanguagesModel.getByLanguageString(patientLanguage);
+  const language = 1;
   const template = TemplatesModel.getById(1);
   const messageBody = TemplatesModel.generateMessage(1, language.id, appointment);
 
@@ -52,29 +53,25 @@ export default async (req, res) => {
     timeSent: moment().format("YYYY-MM-DD HH:mm:ss")
   };
 
-  sendMessage(patientPhoneNumber, messageBody)
-    .then(async () => {
-      let messageId;
-      try {
-        messageId = await db("messages").insert(message);
-      } catch (error) {
-        res.status(500).send({
-          error,
-          message: "Could not save message to database"
-        });
-        return;
-      }
-      res.status(200).send({
-        insertedAppointmentId,
-        messageId: messageId[0]
-      });
-      return;
-    })
+  await sendMessage(patientPhoneNumber, messageBody)
     .catch((error) => {
-      res.status(500).send({
-        error,
-        insertedAppointmentId
-      })
+      res.status(500).send({ error, message: "Failed to send appointment reminder"});
       return;
     });
+
+  let messageId;
+  try {
+    messageId = await db("messages").insert(message);
+  } catch (error) {
+    res.status(500).send({
+      error,
+      message: "Could not save message to database"
+    });
+    return;
+  }
+  res.status(200).send({
+    insertedAppointmentId,
+    messageId: messageId[0]
+  });
+  return;
 };
