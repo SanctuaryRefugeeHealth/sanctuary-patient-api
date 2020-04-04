@@ -1,10 +1,14 @@
+const crypto = require("crypto");
+
 exports.seed = (knex) => {
   return knex("appointments").del()
     .then(() => {
+      const salt = crypto.randomBytes(16).toString("hex");
+      const hash = crypto.pbkdf2Sync("sanctuary", salt, 1000, 64, "sha512").toString("hex");
       return knex("users").insert({
         email: "one@test.com",
-        // sanctuary
-        password: "$2b$10$60mg6/S0Vm5Xia9feTHHm.uX50r7D5CxeUzxL7BOaCYop1GcxCDau"
+        salt,
+        password: hash
       });
     });
 };

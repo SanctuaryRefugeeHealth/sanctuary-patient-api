@@ -1,4 +1,4 @@
-import bcrypt from "bcryptjs";
+import { pbkdf2Sync } from "crypto";
 import jwt from "jsonwebtoken";
 import { db } from "../../../../knex";
 import { jwtConfig } from "../../../config";
@@ -12,7 +12,7 @@ export async function getToken(req, res) {
 
   try {
     user = await db("users")
-      .select("email", "password")
+      .select("email", "password", "salt")
       .where("email", email)
       .first();
   } catch (error) {
@@ -23,7 +23,8 @@ export async function getToken(req, res) {
     return res.status(401).send({ success: false, message: "Authentication failed. User not found." });
   }
 
-  if (!bcrypt.compareSync(password, user.password)) {
+  const hash = pbkdf2Sync(password, user.salt, 1000, 64, "sha512").toString("hex");
+  if (hash !== user.password) {
     return res.status(401).send({ success: false, message: "Authentication failed. Wrong password." });
   }
 
@@ -31,6 +32,7 @@ export async function getToken(req, res) {
     userEmail: user.email,
   };
   const token = jwt.sign(payload, jwtConfig.jwtSecret, {
+    algorithm: "HS256",
     expiresIn: jwtConfig.jwtTokenExpiry,
   });
   
