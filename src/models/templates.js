@@ -12,6 +12,11 @@ const templates = [
     لديك(ي) موعد لدى {{practitionerClinicName}}  .
     في تاريخ {{appointmentTime}}
     على العنوان التالي {{practitionerAddress}}`,
+  },
+  {
+    templateId: 2,
+    templateName: "Reply to Text",
+    "english": "Replies are not read. Please call 226-750-6674 to talk to someone at Sanctuary Refugee Health Centre."
   }
 ];
 
@@ -22,5 +27,8 @@ export default {
   getById,
   generateMessage: (templateId, languageId = 1, templateMetadata) => {
     return Mustache.render(getById(templateId)[languageId], templateMetadata);
+  },
+  generateReply: (templateId = 2, language = "english") => {
+    return Mustache.render(getById(templateId)[language])
   }
 };
