@@ -1,13 +1,13 @@
-import http from 'http';
-import express from 'express';
-import cors from 'cors';
-import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import 'dotenv/config';
-import initializeDb from './db';
-import middleware from './middleware';
+import express from 'express';
+import http from 'http';
+import morgan from 'morgan';
 import api from './api';
 import config from './config';
+import initializeDb from './db';
+import middleware from './middleware';
 
 let app = express();
 app.server = http.createServer(app);
