@@ -10,7 +10,8 @@
     "build": "babel src -s -D -d dist",
     "start": "pm2-dev --interpreter babel-node src",
     "start:dev": "npm run migrate && npm start",
-    "serve": "pm2 start dist"
+    "serve": "pm2 start dist",
+    "seed": "node -r dotenv/config ./node_modules/knex/bin/cli.js seed:run"
   },
   "license": "MIT",
   "dependencies": {
@@ -19,6 +20,7 @@
     "cors": "^2.7.1",
     "dotenv": "^8.2.0",
     "express": "^4.13.3",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.10",
     "moment": "^2.24.0",
     "morgan": "^1.8.0",

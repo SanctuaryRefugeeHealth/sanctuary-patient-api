@@ -6,5 +6,9 @@ module.exports = {
 		number: process.env.TWILIO_NUMBER,
 		accountSid: process.env.TWILIO_ACCOUNT_SID,
 		authToken: process.env.TWILIO_AUTH_TOKEN
-	}
+  },
+  jwtConfig: {
+    jwtSecret: process.env.JWT_SECRET || "secret",
+    jwtTokenExpiry: process.env.JWT_TOKEN_EXPIRY || 43200
+  },
 }
