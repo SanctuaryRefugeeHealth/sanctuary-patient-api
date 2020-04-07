@@ -2,17 +2,18 @@ const languages = [
   {
     id: "1",
     iso: "en",
-    name: "English",
+    name: "english",
     direction: "ltr"
   },
   {
     id: "2",
     iso: "ar",
-    name: "Arabic",
+    name: "arabic",
     direction: "rtl"
   }
 ];
 
 export default {
-    getAll: () => (languages)
+  getAll: () => (languages),
+  getByLanguageString: (language) => languages.find((obj) => obj.name === language)
 };

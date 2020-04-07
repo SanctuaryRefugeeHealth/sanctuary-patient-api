@@ -8,7 +8,12 @@ import replies from "./handlers/replies";
 import messageTemplates from "./handlers/templates";
 import user from "./handlers/users";
 
-const { patchAppointments, postAppointments, getAppointments } = appointments;
+const { 
+  patchAppointments, 
+  postAppointments, 
+  getAppointments,
+  sendReminders
+} = appointments;
 const { getMessages, postMessages } = messages;
 const { postReplies } = replies;
 const { getLanguages } = languages;
@@ -18,50 +23,53 @@ const { createUser } = user;
 
 // eslint-disable-next-line no-unused-vars
 export default ({ config, db }) => {
-    let api = Router();
+  let api = Router();
 
-    // perhaps expose some API metadata at the root
-    api.get("/", (req, res) => {
-        res.json({ version });
-    });
+  // perhaps expose some API metadata at the root
+  api.get("/", (req, res) => {
+    res.json({ version });
+  });
 
+  // Get an auth token
+  api.post("/auth", getToken);
 
-    // Get an auth token
-    api.post("/auth", getToken);
+  // -- User
+  api.put("/user", createUser);
 
-    // -- User
-    api.put("/user", createUser);
+  // -- Appointments
 
-    // -- Appointments
+  api.get("/appointments", getAppointments);
+  api.post("/appointments", postAppointments);
+  api.patch("/appointments/:appointmentId", patchAppointments);
 
-    api.get("/appointments", getAppointments);
-    api.post("/appointments", postAppointments);
-    api.patch("/appointments/:appointmentId", patchAppointments);
+  // -- Bulk messages
 
-    // -- Messages
+  api.get("/appointments/sendReminders", sendReminders);
 
-    api.get("/appointments/:appointmentId/messages", getMessages);
-    api.post("/appointments/:appointmentId/messages", postMessages);
+  // -- Messages
 
-    // -- Message Templates
+  api.get("/appointments/:appointmentId/messages", getMessages);
+  api.post("/appointments/:appointmentId/messages", postMessages);
 
-    api.get("/templates", getMessageTemplates);
+  // -- Message Templates
 
-    // -- Replies
+  api.get("/templates", getMessageTemplates);
 
-    api.post("/reply/:phoneNumber", postReplies);
+  // -- Replies
 
-    // -- Languages
+  api.post("/reply/:phoneNumber", postReplies);
 
-    api.get("/languages", getLanguages);
+  // -- Languages
 
-    // -- Ping
-    api.get("/ping", (req, res) => {
-        res.json("pong");
-    });
+  api.get("/languages", getLanguages);
 
-    api.post("/reply", postReplies);
-    api.get("/languages", getLanguages);
+  // -- Ping
+  api.get("/ping", (req, res) => {
+      res.json("pong");
+  });
 
-    return api;
+  api.post("/reply", postReplies);
+  api.get("/languages", getLanguages);
+
+  return api;
 };
