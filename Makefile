@@ -3,12 +3,12 @@
 # OR AWS_PROFILE
 
 NAME                       := sanctuary/api
-REPOSITORY                 := 990864907642.dkr.ecr.us-east-1.amazonaws.com
+REPOSITORY                 := 990864907642.dkr.ecr.ca-central-1.amazonaws.com
 TAG                        := v0.0.1
 IMG                        := ${NAME}:${TAG}
 LATEST                     := ${NAME}:latest
 REPOSITORY_IMG             := ${REPOSITORY}/${IMG}
-LOGIN                      := $$(aws ecr get-login --no-include-email --region us-east-1)
+LOGIN                      := $$(aws ecr get-login --no-include-email --region ca-central-1)
 
 build:
 	@docker build -t ${IMG} -t ${LATEST} -t ${REPOSITORY_IMG} .
