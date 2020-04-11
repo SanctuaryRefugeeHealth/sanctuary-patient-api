@@ -1,5 +1,4 @@
 import { createUser } from "./createUser";
 
-const user = { createUser };
+export { createUser };
 
-export default user;

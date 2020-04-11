@@ -28,7 +28,7 @@ export default async (req, res) => {
         "practitionerClinicName",
         "patientLanguage"
       )
-      .where("patientPhoneNumber", fromPhoneNumber)
+      .where({ "patientPhoneNumber": fromPhoneNumber, "isDeleted": false })
       .first();
   } catch (error) {
     console.log(`Error sending reply ${error}`);
@@ -73,5 +73,5 @@ export default async (req, res) => {
     return handleError(fromPhoneNumber, appointment.appointmentId);
   }
 
-  return res.send({success: true})
+  return res.status(200).send({success: true});
 };

@@ -3,13 +3,13 @@ import { db } from "../../../../knex";
 export default (req, res) => {
   const { appointmentId } = req.params;
 
-  db("messages")
+  return db("messages")
     .select("*")
     .where("appointmentId", appointmentId)
     .then(result => {
-      res.status(200).send(result);
+      return res.status(200).send(result);
     })
     .catch(err => {
-      res.status(500).send(err);
+      return res.status(500).send(err);
     });
 };

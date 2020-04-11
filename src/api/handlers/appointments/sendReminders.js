@@ -1,9 +1,9 @@
 import moment from "moment";
-
 import { db } from "../../../../knex";
-import { sendMessage } from "../../../services/twilioClient";
-import TemplatesModel from "../../../models/templates";
 import LanguagesModel from "../../../models/languages";
+import TemplatesModel from "../../../models/templates";
+import { sendMessage } from "../../../services/twilioClient";
+
 
 const daysFromNow = (interval) => {
   return moment().add(interval, "d").format("YYYY-MM-DD hh:mm:ss");
@@ -14,6 +14,7 @@ export default async (req, res) => {
   try {
     appointments = await db("appointments")
       .select("*")
+      .where("isDeleted", false)
       .where("appointmentTime", ">=", daysFromNow(1))
       .where("appointmentTime", "<", daysFromNow(3));
   } catch (error) {
@@ -71,7 +72,7 @@ export default async (req, res) => {
     });
   });
 
-  Promise.all(appointmentsPromises)
+  return Promise.all(appointmentsPromises)
     .then((result) => res.status(200).send(result))
     .catch((error) => res.status(500).send({ 
         error,

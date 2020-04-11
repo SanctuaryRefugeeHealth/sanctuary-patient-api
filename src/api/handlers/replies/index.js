@@ -1,5 +1,4 @@
 import postReplies from "./postReplies";
 
-const replies = { postReplies };
+export { postReplies };
 
-export default replies;

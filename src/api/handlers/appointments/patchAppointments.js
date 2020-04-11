@@ -5,7 +5,7 @@ export default (req, res) => {
 
   const { isConfirmed } = req.body;
 
-  db("appointments")
+  return db("appointments")
     .where({ appointmentId })
     .update({ appointmentIsConfirmed: isConfirmed })
     .then(result => {

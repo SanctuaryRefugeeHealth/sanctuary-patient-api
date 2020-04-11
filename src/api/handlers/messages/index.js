@@ -1,9 +1,5 @@
-import postMessages from "./postMessages";
 import getMessages from "./getMessages";
+import postMessages from "./postMessages";
 
-const messages = {
-    postMessages,
-    getMessages
-};
+export { postMessages, getMessages };
 
-export default messages;

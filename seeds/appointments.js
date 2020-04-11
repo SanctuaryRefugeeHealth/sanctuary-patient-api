@@ -9,10 +9,15 @@ const addDays = (date, days) => {
 };
 
 exports.seed = (knex) => {
-  return knex("appointments").del()
+
+  return Promise.all([
+    knex("replies").del(),
+    knex("messages").del()
+  ])
+    .then(() => { knex("appointments").del() })
     .then(() => {
       const promises = [];
-      const languages = ["english", "arabic", "spanish"]
+      const languages = ["english", "arabic", "spanish", "tigrinya", "somali", "turkish"]
       for (let i = 0; i <= 10; i++) {
         let doctorName = random_name({ seed: `Doctor names ${i}` });
         promises.push(
