@@ -2,6 +2,7 @@ import { Router } from "express";
 import { version } from "../../package.json";
 import { getAppointment, getAppointments, patchAppointments, postAppointments, sendReminders } from "./handlers/appointments";
 import { getToken } from "./handlers/auth";
+import { getCommunications } from "./handlers/communications";
 import { getLanguages } from "./handlers/languages";
 import { getMessages, postMessages } from "./handlers/messages";
 import { postReplies } from "./handlers/replies";
@@ -22,6 +23,8 @@ export default ({ config, db }) => {
 
   // -- User
   api.put("/user", createUser);
+
+  api.get("/communications/:appointmentId", getCommunications);
 
   // -- Appointments
 

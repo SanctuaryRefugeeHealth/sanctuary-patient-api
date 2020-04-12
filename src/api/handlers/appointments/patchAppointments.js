@@ -8,7 +8,5 @@ export default (req, res) => {
   return db("appointments")
     .where({ appointmentId })
     .update({ appointmentIsConfirmed: isConfirmed })
-    .then(result => {
-      res.status(201).send(result);
-    });
+    .then(() => res.sendStatus(204));
 };

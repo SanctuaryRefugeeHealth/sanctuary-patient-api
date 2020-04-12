@@ -1,5 +1,5 @@
-import getMessages from "./getMessages";
+import { getMessages, getMessagesFromDb } from "./getMessages";
 import postMessages from "./postMessages";
 
-export { postMessages, getMessages };
+export { postMessages, getMessages, getMessagesFromDb };
 
