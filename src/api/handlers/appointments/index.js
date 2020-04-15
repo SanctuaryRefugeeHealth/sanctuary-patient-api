@@ -1,13 +1,6 @@
-import postAppointments from "./postAppointments";
+import { getAppointment, getAppointments } from "./getAppointments";
 import patchAppointments from "./patchAppointments";
-import getAppointments from "./getAppointments";
+import postAppointments from "./postAppointments";
 import sendReminders from "./sendReminders";
 
-const appointments = { 
-  postAppointments, 
-  patchAppointments, 
-  getAppointments,
-  sendReminders
-};
-
-export default appointments;
+export { postAppointments, patchAppointments, getAppointments, sendReminders, getAppointment };

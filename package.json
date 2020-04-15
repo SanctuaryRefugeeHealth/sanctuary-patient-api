@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon -w src --exec \"babel-node src\"",
     "migrate": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:latest",
-    "lint": "eslint src",
+    "lint": "eslint .",
     "build": "babel src -s -D -d dist",
     "start": "pm2-dev --interpreter babel-node src",
     "start:dev": "npm run migrate && npm start",
@@ -35,6 +35,7 @@
     "@babel/core": "^7.7.5",
     "@babel/node": "^7.8.4",
     "@babel/preset-env": "^7.7.6",
+    "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
     "node-random-name": "^1.0.1"
   },
@@ -50,6 +51,23 @@
     "rules": {
       "no-console": 0,
       "no-unused-vars": 1
-    }
+    },
+    "ignorePatterns": [
+      "dist/",
+      "node_modules/"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "./src/**/*.js"
+        ],
+        "parser": "babel-eslint",
+        "parserOptions": {
+          "babelOptions": {
+            "configFile": "./babel.config.js"
+          }
+        }
+      }
+    ]
   }
 }

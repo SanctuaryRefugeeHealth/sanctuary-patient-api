@@ -18,7 +18,7 @@ export default async (req, res) => {
         "practitionerAddress",
         "practitionerClinicName"
       )
-      .where("appointmentId", appointmentId)
+      .where({"appointmentId": appointmentId, "isDeleted": false })
       .first();
   } catch (error) {
     res.status(500).send({

@@ -1,5 +1,4 @@
 import getMessageTemplates from "./getMessageTemplates";
 
-const messageTemplates = { getMessageTemplates };
+export { getMessageTemplates };
 
-export default messageTemplates;

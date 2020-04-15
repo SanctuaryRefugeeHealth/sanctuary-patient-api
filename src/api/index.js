@@ -1,25 +1,13 @@
 import { Router } from "express";
 import { version } from "../../package.json";
-import appointments from "./handlers/appointments";
-import auth from "./handlers/auth";
-import languages from "./handlers/languages";
-import messages from "./handlers/messages";
-import replies from "./handlers/replies";
-import messageTemplates from "./handlers/templates";
-import user from "./handlers/users";
-
-const { 
-  patchAppointments, 
-  postAppointments, 
-  getAppointments,
-  sendReminders
-} = appointments;
-const { getMessages, postMessages } = messages;
-const { postReplies } = replies;
-const { getLanguages } = languages;
-const { getMessageTemplates } = messageTemplates;
-const { getToken } = auth;
-const { createUser } = user;
+import { getAppointment, getAppointments, patchAppointments, postAppointments, sendReminders } from "./handlers/appointments";
+import { getToken } from "./handlers/auth";
+import { getCommunications } from "./handlers/communications";
+import { getLanguages } from "./handlers/languages";
+import { getMessages, postMessages } from "./handlers/messages";
+import { postReplies } from "./handlers/replies";
+import { getMessageTemplates } from "./handlers/templates";
+import { createUser } from "./handlers/users";
 
 // eslint-disable-next-line no-unused-vars
 export default ({ config, db }) => {
@@ -36,9 +24,12 @@ export default ({ config, db }) => {
   // -- User
   api.put("/user", createUser);
 
+  api.get("/communications/:appointmentId", getCommunications);
+
   // -- Appointments
 
   api.get("/appointments", getAppointments);
+  api.get("/appointments/:appointmentId", getAppointment);
   api.post("/appointments", postAppointments);
   api.patch("/appointments/:appointmentId", patchAppointments);
 

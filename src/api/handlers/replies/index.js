@@ -1,5 +1,6 @@
+import { getRepliesFromDb } from "./getReplies";
 import postReplies from "./postReplies";
 
-const replies = { postReplies };
 
-export default replies;
+export { postReplies, getRepliesFromDb };
+
