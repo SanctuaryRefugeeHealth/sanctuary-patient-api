@@ -21,8 +21,8 @@ const templates = [
     5: `Sayin {{patientName}},  {{appointmentTime}} tarihinde  {{practitionerAddress}} adresinde bulunan (Consult/ Imaging) ile randevunuz vardir. Sorulariniz icin bizi 226-336-1321'den arayabilirsiniz.
     Dr Michael Stephensoniun - Sanctuary Refugee Health Centre`,
     // Spanish
-    6: `"Este es un mensaje de la oficina del Dr. Michel Stephenson - Sanctuary Refugee Health Centre para: {{patientName}}. Usted tiene una cita con (Consult)/(Imaging)el {{appointmentTime}}en la siguiente dirección: {{practitionerAddress}}. 
-    Si usted tiene alguna pregunta, por favor llamenos al 226-336-1321."`
+    6: `Este es un mensaje de la oficina del Dr. Michel Stephenson - Sanctuary Refugee Health Centre para: {{patientName}}. Usted tiene una cita con (Consult)/(Imaging)el {{appointmentTime}}en la siguiente dirección: {{practitionerAddress}}. 
+    Si usted tiene alguna pregunta, por favor llamenos al 226-336-1321.`
   },
   {
     templateId: 2,
