@@ -4,7 +4,6 @@ import LanguagesModel from "../../../models/languages";
 import TemplatesModel from "../../../models/templates";
 import { sendMessage } from "../../../services/twilioClient";
 
-
 const daysFromNow = (interval) => {
   return moment().add(interval, "d").format("YYYY-MM-DD hh:mm:ss");
 };
@@ -25,7 +24,7 @@ export default async (req, res) => {
     return;
   }
 
-  const appointmentsPromises = appointments.map(appointment => {
+  const appointmentsPromises = appointments.map(async (appointment) => {
     const {
       appointmentId,
       patientLanguage,
@@ -35,7 +34,11 @@ export default async (req, res) => {
     const language = LanguagesModel.getByLanguageString(patientLanguage);
     // 1 is reminder template ID, full templated needed for name in message record
     const template = TemplatesModel.getById(1);
-    const messageBody = TemplatesModel.generateMessage(1, language.id, appointment);
+    const messageBody = TemplatesModel.generateMessage(1, language.id, {
+      patientName: appointment.patientName, 
+      practitionerAddress: appointment.practitionerAddress, 
+      appointmentTime: moment(appointment.appointmentTime).format('LLLL')
+    });
 
     const message = {
       appointmentId,
@@ -46,30 +49,29 @@ export default async (req, res) => {
       timeSent: moment().format("YYYY-MM-DD HH:mm:ss")
     };
 
-    return new Promise(async (resolve) => {
-      try {
-        await sendMessage(patientPhoneNumber, messageBody);
-      } catch (error) {
-        return resolve({
-          error,
-          message: `Failed to send appointment reminder to ${patientPhoneNumber}`
-        });
-      }
 
-      let messageId;
-      try {
-        messageId = await db("messages").insert(message);
-      } catch (error) {
-        return resolve({
-          error,
-          message: "Could not save message to database"
-        });
-      }
-      return resolve({
-        appointmentId,
-        messageId: messageId[0]
-      });
-    });
+    try {
+      await sendMessage(patientPhoneNumber, messageBody);
+    } catch (error) {
+      return {
+        error,
+        message: `Failed to send appointment reminder to ${patientPhoneNumber}`
+      };
+    }
+
+    let messageId;
+    try {
+      messageId = await db("messages").insert(message);
+    } catch (error) {
+      return {
+        error,
+        message: "Could not save message to database"
+      };
+    }
+    return {
+      appointmentId,
+      messageId: messageId[0]
+    };
   });
 
   return Promise.all(appointmentsPromises)
