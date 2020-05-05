@@ -11,7 +11,7 @@ const addDays = (date, days) => {
 };
 
 exports.seed = (knex) => {
-  const languages = ["english", "arabic", "spanish", "tigrinya", "somali", "turkish"]
+  const languages = ["english", "arabic", "spanish", "amharic", "somali", "turkish"]
 
   return Promise.all([
     knex("replies").del(),
