@@ -12,9 +12,9 @@ const languages = [
     direction: "rtl"
   },
   {
-    id: "3",
-    iso: "sp",
-    name: "spanish",
+    id: "3", 
+    iso: "am",
+    name: "amharic",
     direction: "ltr"
   },
   {
@@ -30,9 +30,9 @@ const languages = [
     direction: "ltr"
   },
   {
-    id: "6", 
-    iso: "am",
-    name: "amharic",
+    id: "6",
+    iso: "sp",
+    name: "spanish",
     direction: "ltr"
   }
 ];
