@@ -33,4 +33,4 @@ COPY --from=build /app/dist dist
 
 EXPOSE 8080
 
-CMD ["npm", "run", "serve"]
+CMD ["node", "dist"]

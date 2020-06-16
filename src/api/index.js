@@ -1,57 +1,66 @@
-import { version } from "../../package.json";
 import { Router } from "express";
-
-import messages from "./handlers/messages";
-import appointments from "./handlers/appointments";
-import replies from "./handlers/replies";
-import languages from "./handlers/languages";
-import messageTemplates from "./handlers/templates";
-
-const { patchAppointments, postAppointments, getAppointments } = appointments;
-const { getMessages, postMessages } = messages;
-const { postReplies } = replies;
-const { getLanguages } = languages;
-const { getMessageTemplates } = messageTemplates;
+import { version } from "../../package.json";
+import { getAppointment, getAppointments, patchAppointments, postAppointments, sendReminders } from "./handlers/appointments";
+import { getToken } from "./handlers/auth";
+import { getCommunications } from "./handlers/communications";
+import { getLanguages } from "./handlers/languages";
+import { getMessages, postMessages } from "./handlers/messages";
+import { postReplies } from "./handlers/replies";
+import { getMessageTemplates } from "./handlers/templates";
+import { createUser } from "./handlers/users";
 
 // eslint-disable-next-line no-unused-vars
 export default ({ config, db }) => {
-    let api = Router();
+  let api = Router();
 
-    // perhaps expose some API metadata at the root
-    api.get("/", (req, res) => {
-        res.json({ version });
-    });
+  // perhaps expose some API metadata at the root
+  api.get("/", (req, res) => {
+    res.json({ version });
+  });
 
-    // -- Appointments
+  // Get an auth token
+  api.post("/auth", getToken);
 
-    api.get("/appointments", getAppointments);
-    api.post("/appointments", postAppointments);
-    api.patch("/appointments/:appointmentId", patchAppointments);
+  // -- User
+  api.put("/user", createUser);
 
-    // -- Messages
+  api.get("/communications/:appointmentId", getCommunications);
 
-    api.get("/appointments/:appointmentId/messages", getMessages);
-    api.post("/appointments/:appointmentId/messages", postMessages);
+  // -- Appointments
 
-    // -- Message Templates
+  api.get("/appointments", getAppointments);
+  api.get("/appointments/:appointmentId", getAppointment);
+  api.post("/appointments", postAppointments);
+  api.patch("/appointments/:appointmentId", patchAppointments);
 
-    api.get("/templates", getMessageTemplates);
+  // -- Bulk messages
 
-    // -- Replies
+  api.get("/appointments/sendReminders", sendReminders);
 
-    api.post("/reply/:phoneNumber", postReplies);
+  // -- Messages
 
-    // -- Languages
+  api.get("/appointments/:appointmentId/messages", getMessages);
+  api.post("/appointments/:appointmentId/messages", postMessages);
 
-    api.get("/languages", getLanguages);
+  // -- Message Templates
 
-    // -- Ping
-    api.get("/ping", (req, res) => {
-        res.json("pong");
-    });
+  api.get("/templates", getMessageTemplates);
 
-    api.post("/reply", postReplies);
-    api.get("/languages", getLanguages);
+  // -- Replies
 
-    return api;
+  api.post("/reply/:phoneNumber", postReplies);
+
+  // -- Languages
+
+  api.get("/languages", getLanguages);
+
+  // -- Ping
+  api.get("/ping", (req, res) => {
+      res.json("pong");
+  });
+
+  api.post("/reply", postReplies);
+  api.get("/languages", getLanguages);
+
+  return api;
 };

@@ -1,5 +1,4 @@
 import getLanguages from "./getLanguages";
 
-const languages = { getLanguages };
+export { getLanguages };
 
-export default languages;

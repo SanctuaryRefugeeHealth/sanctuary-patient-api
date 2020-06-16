@@ -1,15 +1,15 @@
 import { db } from "../../../../knex";
 
-export const getMessagesFromDb = (appointmentId) => {
-  return db("messages")
+export const getRepliesFromDb = (appointmentId) => {
+  return db("replies")
     .select("*")
     .where("appointmentId", appointmentId);
 }
 
-export const getMessages = (req, res) => {
+export const getReplies = (req, res) => {
   const { appointmentId } = req.params;
 
-  return getMessagesFromDb(appointmentId)
+  return getRepliesFromDb(appointmentId)
     .then(result => res.status(200).send(result))
     .catch(err => res.status(500).send(err));
 };
