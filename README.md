@@ -17,6 +17,22 @@ To run the API locally you need first to build and run docker container:
 ### Docker Build Image
 
     docker build -t sanctuary/api .
+    
+### Publish the Image
+
+Locally:
+```
+aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 990864907642.dkr.ecr.ca-central-1.amazonaws.com
+docker tag <image_id> 990864907642.dkr.ecr.ca-central-1.amazonaws.com/sanctuary/api
+docker push 990864907642.dkr.ecr.ca-central-1.amazonaws.com/sanctuary/api
+```
+On server:
+```
+ssh ubuntu@ec2-52-60-78-19.ca-central-1.compute.amazonaws.com
+aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 990864907642.dkr.ecr.ca-central-1.amazonaws.com
+docker pull 990864907642.dkr.ecr.ca-central-1.amazonaws.com/sanctuary/api:latest
+docker run <image_id>
+```
 
 ### Access the API
 
