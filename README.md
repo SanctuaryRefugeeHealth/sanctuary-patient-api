@@ -10,9 +10,13 @@ TWILIO_AUTH_TOKEN=
 ```
 
 ### Run Locally
-To run the API locally you need first to build and run docker container:
+To run the API locally you need first run `npm install`.
+
+Then to build and run the docker container:
 
     docker-compose up --build
+
+The API will be available on port 80 (`http://localhost:80/api/`).
 
 ### Docker Build Image
 
