@@ -19,6 +19,8 @@ FROM node:12.13.1-alpine as prod
 
 WORKDIR /app
 
+COPY .env ./
+
 COPY package.json ./
 
 COPY knex* ./
