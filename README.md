@@ -16,7 +16,7 @@ Then to build and run the docker container:
 
     docker-compose up --build
 
-The API will be available on port 80 (`http://localhost:80/api/`).
+The API will be available on port 8080 (`http://localhost:8080/api/`).
 
 ### Docker Build Image
 
@@ -25,7 +25,7 @@ The API will be available on port 80 (`http://localhost:80/api/`).
 ### Access the API
 
     npm run seed
-    POST http://localhost:80/api/auth
+    POST http://localhost:8080/api/auth
     {
       "email": "one@test.com",
       "password": "sanctuary"
