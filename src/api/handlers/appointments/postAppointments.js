@@ -46,7 +46,7 @@ export default async (req, res) => {
   const message = {
     appointmentId: insertedAppointmentId,
     messageBody,
-    language: language.id,
+    language: language.name,
     templateName: template.templateName,
     // UTC
     timeSent: moment().format("YYYY-MM-DD HH:mm:ss")
