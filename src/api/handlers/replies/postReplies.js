@@ -52,7 +52,7 @@ export default async (req, res) => {
     return handleError(fromPhoneNumber, appointment.appointmentId);
   }
 
-  const messageBody = TemplatesModel.generateReply(2, appointment.patientLanguage);
+  const messageBody = TemplatesModel.generateReply();
 
   try {
     await sendMessage(appointment.patientPhoneNumber, messageBody);

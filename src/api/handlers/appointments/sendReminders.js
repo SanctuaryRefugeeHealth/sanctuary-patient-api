@@ -31,10 +31,10 @@ export default async (req, res) => {
       patientPhoneNumber
     } = appointment;
   
-    const language = LanguagesModel.getByLanguageString(patientLanguage);
+    const language = await LanguagesModel.getByLanguageString(patientLanguage);
     // 1 is reminder template ID, full templated needed for name in message record
     const template = TemplatesModel.getById(1);
-    const messageBody = TemplatesModel.generateMessage(1, language.id, {
+    const messageBody = TemplatesModel.generateMessage(1, language.name, {
       patientName: appointment.patientName, 
       practitionerAddress: appointment.practitionerAddress, 
       appointmentTime: moment(appointment.appointmentTime).format('LLLL')
@@ -43,7 +43,7 @@ export default async (req, res) => {
     const message = {
       appointmentId,
       messageBody,
-      language: language.id,
+      language: language.name,
       templateName: template.templateName,
       // UTC, will be the same for every message sent in a batch
       timeSent: moment().format("YYYY-MM-DD HH:mm:ss")

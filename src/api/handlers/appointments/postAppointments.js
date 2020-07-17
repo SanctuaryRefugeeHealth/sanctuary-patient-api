@@ -65,11 +65,11 @@ export default async (req, res) => {
     return;
   }
 
-  const language = LanguagesModel.getByLanguageString(patientLanguage);
+  const language = await LanguagesModel.getByLanguageString(patientLanguage);
   const template = TemplatesModel.getById(1);
   const messageBody = TemplatesModel.generateMessage(
     1,
-    language.id,
+    language.name,
     appointment
   );
 

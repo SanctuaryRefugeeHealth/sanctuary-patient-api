@@ -6,7 +6,7 @@ import { sendMessage } from "../../../services/twilioClient";
 export default async (req, res) => {
   const { appointmentId } = req.params;
 
-  const { templateId, languageId } = req.body;
+  const { templateId, languageName } = req.body;
   
   let appointment;
   try {
@@ -36,12 +36,12 @@ export default async (req, res) => {
   }
 
   const template = TemplatesModel.getById(templateId);
-  const messageBody = TemplatesModel.generateMessage(templateId, languageId, appointment);
+  const messageBody = TemplatesModel.generateMessage(templateId, languageName, appointment);
 
   const message = {
     appointmentId,
     messageBody,
-    language: languageId,
+    language: languageName,
     templateName: template.templateName,
     // UTC
     timeSent: moment().format("YYYY-MM-DD HH:mm:ss")
