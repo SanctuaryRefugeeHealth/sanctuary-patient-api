@@ -26,7 +26,9 @@ export async function getAppointment(req, res) {
     .where({ "appointmentId": appointmentId, "isDeleted": false })
     .first()
     .then((result) => {
-      // We need a presentation layer.
-      return res.status(200).send(result)
+      if (result) {
+        return res.status(200).json(result);
+      }
+      return res.status(404).end();
     })
 }
