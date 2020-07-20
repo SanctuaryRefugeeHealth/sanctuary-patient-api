@@ -8,11 +8,19 @@ import { sendMessage } from "../../../services/twilioClient";
 
 const schema = Joi.object({
   patientName: Joi.string().trim().required(),
-  patientPhoneNumber: Joi.string().trim().length(10).pattern(/^\d+$/).required(),
+  patientPhoneNumber: Joi.string()
+    .trim()
+    .length(10)
+    .pattern(/^\d+$/)
+    .required(),
   location: Joi.string().trim().required(),
   date: Joi.string().trim().required(),
   patientLanguage: Joi.string().trim().required(),
-  practitionerPhoneNumber: Joi.string().trim().length(10).pattern(/^\d+$/).required(),
+  practitionerPhoneNumber: Joi.string()
+    .trim()
+    .length(10)
+    .pattern(/^\d+$/)
+    .required(),
   specialistName: Joi.string().trim().required(),
   practitionerClinicName: Joi.string().trim().required(),
   // The below can be removed once the frontend no longer sends them
@@ -45,7 +53,7 @@ export default async (req, res) => {
   const appointment = {
     patientName,
     patientPhoneNumber,
-    patientLanguage,
+    language: patientLanguage,
     practitionerName: specialistName,
     practitionerClinicName,
     practitionerAddress: location,
