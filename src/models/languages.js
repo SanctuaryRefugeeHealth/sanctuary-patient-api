@@ -1,7 +1,7 @@
 import { db } from "../../knex";
 
 const getAll = async () => {
-  return db("languages").select("name");
+  return db("languages").select("name").orderBy("name");
 };
 
 const getByLanguageString =  async (language) => {
