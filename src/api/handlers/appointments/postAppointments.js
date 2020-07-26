@@ -76,10 +76,14 @@ export default async (req, res) => {
   const language = await LanguagesModel.getByLanguageString(patientLanguage);
   const template = TemplatesModel.getById(1);
   const messageBody = TemplatesModel.generateMessage(
-    1,
-    language.name,
-    appointment
-  );
+    1, 
+    language.name, 
+    {
+    ...appointment,
+    appointmentTime: moment(appointment.appointmentTime).format(
+      "YYYY-MM-DD h:mm a"
+    ),
+  });
 
   const message = {
     appointmentId: insertedAppointmentId,
