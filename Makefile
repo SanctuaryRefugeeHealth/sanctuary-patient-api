@@ -3,13 +3,13 @@
 # OR AWS_PROFILE
 
 TAG                        := v0.1.0
-CONTAINER_NAME					   := sanctuary_api
+CONTAINER_NAME             := sanctuary_api
 IMG_NAME                   := sanctuary/api
 REPOSITORY                 := 990864907642.dkr.ecr.ca-central-1.amazonaws.com
 IMG                        := ${IMG_NAME}:${TAG}
 LATEST                     := ${IMG_NAME}:latest
 REPOSITORY_IMG             := ${REPOSITORY}/${IMG}
-SERVER										 := ubuntu@ec2-52-60-78-19.ca-central-1.compute.amazonaws.com
+SERVER                     := ubuntu@ec2-52-60-78-19.ca-central-1.compute.amazonaws.com
 
 build:
 	@docker build -t ${IMG} -t ${LATEST} -t ${REPOSITORY_IMG} .
