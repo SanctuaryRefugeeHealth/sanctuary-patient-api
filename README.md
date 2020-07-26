@@ -18,10 +18,6 @@ Then to build and run the docker container:
 
 The API will be available on port 8080 (`http://localhost:8080/api/`).
 
-### Docker Build Image
-
-    docker build -t sanctuary/api .
-
 ### Access the API
 
     npm run seed
@@ -34,3 +30,8 @@ The API will be available on port 8080 (`http://localhost:8080/api/`).
   In subsequent requests, add the token from the response of the above request to your headers
 
     Authorization: Bearer `token`
+
+### Deploy
+
+    - Set `TAG` in `Makefile`.
+    - `make deploy`
