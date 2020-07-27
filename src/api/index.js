@@ -1,8 +1,15 @@
 import { Router } from "express";
 import { version } from "../../package.json";
-import { getAppointment, getAppointments, patchAppointments, postAppointments, sendReminders } from "./handlers/appointments";
+import {
+  getAppointment,
+  getAppointments,
+  patchAppointments,
+  postAppointments,
+  sendReminders,
+} from "./handlers/appointments";
 import { getToken } from "./handlers/auth";
 import { getCommunications } from "./handlers/communications";
+import { webhook } from "../services/twilioClient";
 import { postReply } from "./handlers/twilio";
 import { getLanguages } from "./handlers/languages";
 import { getMessages, postMessages } from "./handlers/messages";
@@ -27,8 +34,7 @@ export default ({ config, db }) => {
 
   api.get("/communications/:appointmentId", getCommunications);
 
-
-  api.post("/twilio/reply", postReply);
+  api.post("/twilio/reply", webhook(), postReply);
 
   // -- Appointments
 
@@ -60,7 +66,7 @@ export default ({ config, db }) => {
 
   // -- Ping
   api.get("/ping", (req, res) => {
-      res.json("pong");
+    res.json("pong");
   });
 
   api.post("/reply", postReplies);

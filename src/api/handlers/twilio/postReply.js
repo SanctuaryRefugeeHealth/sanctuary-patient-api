@@ -2,7 +2,6 @@ import TemplatesModel from "../../../models/templates";
 import { getMessageResponse } from "../../../services/twilioClient";
 
 export default (req, res) => {
-  console.log("Enter");
 
   const language = "English";
 
@@ -10,7 +9,6 @@ export default (req, res) => {
 
   const reply = getMessageResponse(replyText);
 
-  console.log("Reply: ", reply);
 
   res.set("Content-Type", "text/xml");
   res.send(reply);
