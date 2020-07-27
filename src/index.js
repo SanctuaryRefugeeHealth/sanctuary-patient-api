@@ -34,10 +34,9 @@ app.use(
   jwt({
     secret: config.jwtConfig.jwtSecret,
 	algorithms: ["HS256"],
-	// Custom getToken can be removed onced frontend is updated to store
+	// Custom getToken can be removed once frontend is updated to store
 	// token in the proper Authorization header
     getToken: (req) => {
-      console.log(req.headers);
       if (
         req.headers.authorization &&
         req.headers.authorization.split(" ")[0] === "Bearer"
@@ -50,8 +49,8 @@ app.use(
   }).unless({
     path: [
       "/api/twilio/reply", // Authentication handled by Twilio middleware
-      "/api/ping",
-      "/api/auth",
+      "/api/ping", // Health check
+      "/api/auth", // Used to login
     ],
   })
 );
