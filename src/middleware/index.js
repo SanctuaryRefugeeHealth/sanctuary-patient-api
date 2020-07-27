@@ -4,7 +4,7 @@ import { jwtConfig } from "../config";
 
 const authenticate = (req, res, next) => {
 
-  // This path must remain open for Twilio
+  // This route is validated by Twilio's middleware
   if (req.originalUrl === "/api/twilio/reply") {
     return next();
   }
