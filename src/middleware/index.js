@@ -3,6 +3,12 @@ import jwt from "jsonwebtoken";
 import { jwtConfig } from "../config";
 
 const authenticate = (req, res, next) => {
+
+  // This path must remain open for Twilio
+  if (req.originalUrl === "/api/twilio/reply") {
+    return next();
+  }
+
   // check header or url parameters or post parameters for token
   let token = req.headers["x-access-token"] || req.headers.authorization;
   if (!token) return res.status(401).send({ success: false, message: "Unauthorized." });
