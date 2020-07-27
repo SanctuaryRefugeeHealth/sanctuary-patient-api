@@ -33,7 +33,9 @@ app.use(
 app.use(
   jwt({
     secret: config.jwtConfig.jwtSecret,
-    algorithms: ["HS256"],
+	algorithms: ["HS256"],
+	// Custom getToken can be removed onced frontend is updated to store
+	// token in the proper Authorization header
     getToken: (req) => {
       console.log(req.headers);
       if (
