@@ -1,4 +1,4 @@
-import getReply from "./getReply";
+import postReply from "./postReply";
 
-export { getReply };
+export { postReply };
 

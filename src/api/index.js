@@ -3,7 +3,7 @@ import { version } from "../../package.json";
 import { getAppointment, getAppointments, patchAppointments, postAppointments, sendReminders } from "./handlers/appointments";
 import { getToken } from "./handlers/auth";
 import { getCommunications } from "./handlers/communications";
-import { getReply } from "./handlers/twilio";
+import { postReply } from "./handlers/twilio";
 import { getLanguages } from "./handlers/languages";
 import { getMessages, postMessages } from "./handlers/messages";
 import { postReplies } from "./handlers/replies";
@@ -28,7 +28,7 @@ export default ({ config, db }) => {
   api.get("/communications/:appointmentId", getCommunications);
 
 
-  api.get("/twilio/reply", getReply);
+  api.get("/twilio/reply", postReply);
 
   // -- Appointments
 
