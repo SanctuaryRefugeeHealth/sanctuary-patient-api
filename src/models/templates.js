@@ -39,7 +39,7 @@ export default {
   generateMessage: (templateId, languageName, templateMetadata) => {
     return Mustache.render(getById(templateId)[languageName], templateMetadata);
   },
-  generateReply: () => {
-    return Mustache.render(getById(2)["English"]);
+  generateReply: (languageName) => {
+    return Mustache.render(getById(2)[languageName]);
   },
 };
