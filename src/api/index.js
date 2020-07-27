@@ -28,7 +28,7 @@ export default ({ config, db }) => {
   api.get("/communications/:appointmentId", getCommunications);
 
 
-  api.get("/twilio/reply", postReply);
+  api.post("/twilio/reply", postReply);
 
   // -- Appointments
 
