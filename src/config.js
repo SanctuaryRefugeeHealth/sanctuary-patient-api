@@ -11,7 +11,7 @@ module.exports = {
     authToken: process.env.TWILIO_AUTH_TOKEN,
   },
   jwtConfig: {
-    jwtSecret: process.env.JWT_SECRET || "secret",
+    jwtSecret: process.env.JWT_SECRET,
     jwtTokenExpiry: process.env.JWT_TOKEN_EXPIRY || 43200,
   },
 };
