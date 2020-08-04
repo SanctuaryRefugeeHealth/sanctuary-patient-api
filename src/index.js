@@ -33,23 +33,11 @@ app.use(
 app.use(
   jwt({
     secret: config.jwtConfig.jwtSecret,
-	algorithms: ["HS256"],
-	// Custom getToken can be removed once frontend is updated to store
-	// token in the proper Authorization header
-    getToken: (req) => {
-      if (
-        req.headers.authorization &&
-        req.headers.authorization.split(" ")[0] === "Bearer"
-      ) {
-        return req.headers.authorization.split(" ")[1];
-      }
-
-      return req.headers["x-access-token"];
-    },
+    algorithms: ["HS256"],
   }).unless({
     path: [
       "/api/twilio/reply", // Authentication handled by Twilio middleware
-      "/api/ping", // Health check
+      "/api/ping", // Open health check
       "/api/auth", // Used to login
     ],
   })
