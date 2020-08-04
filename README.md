@@ -9,6 +9,8 @@ TWILIO_ACCOUNT_SID=
 TWILIO_AUTH_TOKEN=
 ```
 
+For testing Twilio replies locally use [ngrok](https://www.twilio.com/blog/2013/10/test-your-webhooks-locally-with-ngrok.html).
+
 ### Run Locally
 To run the API locally you need first run `npm install`.
 

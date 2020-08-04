@@ -1,11 +1,14 @@
 import { twilioConfig } from "../config";
 
-const client = require("twilio")(
+const twilio = require("twilio")
+const client = twilio(
   twilioConfig.accountSid,
   twilioConfig.authToken
 );
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
 const countryCode = "+1";
+
+export const webhook = twilio.webhook;
 
 export const sendMessage = (phoneNumber, message) => {
   if (phoneNumber.length !== 10) {
