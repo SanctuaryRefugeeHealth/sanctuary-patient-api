@@ -8,6 +8,7 @@ import api from './api';
 import config from './config';
 import initializeDb from './db';
 import middleware from './middleware';
+import reminderScheduler from './services/scheduler'
 
 let app = express();
 app.server = http.createServer(app);
@@ -25,6 +26,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({
 	limit : config.bodyLimit
 }));
+
+reminderScheduler.start();
 
 // connect to db
 initializeDb(db => {
