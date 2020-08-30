@@ -70,8 +70,14 @@ export default async (req, res) => {
     language.name, 
     {
     ...appointment,
-    appointmentTime: moment(appointment.appointmentTime).format(
+    appointmentDateTime: moment(appointment.appointmentTime).format(
       "YYYY-MM-DD h:mm a"
+    ),
+    appointmentDate: moment(appointment.appointmentTime).format(
+      "YYYY-MM-DD"
+    ),
+    appointmentTime: moment(appointment.appointmentTime).format(
+      "h:mm a"
     ),
   });
 
