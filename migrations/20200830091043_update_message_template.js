@@ -4,7 +4,7 @@ exports.up = async (knex) => {
     table.dropColumn("practitionerClinicName");
     table.dropColumn("practitionerPhoneNumber");
     table.text("description");
-    table.text("specialNote");
+    table.text("specialNotes");
   });
 };
 
@@ -14,6 +14,6 @@ exports.down = async (knex) => {
     table.text("practitionerClinicName").notNullable();
     table.text("practitionerPhoneNumber").notNullable();
     table.dropColumn("description");
-    table.dropColumn("specialNote");
+    table.dropColumn("specialNotes");
   });
 };
