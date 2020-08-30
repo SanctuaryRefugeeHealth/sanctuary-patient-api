@@ -13,19 +13,11 @@ const schema = Joi.object({
     .length(10)
     .pattern(/^\d+$/)
     .required(),
-  location: Joi.string().trim().required(),
   date: Joi.string().trim().required(),
   patientLanguage: Joi.string().trim().required(),
-  practitionerPhoneNumber: Joi.string()
-    .trim()
-    .length(10)
-    .pattern(/^\d+$/)
-    .required(),
-  specialistName: Joi.string().trim().required(),
-  practitionerClinicName: Joi.string().trim().required(),
-  // The below can be removed once the frontend no longer sends them
-  appointmentDate: Joi.string(),
-  appointmentTime: Joi.string(),
+  practitionerAddress: Joi.string().trim().required(),
+  description: Joi.string().optional().allow(null),
+  specialNotes: Joi.string().optional().allow(null),
 });
 
 export default async (req, res) => {
@@ -41,25 +33,23 @@ export default async (req, res) => {
 
   const {
     date,
-    location,
+    practitionerAddress,
     patientLanguage,
     patientName,
-    practitionerClinicName,
     patientPhoneNumber,
-    practitionerPhoneNumber,
-    specialistName,
+    description,
+    specialNotes,
   } = req.body;
 
   const appointment = {
     patientName,
     patientPhoneNumber,
     language: patientLanguage,
-    practitionerName: specialistName,
-    practitionerClinicName,
-    practitionerAddress: location,
-    practitionerPhoneNumber,
+    practitionerAddress,
     appointmentTime: date,
     appointmentIsConfirmed: false,
+    description,
+    specialNotes
   };
 
   let insertedAppointmentId;
