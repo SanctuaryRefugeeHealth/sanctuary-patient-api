@@ -4,9 +4,9 @@ const templates = [
   {
     templateId: 1,
     templateName: "Appointment Reminder",
-    English: `This is a message from Dr. Michael Stephenson's office - Sanctuary Refugee Health Centre to {{patientName}}. 
-    You have an appointment for (Consult/ Imaging) on {{appointmentTime}} at the the following address {{practitionerAddress}}. 
-    If have any questions, please call us at 226-336-1321.`,
+    English: `This is a message from Dr. Michael Stephenson's office - Sanctuary Refugee Health Centre to {{patientName}}.
+You have an appointment for (Consult/ Imaging) on {{appointmentTime}} at the the following address {{practitionerAddress}}.
+If have any questions, please call us at 226-336-1321.`,
 
     Arabic: `هذه رسالة من عيادة الدكتور مايكل طبيب العائلة إلى ( {{patientName}}). هناك موعد ({{practitionerAddress}}) يوم ({{appointmentTime}}) على العنوان التالي: (العنوان)
     للاستفسار رجاءًا الاتصال على الرقم التالي:`,
