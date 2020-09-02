@@ -13,7 +13,6 @@ import { webhook } from "../services/twilioClient";
 import { postReply } from "./handlers/twilio";
 import { getLanguages } from "./handlers/languages";
 import { getMessages, postMessages } from "./handlers/messages";
-import { postReplies } from "./handlers/replies";
 import { getMessageTemplates } from "./handlers/templates";
 import { createUser } from "./handlers/users";
 
@@ -56,10 +55,6 @@ export default ({ config, db }) => {
 
   api.get("/templates", getMessageTemplates);
 
-  // -- Replies
-
-  api.post("/reply/:phoneNumber", postReplies);
-
   // -- Languages
 
   api.get("/languages", getLanguages);
@@ -69,7 +64,6 @@ export default ({ config, db }) => {
     res.json("pong");
   });
 
-  api.post("/reply", postReplies);
   api.get("/languages", getLanguages);
 
   return api;

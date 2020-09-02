@@ -16,7 +16,8 @@ export default async (req, res) => {
         "patientName",
         "patientPhoneNumber",
         "practitionerAddress",
-        "practitionerClinicName"
+        "description",
+        "specialNotes"
       )
       .where({"appointmentId": appointmentId, "isDeleted": false })
       .first();
