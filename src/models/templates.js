@@ -15,6 +15,7 @@ Special Notes: {{specialNotes}}
 
 If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321.`,
 
+    // \u200E is the left-to-right mark and is used to improve mixing LTR text into the RTL message
     Arabic: `هذه رسالة من عيادة الدكتور مايكل طبيب العائلة إلى \u200E({{patientName}}). هناك موعد \u200E({{practitionerAddress}}) يوم \u200E({{appointmentDateTime}}) على العنوان التالي: (العنوان)
     للاستفسار رجاءًا الاتصال على الرقم التالي:`,
 
