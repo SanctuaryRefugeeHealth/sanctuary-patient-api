@@ -13,10 +13,10 @@ Address: {{practitionerAddress}}
 Special Notes: {{specialNotes}}
 {{/specialNotes}}
 
-If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321.
-    `,
+If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321.`,
 
-    Arabic: `هذه رسالة من عيادة الدكتور مايكل طبيب العائلة إلى ( {{patientName}}). هناك موعد ({{practitionerAddress}}) يوم ({{appointmentDateTime}}) على العنوان التالي: (العنوان)
+    // \u200E is the left-to-right mark and is used to improve mixing LTR text into the RTL message
+    Arabic: `هذه رسالة من عيادة الدكتور مايكل طبيب العائلة إلى \u200E({{patientName}}). هناك موعد \u200E({{practitionerAddress}}) يوم \u200E({{appointmentDateTime}}) على العنوان التالي: (العنوان)
     للاستفسار رجاءًا الاتصال على الرقم التالي:`,
 
     Amharic: `ይህከዶ / ር ሚካኤል እስጢፋኖስ ቢሮ - ቅዱስ ሥደተኞች የጤና ማእከል ለ {{patientName}} መልእክት ነው ፡፡ በሚተቀለው አድራሻ {{practitionerAddress}} ላይ {{appointmentDateTime}} ቀጠሮ አልዎት ፡፡
@@ -28,7 +28,7 @@ If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Mich
     Turkish: `Sayin {{patientName}},  {{appointmentDateTime}} tarihinde  {{practitionerAddress}} adresinde bulunan (Consult/ Imaging) ile randevunuz vardir. Sorulariniz icin bizi 226-336-1321'den arayabilirsiniz.
     Dr Michael Stephensoniun - Sanctuary Refugee Health Centre`,
 
-    Spanish: `Este es un mensaje de la oficina del Dr. Michel Stephenson - Sanctuary Refugee Health Centre para: {{patientName}}. Usted tiene una cita con (Consult)/(Imaging)el {{appointmentDateTime}}en la siguiente dirección: {{practitionerAddress}}. 
+    Spanish: `Este es un mensaje de la oficina del Dr. Michel Stephenson - Sanctuary Refugee Health Centre para: {{patientName}}. Usted tiene una cita con (Consult)/(Imaging)el {{appointmentDateTime}} en la siguiente dirección: {{practitionerAddress}}. 
     Si usted tiene alguna pregunta, por favor llamenos al 226-336-1321.`,
   },
   {
