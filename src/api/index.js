@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { version } from "../../package.json";
+import { webhook } from "../services/twilioClient";
 import {
   getAppointment,
   getAppointments,
@@ -9,11 +10,10 @@ import {
 } from "./handlers/appointments";
 import { getToken } from "./handlers/auth";
 import { getCommunications } from "./handlers/communications";
-import { webhook } from "../services/twilioClient";
-import { postReply } from "./handlers/twilio";
 import { getLanguages } from "./handlers/languages";
 import { getMessages, postMessages } from "./handlers/messages";
 import { getMessageTemplates } from "./handlers/templates";
+import { postReply } from "./handlers/twilio";
 import { createUser } from "./handlers/users";
 
 // eslint-disable-next-line no-unused-vars
@@ -38,13 +38,10 @@ export default ({ config, db }) => {
   // -- Appointments
 
   api.get("/appointments", getAppointments);
+  api.get("/appointments/sendReminders", sendReminders);
   api.get("/appointments/:appointmentId", getAppointment);
   api.post("/appointments", postAppointments);
   api.patch("/appointments/:appointmentId", patchAppointments);
-
-  // -- Bulk messages
-
-  api.get("/appointments/sendReminders", sendReminders);
 
   // -- Messages
 

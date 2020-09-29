@@ -1,10 +1,7 @@
 import { twilioConfig } from "../config";
 
-const twilio = require("twilio")
-const client = twilio(
-  twilioConfig.accountSid,
-  twilioConfig.authToken
-);
+const twilio = require("twilio");
+const client = twilio(twilioConfig.accountSid, twilioConfig.authToken);
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
 const countryCode = "+1";
 
@@ -18,8 +15,6 @@ export const sendMessage = (phoneNumber, message) => {
   if (!/^\d+$/.test(phoneNumber)) {
     throw Error("Phone number must only contain digits.");
   }
-
-  console.log(phoneNumber);
 
   return client.messages.create({
     body: message,
