@@ -29,21 +29,17 @@ const convertReply = (reply) => {
   return convertedReply;
 };
 
-export default async (req, res) => {
-  let patientPhoneNumber = req?.body?.From;
-  const messageFromPatient = req?.body?.Body;
-  const lowercaseMessageFromPatient = messageFromPatient.toLowerCase();
+export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
   let ourResponse;
-  patientPhoneNumber = patientPhoneNumber.replace("+", "");
-  patientPhoneNumber = patientPhoneNumber.substring(1);
-  res.set("Content-Type", "text/xml");
 
   if (!messageFromPatient || messageFromPatient === "") {
     ourResponse = getMessageResponse(
       "We are sorry, we could not process your response. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
     );
-    return res.send(ourResponse);
+    return ourResponse;
   }
+
+  const lowercaseMessageFromPatient = messageFromPatient.toLowerCase();
 
   let appointments;
   try {
@@ -51,18 +47,18 @@ export default async (req, res) => {
       .select("appointmentId", "language")
       .where({ patientPhoneNumber, appointmentIsConfirmed: 0 });
   } catch (error) {
-    // Can't store reply without patientId
+    // Can't store reply without appointmentId
     ourResponse = getMessageResponse(
       "We are sorry, we could not find an appointment for you. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
     );
-    return res.send(ourResponse);
+    return ourResponse;
   }
 
-  if (!appointments) {
+  if (!appointments || appointments.length === 0) {
     ourResponse = getMessageResponse(
-      "We are sorry, we could not find an appointment for you. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
+      "We are sorry, we could not find an appointment for you, or your appointment is already confirmed. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
     );
-    return res.send(ourResponse);
+    return ourResponse;
   }
 
   const trx = await db.transaction();
@@ -72,7 +68,7 @@ export default async (req, res) => {
     ourResponse = getMessageResponse(
       "We are sorry, we could not confirm your appointment. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
     );
-    return res.send(ourResponse);
+    return ourResponse;
   }
 
   try {
@@ -84,13 +80,13 @@ export default async (req, res) => {
               phoneNumber: patientPhoneNumber,
               body: messageFromPatient,
               appointmentId: appointment.appointmentId,
-              time: moment().format("YYYY-MM-DD HH:mm:ss"),
+              time: new Date(),
             })
             .transacting(trx);
           await db("appointments")
             .where({ appointmentId: appointment.appointmentId })
             .update({
-              appointmentIsConfirmed: 1,
+              appointmentIsConfirmed: true,
             })
             .transacting(trx);
         }
@@ -108,7 +104,7 @@ export default async (req, res) => {
           await db("appointments")
             .where({ appointmentId: appointment.appointmentId })
             .update({
-              appointmentIsConfirmed: 0,
+              appointmentIsConfirmed: false,
             })
             .transacting(trx);
         }
@@ -122,7 +118,7 @@ export default async (req, res) => {
     ourResponse = getMessageResponse(
       "We are sorry, we could not confirm your appointment. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
     );
-    return res.send(ourResponse);
+    return ourResponse;
   }
 
   await trx.commit();
@@ -134,5 +130,25 @@ export default async (req, res) => {
 
   ourResponse = getMessageResponse(replyText);
 
+  return ourResponse;
+}
+
+export async function postReply(req, res) {
+  let patientPhoneNumber = req && req.body && req.body.From;
+  const messageFromPatient = req && req.body && req.body.Body;
+
+  patientPhoneNumber = patientPhoneNumber.replace("+", "");
+  patientPhoneNumber = patientPhoneNumber.substring(1);
+  res.set("Content-Type", "text/xml");
+  let ourResponse;
+
+  try {
+    ourResponse = await handlePostReply(patientPhoneNumber, messageFromPatient);
+  } catch (error) {
+    ourResponse = getMessageResponse(
+      "We are sorry, we could not confirm your appointment. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
+    );
+  }
+
   return res.send(ourResponse);
-};
+}
