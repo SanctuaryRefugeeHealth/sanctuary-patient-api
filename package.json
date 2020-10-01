@@ -10,6 +10,8 @@
     "build": "babel src -s -D -d dist",
     "start": "pm2-dev --interpreter babel-node src",
     "start:dev": "npm run migrate && npm start",
+    "test": "mocha 'src/**/*.test.js' --require esm",
+    "coverage": "nyc npm test",
     "serve": "pm2 start dist",
     "seed": "node -r dotenv/config ./node_modules/knex/bin/cli.js seed:run"
   },
@@ -21,6 +23,7 @@
     "cors": "^2.7.1",
     "dotenv": "^8.2.0",
     "express": "^4.13.3",
+    "express-jwt": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.10",
     "moment": "^2.24.0",
@@ -38,8 +41,12 @@
     "@babel/node": "^7.8.4",
     "@babel/preset-env": "^7.7.6",
     "babel-eslint": "^10.1.0",
+    "chai": "^4.2.0",
     "eslint": "^6.8.0",
-    "node-random-name": "^1.0.1"
+    "eslint-plugin-mocha": "^8.0.0",
+    "mocha": "^8.1.1",
+    "node-random-name": "^1.0.1",
+    "nyc": "^15.1.0"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",
@@ -70,6 +77,9 @@
           }
         }
       }
+    ],
+    "plugins": [
+      "mocha"
     ]
   }
 }

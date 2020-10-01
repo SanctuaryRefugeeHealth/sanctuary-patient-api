@@ -4,23 +4,31 @@ const templates = [
   {
     templateId: 1,
     templateName: "Appointment Reminder",
-    English: `This is a message from Dr. Michael Stephenson's office - Sanctuary Refugee Health Centre to {{patientName}}. 
-    You have an appointment for (Consult/ Imaging) on {{appointmentTime}} at the the following address {{practitionerAddress}}. 
-    If have any questions, please call us at 226-336-1321.`,
+    English: `Dear {{patientName}}, this message is to inform you of your upcoming appointment{{#description}}: {{description}}{{/description}}.
 
-    Arabic: `هذه رسالة من عيادة الدكتور مايكل طبيب العائلة إلى ( {{patientName}}). هناك موعد ({{practitionerAddress}}) يوم ({{appointmentTime}}) على العنوان التالي: (العنوان)
+Date: {{appointmentDate}}
+Time: {{appointmentTime}}
+Address: {{practitionerAddress}}
+{{#specialNotes}}
+Special Notes: {{specialNotes}}
+{{/specialNotes}}
+
+If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321.`,
+
+    // \u200E is the left-to-right mark and is used to improve mixing LTR text into the RTL message
+    Arabic: `هذه رسالة من عيادة الدكتور مايكل طبيب العائلة إلى \u200E({{patientName}}). هناك موعد \u200E({{practitionerAddress}}) يوم \u200E({{appointmentDateTime}}) على العنوان التالي: (العنوان)
     للاستفسار رجاءًا الاتصال على الرقم التالي:`,
 
-    Amharic: `ይህከዶ / ር ሚካኤል እስጢፋኖስ ቢሮ - ቅዱስ ሥደተኞች የጤና ማእከል ለ {{patientName}} መልእክት ነው ፡፡ በሚተቀለው አድራሻ {{practitionerAddress}} ላይ {{appointmentTime}} ቀጠሮ አልዎት ፡፡
+    Amharic: `ይህከዶ / ር ሚካኤል እስጢፋኖስ ቢሮ - ቅዱስ ሥደተኞች የጤና ማእከል ለ {{patientName}} መልእክት ነው ፡፡ በሚተቀለው አድራሻ {{practitionerAddress}} ላይ {{appointmentDateTime}} ቀጠሮ አልዎት ፡፡
     ማናቸውምጥያቄዎች ካሉዎት እባክዎን በ 226-336-1321 ይደውሉልን ፡`,
 
     Somali: `Tani waa dhambaal ka socda xafiiska Dr.Michael Steaphenson ee Sanctuary ({{patientName}}). Ballan ayaad u leedahay (La-tashi / Sawir Raajo or Computer) maalinta {Taariikhda} ({{practitionerAddress}})cinwaanka soo socda.
     Haddii aad qabtid wax su'aalo ah, fadlan naga soo wac Numbarkan.226-336-1321.`,
 
-    Turkish: `Sayin {{patientName}},  {{appointmentTime}} tarihinde  {{practitionerAddress}} adresinde bulunan (Consult/ Imaging) ile randevunuz vardir. Sorulariniz icin bizi 226-336-1321'den arayabilirsiniz.
+    Turkish: `Sayin {{patientName}},  {{appointmentDateTime}} tarihinde  {{practitionerAddress}} adresinde bulunan (Consult/ Imaging) ile randevunuz vardir. Sorulariniz icin bizi 226-336-1321'den arayabilirsiniz.
     Dr Michael Stephensoniun - Sanctuary Refugee Health Centre`,
 
-    Spanish: `Este es un mensaje de la oficina del Dr. Michel Stephenson - Sanctuary Refugee Health Centre para: {{patientName}}. Usted tiene una cita con (Consult)/(Imaging)el {{appointmentTime}}en la siguiente dirección: {{practitionerAddress}}. 
+    Spanish: `Este es un mensaje de la oficina del Dr. Michel Stephenson - Sanctuary Refugee Health Centre para: {{patientName}}. Usted tiene una cita con (Consult)/(Imaging)el {{appointmentDateTime}} en la siguiente dirección: {{practitionerAddress}}. 
     Si usted tiene alguna pregunta, por favor llamenos al 226-336-1321.`,
   },
   {
