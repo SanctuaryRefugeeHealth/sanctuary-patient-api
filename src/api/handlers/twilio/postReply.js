@@ -29,6 +29,12 @@ const convertReply = (reply) => {
   return convertedReply;
 };
 
+export async function getAppointments(patientPhoneNumber) {
+  return await db("appointments")
+    .select("appointmentId", "language")
+    .where({ patientPhoneNumber, appointmentIsConfirmed: 0 });
+}
+
 export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
   let ourResponse;
 
@@ -43,9 +49,7 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
 
   let appointments;
   try {
-    appointments = await db("appointments")
-      .select("appointmentId", "language")
-      .where({ patientPhoneNumber, appointmentIsConfirmed: 0 });
+    appointments = await getAppointments(patientPhoneNumber);
   } catch (error) {
     // Can't store reply without appointmentId
     ourResponse = getMessageResponse(
@@ -129,7 +133,6 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
   );
 
   ourResponse = getMessageResponse(replyText);
-
   return ourResponse;
 }
 
