@@ -2,7 +2,7 @@ import { twilioConfig } from "../config";
 
 export const webhook = () => {
   const twilio = require("twilio");
-  twilio.webhook;
+  return twilio.webhook;
 };
 
 export const sendMessage = (phoneNumber, message) => {

@@ -1,32 +1,58 @@
 import sinon from "sinon";
 const postReplyFunctions = require("./postReply.js");
+const postReplyDbFunctions = require("./databaseFunctions");
 import { assert } from "chai";
 const tClient = require("../../../services/twilioClient");
+const db = require("../../../../knex");
 
-describe("", function () {
+describe("Sending A Reply", function () {
   let getAppointments;
   let getMessageResponseStub;
+  let insertReplyStub;
+  let updateAppointmentStub;
+  let transactionStub;
+
   before(() => {
+    transactionStub = sinon
+      .stub(db.db, "transaction")
+      .returns({
+        commit: () => {}
+      });
     getMessageResponseStub = sinon
       .stub(tClient, "getMessageResponse")
       .callsFake((message) => {
-        console.log("getMessageResponse Stub");
         return message;
       });
     getAppointments = sinon
-      .stub(postReplyFunctions, "getAppointments")
+      .stub(postReplyDbFunctions, "getAppointments")
       .callsFake((patientPhoneNumber) => {
-        console.log("getAppointments Stub");
-        return [{}];
+        return [{language: "English"}];
+      });
+    insertReplyStub = sinon
+      .stub(postReplyDbFunctions, "insertReply")
+      .callsFake((trx, patientPhoneNumber, messageFromPatient, appointmentId) => {
+        return true;
+      });
+    updateAppointmentStub = sinon
+      .stub(postReplyDbFunctions, "updateAppointment")
+      .callsFake((trx, appointmentId, appointmentIsConfirmed) => {
+        return true;
       });
   });
 
-  it.only("Test 1", function () {
-    assert.equal(postReplyFunctions.handlePostReply("123", "yes"), "something");
+  it("Works when they say yes", async function () {
+    assert.equal(await postReplyFunctions.handlePostReply("123", "yes"), "Thank you for your confirmation!");
+  });
+
+  it("Works when they say no", async function () {
+    assert.equal(await postReplyFunctions.handlePostReply("123", "no"), "Thank you for your confirmation!");
   });
 
   after(() => {
     getAppointments.restore();
     getMessageResponseStub.restore();
+    insertReplyStub.restore();
+    updateAppointmentStub.restore();
+    transactionStub.restore();
   });
 });

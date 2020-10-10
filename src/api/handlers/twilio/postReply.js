@@ -1,7 +1,7 @@
-import moment from "moment";
 import { db } from "../../../../knex";
 import TemplatesModel from "../../../models/templates";
 import { getMessageResponse } from "../../../services/twilioClient";
+import { getAppointments, insertReply, updateAppointment } from "./databaseFunctions";
 
 const convertReply = (reply) => {
   const languageConversions = {
@@ -29,12 +29,6 @@ const convertReply = (reply) => {
   return convertedReply;
 };
 
-export async function getAppointments(patientPhoneNumber) {
-  return await db("appointments")
-    .select("appointmentId", "language")
-    .where({ patientPhoneNumber, appointmentIsConfirmed: 0 });
-}
-
 export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
   let ourResponse;
 
@@ -51,6 +45,7 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
   try {
     appointments = await getAppointments(patientPhoneNumber);
   } catch (error) {
+    console.log("here", error)
     // Can't store reply without appointmentId
     ourResponse = getMessageResponse(
       "We are sorry, we could not find an appointment for you. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
@@ -79,38 +74,14 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
     switch (lowercaseMessageFromPatient) {
       case "yes":
         for (const appointment of appointments) {
-          await db("replies")
-            .insert({
-              phoneNumber: patientPhoneNumber,
-              body: messageFromPatient,
-              appointmentId: appointment.appointmentId,
-              time: new Date(),
-            })
-            .transacting(trx);
-          await db("appointments")
-            .where({ appointmentId: appointment.appointmentId })
-            .update({
-              appointmentIsConfirmed: true,
-            })
-            .transacting(trx);
+          await insertReply(trx, patientPhoneNumber, messageFromPatient, appointment.appointmentId);
+          await updateAppointment(trx, appointment.appointmentId, true);
         }
         break;
       case "no":
         for (const appointment of appointments) {
-          await db("replies")
-            .insert({
-              phoneNumber: patientPhoneNumber,
-              body: messageFromPatient,
-              appointmentId: appointment.appointmentId,
-              time: moment().format("YYYY-MM-DD HH:mm:ss"),
-            })
-            .transacting(trx);
-          await db("appointments")
-            .where({ appointmentId: appointment.appointmentId })
-            .update({
-              appointmentIsConfirmed: false,
-            })
-            .transacting(trx);
+          await insertReply(trx, patientPhoneNumber, messageFromPatient, appointment.appointmentId);
+          await updateAppointment(trx, appointment.appointmentId, false);
         }
         break;
       // Handle interpreter?
