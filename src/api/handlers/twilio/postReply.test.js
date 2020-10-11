@@ -13,11 +13,9 @@ describe("Sending A Reply", function () {
   let transactionStub;
 
   before(() => {
-    transactionStub = sinon
-      .stub(db.db, "transaction")
-      .returns({
-        commit: () => {}
-      });
+    transactionStub = sinon.stub(db.db, "transaction").returns({
+      commit: () => {},
+    });
     getMessageResponseStub = sinon
       .stub(tClient, "getMessageResponse")
       .callsFake((message) => {
@@ -26,13 +24,15 @@ describe("Sending A Reply", function () {
     getAppointments = sinon
       .stub(postReplyDbFunctions, "getAppointments")
       .callsFake((patientPhoneNumber) => {
-        return [{language: "English"}];
+        return [{ language: "English" }];
       });
     insertReplyStub = sinon
       .stub(postReplyDbFunctions, "insertReply")
-      .callsFake((trx, patientPhoneNumber, messageFromPatient, appointmentId) => {
-        return true;
-      });
+      .callsFake(
+        (trx, patientPhoneNumber, messageFromPatient, appointmentId) => {
+          return true;
+        }
+      );
     updateAppointmentStub = sinon
       .stub(postReplyDbFunctions, "updateAppointment")
       .callsFake((trx, appointmentId, appointmentIsConfirmed) => {
@@ -41,11 +41,17 @@ describe("Sending A Reply", function () {
   });
 
   it("Works when they say yes", async function () {
-    assert.equal(await postReplyFunctions.handlePostReply("123", "yes"), "Thank you for your confirmation!");
+    assert.equal(
+      await postReplyFunctions.handlePostReply("123", "yes"),
+      "Thank you for your confirmation!"
+    );
   });
 
   it("Works when they say no", async function () {
-    assert.equal(await postReplyFunctions.handlePostReply("123", "no"), "Thank you for your confirmation!");
+    assert.equal(
+      await postReplyFunctions.handlePostReply("123", "no"),
+      "Thank you for your confirmation!"
+    );
   });
 
   after(() => {

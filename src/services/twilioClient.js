@@ -1,15 +1,12 @@
 import { twilioConfig } from "../config";
 
-export const webhook = () => {
-  const twilio = require("twilio");
-  return twilio.webhook;
-};
+const twilio = require("twilio");
+const countryCode = "+1";
+
+export const webhook = twilio.webhook;
 
 export const sendMessage = (phoneNumber, message) => {
-  const twilio = require("twilio");
   const client = twilio(twilioConfig.accountSid, twilioConfig.authToken);
-  const countryCode = "+1";
-
   if (phoneNumber.length !== 10) {
     throw Error("Phone number must be 10 digits long.");
   }

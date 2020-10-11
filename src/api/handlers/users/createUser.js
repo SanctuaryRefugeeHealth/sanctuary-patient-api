@@ -18,11 +18,12 @@ export async function createUser(req, res) {
       salt = :salt;
   `;
   try {
-    await db.raw(query, {email, password: hash, salt});
+    await db.raw(query, { email, password: hash, salt });
   } catch (error) {
-    console.log(error);
-    return res.status(500).send({ success: false, message: "Could not create user." });
+    return res
+      .status(500)
+      .send({ success: false, message: "Could not create user." });
   }
-  
+
   return res.status(204).send();
 }
