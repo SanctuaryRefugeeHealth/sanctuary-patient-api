@@ -54,7 +54,10 @@
     "sinon": "^9.1.0"
   },
   "eslintConfig": {
-    "extends": ["eslint:recommended", "prettier"],
+    "extends": [
+      "eslint:recommended",
+      "prettier"
+    ],
     "parserOptions": {
       "ecmaVersion": 2018,
       "sourceType": "module"

@@ -57,6 +57,7 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
   try {
     appointments = await getAppointments(patientPhoneNumber);
   } catch (error) {
+    console.log(`Could not get appointment for ${patientPhoneNumber}`, error);
     // Can't store reply without appointmentId
     ourResponse = getMessageResponse(
       "We are sorry, we could not find an appointment for you. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
@@ -102,6 +103,10 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
     }
   } catch (error) {
     await trx.rollback();
+    console.log(
+      `There was an error handling a reply ${patientPhoneNumber}, ${messageFromPatient}, ${appointments}`,
+      error
+    );
     ourResponse = getMessageResponse(
       "We are sorry, we could not confirm your appointment. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
     );
@@ -131,6 +136,10 @@ export async function postReply(req, res) {
   try {
     ourResponse = await handlePostReply(patientPhoneNumber, messageFromPatient);
   } catch (error) {
+    console.log(
+      `There was an error handling a reply ${patientPhoneNumber}, ${messageFromPatient}`,
+      error
+    );
     ourResponse = getMessageResponse(
       "We are sorry, we could not confirm your appointment. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
     );
