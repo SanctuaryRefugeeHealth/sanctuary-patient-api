@@ -41,7 +41,13 @@ In subsequent requests, add the token from the response of the above request to 
 
 ### Deploy
 
+First time setup:
+
 - Make sure Docker is running
 - Make sure there is a `[sanctuary]` section in `~/.aws/credentials` containing your AWS credentials (from the AWS console).
+- You'll need an existing user to add your public SSH key to ~/.ssh/authorized_keys on ubuntu@ec2-52-60-78-19.ca-central-1.compute.amazonaws.com
+
+Each time:
+
 - Set `TAG` in `Makefile` (optional; you can redeploy using the previous version)
 - `make deploy`
