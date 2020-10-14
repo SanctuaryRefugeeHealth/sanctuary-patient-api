@@ -35,5 +35,6 @@ The API will be available on port 8080 (`http://localhost:8080/api/`).
 
 ### Deploy
 
-    - Set `TAG` in `Makefile`.
-    - `make deploy`
+- Make sure Docker is running
+- Set `TAG` in `Makefile` (optional; you can redeploy using the previous version)
+- `make deploy`
