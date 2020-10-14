@@ -18,7 +18,7 @@ push:
 	@docker push ${REPOSITORY_IMG}
 
 login:
-	@aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin ${REPOSITORY}
+	@aws --profile sanctuary ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin ${REPOSITORY}
 
 remote-migrate:
 	ssh ${SERVER} "docker exec ${CONTAINER_NAME} yarn run migrate"
