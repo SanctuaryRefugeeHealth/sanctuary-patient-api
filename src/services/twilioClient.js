@@ -1,16 +1,12 @@
 import { twilioConfig } from "../config";
 
-const twilio = require("twilio")
-const client = twilio(
-  twilioConfig.accountSid,
-  twilioConfig.authToken
-);
-const MessagingResponse = require("twilio").twiml.MessagingResponse;
+const twilio = require("twilio");
 const countryCode = "+1";
 
 export const webhook = twilio.webhook;
 
 export const sendMessage = (phoneNumber, message) => {
+  const client = twilio(twilioConfig.accountSid, twilioConfig.authToken);
   if (phoneNumber.length !== 10) {
     throw Error("Phone number must be 10 digits long.");
   }
@@ -18,8 +14,6 @@ export const sendMessage = (phoneNumber, message) => {
   if (!/^\d+$/.test(phoneNumber)) {
     throw Error("Phone number must only contain digits.");
   }
-
-  console.log(phoneNumber);
 
   return client.messages.create({
     body: message,
@@ -31,6 +25,7 @@ export const sendMessage = (phoneNumber, message) => {
 export const getMessageResponse = (
   message = "Thank you for your confirmation!"
 ) => {
+  const MessagingResponse = require("twilio").twiml.MessagingResponse;
   const twiml = new MessagingResponse();
   twiml.message(message);
 

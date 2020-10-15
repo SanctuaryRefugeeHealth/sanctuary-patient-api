@@ -19,25 +19,23 @@ export default async (req, res) => {
   } catch (error) {
     res.status(500).send({
       error,
-      message: `Could not retrieve appointments for ${daysFromNow(1)} and ${daysFromNow(2)}`
+      message: `Could not retrieve appointments for ${daysFromNow(
+        1
+      )} and ${daysFromNow(2)}`,
     });
     return;
   }
 
   const appointmentsPromises = appointments.map(async (appointment) => {
-    const {
-      appointmentId,
-      patientLanguage,
-      patientPhoneNumber
-    } = appointment;
-  
+    const { appointmentId, patientLanguage, patientPhoneNumber } = appointment;
+
     const language = await LanguagesModel.getByLanguageString(patientLanguage);
     // 1 is reminder template ID, full templated needed for name in message record
     const template = TemplatesModel.getById(1);
     const messageBody = TemplatesModel.generateMessage(1, language.name, {
-      patientName: appointment.patientName, 
-      practitionerAddress: appointment.practitionerAddress, 
-      appointmentTime: moment(appointment.appointmentTime).format('LLLL')
+      patientName: appointment.patientName,
+      practitionerAddress: appointment.practitionerAddress,
+      appointmentTime: moment(appointment.appointmentTime).format("LLLL"),
     });
 
     const message = {
@@ -46,16 +44,15 @@ export default async (req, res) => {
       language: language.name,
       templateName: template.templateName,
       // UTC, will be the same for every message sent in a batch
-      timeSent: moment().format("YYYY-MM-DD HH:mm:ss")
+      timeSent: moment().format("YYYY-MM-DD HH:mm:ss"),
     };
-
 
     try {
       await sendMessage(patientPhoneNumber, messageBody);
     } catch (error) {
       return {
         error,
-        message: `Failed to send appointment reminder to ${patientPhoneNumber}`
+        message: `Failed to send appointment reminder to ${patientPhoneNumber}`,
       };
     }
 
@@ -65,20 +62,21 @@ export default async (req, res) => {
     } catch (error) {
       return {
         error,
-        message: "Could not save message to database"
+        message: "Could not save message to database",
       };
     }
     return {
       appointmentId,
-      messageId: messageId[0]
+      messageId: messageId[0],
     };
   });
 
   return Promise.all(appointmentsPromises)
     .then((result) => res.status(200).send(result))
-    .catch((error) => res.status(500).send({ 
+    .catch((error) =>
+      res.status(500).send({
         error,
-        message: `Could not send reminders for ${daysFromNow(1)}`
+        message: `Could not send reminders for ${daysFromNow(1)}`,
       })
     );
 };

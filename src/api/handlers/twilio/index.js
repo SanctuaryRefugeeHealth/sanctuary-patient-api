@@ -1,4 +1,3 @@
-import postReply from "./postReply";
+import { handlePostReply, postReply } from "./postReply";
 
-export { postReply };
-
+export { postReply, handlePostReply };

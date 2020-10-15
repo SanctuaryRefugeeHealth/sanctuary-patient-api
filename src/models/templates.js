@@ -28,14 +28,36 @@ If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Mich
     Turkish: `Sayin {{patientName}},  {{appointmentDateTime}} tarihinde  {{practitionerAddress}} adresinde bulunan (Consult/ Imaging) ile randevunuz vardir. Sorulariniz icin bizi 226-336-1321'den arayabilirsiniz.
     Dr Michael Stephensoniun - Sanctuary Refugee Health Centre`,
 
-    Spanish: `Este es un mensaje de la oficina del Dr. Michel Stephenson - Sanctuary Refugee Health Centre para: {{patientName}}. Usted tiene una cita con (Consult)/(Imaging)el {{appointmentDateTime}} en la siguiente dirección: {{practitionerAddress}}. 
+    Spanish: `Este es un mensaje de la oficina del Dr. Michel Stephenson - Sanctuary Refugee Health Centre para: {{patientName}}. Usted tiene una cita con (Consult)/(Imaging)el {{appointmentDateTime}} en la siguiente dirección: {{practitionerAddress}}.
     Si usted tiene alguna pregunta, por favor llamenos al 226-336-1321.`,
   },
   {
     templateId: 2,
     templateName: "Reply to Text",
-    English:
-      "Replies are not read. Please call 226-750-6674 to talk to someone at Sanctuary Refugee Health Centre.",
+    yes: {
+      English: "Thank you for your confirmation!",
+      Arabic: "شكرا لكم لتأكيد الحجز!",
+      Amharic: "ስለ ማረጋገጫዎ አመሰግናለሁ!",
+      Somali: "Waad ku mahadsan tahay xaqiijintaada!",
+      Turkish: "Onayınız için teşekkürler!",
+      Spanish: "¡Gracias por su confirmación!",
+    },
+    no: {
+      English: "Thank you for your confirmation!",
+      Arabic: "شكرا لكم لتأكيد الحجز!",
+      Amharic: "ስለ ማረጋገጫዎ አመሰግናለሁ!",
+      Somali: "Waad ku mahadsan tahay xaqiijintaada!",
+      Turkish: "Onayınız için teşekkürler!",
+      Spanish: "¡Gracias por su confirmación!",
+    },
+    interpreter: {
+      English: "Thank you for your confirmation!",
+      Arabic: "شكرا لكم لتأكيد الحجز!",
+      Amharic: "ስለ ማረጋገጫዎ አመሰግናለሁ!",
+      Somali: "Waad ku mahadsan tahay xaqiijintaada!",
+      Turkish: "Onayınız için teşekkürler!",
+      Spanish: "¡Gracias por su confirmación!",
+    },
   },
 ];
 
@@ -47,7 +69,8 @@ export default {
   generateMessage: (templateId, languageName, templateMetadata) => {
     return Mustache.render(getById(templateId)[languageName], templateMetadata);
   },
-  generateReply: (languageName) => {
-    return Mustache.render(getById(2)[languageName]);
+  generateReply: (languageName, patientOption) => {
+    const replyTemplate = getById(2)[patientOption];
+    return Mustache.render(replyTemplate[languageName]);
   },
 };

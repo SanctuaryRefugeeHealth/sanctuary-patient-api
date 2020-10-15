@@ -1,4 +1,4 @@
-FROM node:12.13.1-alpine as build
+FROM node:14.11.0-alpine as build
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ RUN npm run build
 
 # RUNTIME IMAGE
 
-FROM node:12.13.1-alpine as prod
+FROM node:14.11.0-alpine as prod
 
 WORKDIR /app
 
