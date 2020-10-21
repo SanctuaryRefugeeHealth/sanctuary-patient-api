@@ -43,14 +43,14 @@ describe("Sending A Reply", function () {
   it("Works when they say yes", async function () {
     assert.equal(
       await postReplyFunctions.handlePostReply("123", "yes"),
-      "Thank you for your confirmation!"
+      "Thank you!"
     );
   });
 
   it("Works when they say no", async function () {
     assert.equal(
       await postReplyFunctions.handlePostReply("123", "no"),
-      "Thank you for your confirmation!"
+      "Thank you. We will call you to arrange another time."
     );
   });
 
