@@ -4,11 +4,7 @@ exports.up = async (knex) => {
   });
 
   await knex.schema.table("messages", (table) => {
-    table
-      .string("language", 255)
-      .references("name")
-      .inTable("languages")
-      .onUpdate("CASCADE");
+    table.string("language", 255);
   });
 
   await knex("messages").update({
@@ -16,7 +12,13 @@ exports.up = async (knex) => {
   });
 
   await knex.schema.alterTable("messages", (table) => {
-    table.string("language").notNullable().alter();
+    table
+      .string("language")
+      .notNullable()
+      .references("name")
+      .inTable("languages")
+      .onUpdate("CASCADE")
+      .alter();
   });
 };
 

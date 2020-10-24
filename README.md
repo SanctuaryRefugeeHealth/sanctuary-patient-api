@@ -29,11 +29,25 @@ The API will be available on port 8080 (`http://localhost:8080/api/`).
       "password": "sanctuary"
     }
 
-  In subsequent requests, add the token from the response of the above request to your headers
+In subsequent requests, add the token from the response of the above request to your headers:
 
     Authorization: Bearer `token`
 
+### Access the production DB
+
+- Host: sanctuary-db.ckfr6vdnmy6d.ca-central-1.rds.amazonaws.com 
+- Username: [your username from terraform]
+- Database: sanctuary_db
+
 ### Deploy
 
-    - Set `TAG` in `Makefile`.
-    - `make deploy`
+First time setup:
+
+- Make sure Docker is running
+- Make sure there is a `[sanctuary]` section in `~/.aws/credentials` containing your AWS credentials (from the AWS console).
+- You'll need an existing user to add your public SSH key to ~/.ssh/authorized_keys on ubuntu@ec2-52-60-78-19.ca-central-1.compute.amazonaws.com
+
+Each time:
+
+- Set `TAG` in `Makefile` (optional; you can redeploy using the previous version)
+- `make deploy`

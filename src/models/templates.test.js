@@ -96,12 +96,14 @@ If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Mich
   it("should return formatted message in Arabic", function () {
     const metadata = {
       patientName: "John Smith",
-      appointmentDateTime: moment("2020-01-02T03:04").format("YYYY-MM-DD h:mm a"),
+      appointmentDateTime: moment("2020-01-02T03:04").format(
+        "YYYY-MM-DD h:mm a"
+      ),
       practitionerAddress: "123 Fake St.",
     };
 
     const actual = TemplatesModel.generateMessage(1, "Arabic", metadata);
-    
+
     const expected = `هذه رسالة من عيادة الدكتور مايكل طبيب العائلة إلى ‎(John Smith). هناك موعد ‎(123 Fake St.) يوم ‎(2020-01-02 3:04 am) على العنوان التالي: (العنوان)
     للاستفسار رجاءًا الاتصال على الرقم التالي:`;
 
@@ -111,7 +113,9 @@ If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Mich
   it("should return formatted message in Amharic", function () {
     const metadata = {
       patientName: "John Smith",
-      appointmentDateTime: moment("2020-01-02T03:04").format("YYYY-MM-DD h:mm a"),
+      appointmentDateTime: moment("2020-01-02T03:04").format(
+        "YYYY-MM-DD h:mm a"
+      ),
       practitionerAddress: "123 Fake St.",
     };
 
@@ -126,7 +130,9 @@ If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Mich
   it("should return formatted message in Somali", function () {
     const metadata = {
       patientName: "John Smith",
-      appointmentDateTime: moment("2020-01-02T03:04").format("YYYY-MM-DD h:mm a"),
+      appointmentDateTime: moment("2020-01-02T03:04").format(
+        "YYYY-MM-DD h:mm a"
+      ),
       practitionerAddress: "123 Fake St.",
     };
 
@@ -141,7 +147,9 @@ If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Mich
   it("should return formatted message in Turkish", function () {
     const metadata = {
       patientName: "John Smith",
-      appointmentDateTime: moment("2020-01-02T03:04").format("YYYY-MM-DD h:mm a"),
+      appointmentDateTime: moment("2020-01-02T03:04").format(
+        "YYYY-MM-DD h:mm a"
+      ),
       practitionerAddress: "123 Fake St.",
     };
 
@@ -156,14 +164,15 @@ If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Mich
   it("should return formatted message in Spanish", function () {
     const metadata = {
       patientName: "John Smith",
-      appointmentDateTime: moment("2020-01-02T03:04").format("YYYY-MM-DD h:mm a"),
+      appointmentDateTime: moment("2020-01-02T03:04").format(
+        "YYYY-MM-DD h:mm a"
+      ),
       practitionerAddress: "123 Fake St.",
     };
 
     const actual = TemplatesModel.generateMessage(1, "Spanish", metadata);
 
-    const expected = `Este es un mensaje de la oficina del Dr. Michel Stephenson - Sanctuary Refugee Health Centre para: John Smith. Usted tiene una cita con (Consult)/(Imaging)el 2020-01-02 3:04 am en la siguiente dirección: 123 Fake St.. 
-    Si usted tiene alguna pregunta, por favor llamenos al 226-336-1321.`;
+    const expected = `Este es un mensaje de la oficina del Dr. Michel Stephenson - Sanctuary Refugee Health Centre para: John Smith. Usted tiene una cita con (Consult)/(Imaging)el 2020-01-02 3:04 am en la siguiente dirección: 123 Fake St..\n    Si usted tiene alguna pregunta, por favor llamenos al 226-336-1321.`;
 
     expect(actual).to.equal(expected);
   });
