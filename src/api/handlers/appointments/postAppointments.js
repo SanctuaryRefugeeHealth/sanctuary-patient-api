@@ -1,10 +1,7 @@
-import moment from "moment";
 import Joi from "@hapi/joi";
 
 import { db } from "../../../../knex";
-import TemplatesModel from "../../../models/templates";
-import LanguagesModel from "../../../models/languages";
-import { sendMessage } from "../../../services/twilioClient";
+import { sendReminder } from "./sendReminders";
 
 const schema = Joi.object({
   patientName: Joi.string().trim().required(),
