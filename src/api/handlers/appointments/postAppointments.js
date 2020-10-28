@@ -59,8 +59,13 @@ export default async (req, res) => {
     });
     return;
   }
-
-  await sendReminder(appointment);
+  try {
+    await sendReminder(appointment);
+  } catch (error) {
+    return res
+      .status(500)
+      .send({ error, message: "Failed to send appointment reminder" });
+  }
 
   res.status(200).send({
     insertedAppointmentId: appointment.id,

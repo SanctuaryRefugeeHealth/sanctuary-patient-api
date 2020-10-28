@@ -34,16 +34,30 @@ export const sendReminder = async (appointment) => {
     timeSent,
   };
 
-  await sendMessage(appointment.patientPhoneNumber, messageBody);
-  await db("messages").insert(message);
-  await db("appointments")
-    .update("lastReminderSentAt", timeSent)
-    .where("appointmentId", appointment.id);
+  await db.transaction(async (trx) => {
+    await trx("messages").insert(message);
+    await trx("appointments")
+      .update("lastReminderSentAt", timeSent)
+      .where("appointmentId", appointment.id);
+
+    await sendMessage(appointment.patientPhoneNumber, messageBody);
+  });
 };
 
 export const sendReminders = async () => {
   // Select appointments coming up in the next 24 hours that
   // have not had a notification in the previous 24 hours.
+
+  const start = daysFromNow(0);
+  const end = daysFromNow(1);
+  const notAfter = daysFromNow(-1);
+
+  console.info(
+    `Sending reminders for appointments from ${start} to ${end} without reminder after ${daysFromNow(
+      -1
+    )}.`
+  );
+
   const appointments = await db("appointments")
     .select(
       "appointmentId as id",
@@ -55,20 +69,23 @@ export const sendReminders = async () => {
       "description"
     )
     .where("isDeleted", false)
-    .where("lastReminderSentAt", "<=", daysFromNow(-1))
-    .orWhereNull("lastReminderSentAt")
-    .where("appointmentTime", ">=", daysFromNow(0))
-    .where("appointmentTime", "<", daysFromNow(1));
+    .where("appointmentTime", ">=", start)
+    .where("appointmentTime", "<", end)
+    .andWhere((db) => {
+      db.where("lastReminderSentAt", "<=", notAfter).orWhereNull(
+        "lastReminderSentAt"
+      );
+    });
 
   const promises = appointments.map(sendReminder);
 
-  return await Promise.all(promises);
+  await Promise.all(promises);
 };
 
 export default async (req, res) => {
   try {
-    const results = await sendReminders();
-    res.status(200).send(results);
+    await sendReminders();
+    res.status(200).end();
   } catch (e) {
     console.error(e);
     res.status(500).send({
