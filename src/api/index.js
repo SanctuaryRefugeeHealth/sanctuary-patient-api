@@ -17,7 +17,7 @@ import { postReply } from "./handlers/twilio";
 import { createUser } from "./handlers/users";
 
 // eslint-disable-next-line no-unused-vars
-export default ({ config, db }) => {
+export default ({ config }) => {
   let api = Router();
 
   // perhaps expose some API metadata at the root

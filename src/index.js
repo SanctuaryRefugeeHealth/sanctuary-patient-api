@@ -7,7 +7,6 @@ import http from "http";
 import morgan from "morgan";
 import api from "./api";
 import config from "./config";
-import initializeDb from "./db";
 import reminderScheduler from './services/scheduler'
 
 let app = express();
@@ -46,14 +45,10 @@ app.use(
   })
 );
 
-// connect to db
-initializeDb((db) => {
-  // api router
-  app.use("/api", api({ config, db }));
+app.use("/api", api({ config }));
 
-  app.server.listen(config.port, () => {
-    console.log(`Started on port ${app.server.address().port}`);
-  });
+app.server.listen(config.port, () => {
+  console.log(`Started on port ${app.server.address().port}`);
 });
 
 export default app;
