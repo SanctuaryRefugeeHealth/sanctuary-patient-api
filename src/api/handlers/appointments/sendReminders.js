@@ -53,9 +53,7 @@ export const sendReminders = async () => {
   const notAfter = daysFromNow(-1);
 
   console.info(
-    `Sending reminders for appointments from ${start} to ${end} without reminder after ${daysFromNow(
-      -1
-    )}.`
+    `Sending reminders for appointments from ${start} to ${end} without reminder after ${notAfter}.`
   );
 
   const appointments = await db("appointments")
