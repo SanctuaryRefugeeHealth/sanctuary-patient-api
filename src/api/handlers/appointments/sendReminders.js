@@ -83,7 +83,7 @@ export const sendReminders = async () => {
 export default async (req, res) => {
   try {
     await sendReminders();
-    res.status(200).end();
+    return res.status(200).end();
   } catch (e) {
     console.error(e);
     res.status(500).send({
