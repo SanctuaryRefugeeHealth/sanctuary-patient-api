@@ -5,31 +5,81 @@ const templates = [
     templateId: 1,
     templateName: "Appointment Reminder",
     English: `Dear {{patientName}}, this message is to inform you of your upcoming appointment{{#description}}: {{description}}{{/description}}.
+    Date: {{appointmentDate}}
+    Time: {{appointmentTime}}
+    Address: {{practitionerAddress}}
+    {{#specialNotes}}
+    Special Notes: {{specialNotes}}
+    {{/specialNotes}}
 
-Date: {{appointmentDate}}
-Time: {{appointmentTime}}
-Address: {{practitionerAddress}}
-{{#specialNotes}}
-Special Notes: {{specialNotes}}
-{{/specialNotes}}
-
-If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321.`,
+    Please confirm your attendance by replying “Yes” or “No”
+    If you need an interpreter, please reply with the word &quot;interpreter&quot;
+    If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Michael
+    Stephenson) at 226-336-1321`,
 
     // \u200E is the left-to-right mark and is used to improve mixing LTR text into the RTL message
-    Arabic: `هذه رسالة من عيادة الدكتور مايكل طبيب العائلة إلى \u200E({{patientName}}). هناك موعد \u200E({{practitionerAddress}}) يوم \u200E({{appointmentDateTime}}) على العنوان التالي: (العنوان)
-    للاستفسار رجاءًا الاتصال على الرقم التالي:`,
+    Arabic: ``,
 
-    Amharic: `ይህከዶ / ር ሚካኤል እስጢፋኖስ ቢሮ - ቅዱስ ሥደተኞች የጤና ማእከል ለ {{patientName}} መልእክት ነው ፡፡ በሚተቀለው አድራሻ {{practitionerAddress}} ላይ {{appointmentDateTime}} ቀጠሮ አልዎት ፡፡
-    ማናቸውምጥያቄዎች ካሉዎት እባክዎን በ 226-336-1321 ይደውሉልን ፡`,
+    Amharic: `ለ {{patientName}}፣ ይህ መልእክት የሚከተለው ቀጠሮ እንዳለዎት ለማሳወቅ ነው፥ {{#description}}: {{description}}{{/description}}.
+    ቀን፦ {{appointmentDate}}
+    ሰዐት፦ {{appointmentTime}}
+    አድራሻ፦ {{practitionerAddress}}
+    {{#specialNotes}}
+    ማስታወሻ፦ {{specialNotes}}
+    {{/specialNotes}}
+    በዚህ ቀጠሮ ላይ እገኛለሁ ወይም አልገኝም በማለት እንዲያሳውቁን በትህትና እንጠይቃለን።
+    አስተርጓሚ ካስፈለግዎ፣ እባኮ &quot;አስተርጓሚ&quot; በማለት ይመልሱ።
+    ጥያቄ ካለዎት፣እባኮ በ 226-336-1321 Sanctuary Refugee Health Centre በመደወል (ዶ/ር ማይክል
+    ስቴፈንሰን) ያነጋግሩ።`,
 
-    Somali: `Tani waa dhambaal ka socda xafiiska Dr.Michael Steaphenson ee Sanctuary ({{patientName}}). Ballan ayaad u leedahay (La-tashi / Sawir Raajo or Computer) maalinta {Taariikhda} ({{practitionerAddress}})cinwaanka soo socda.
-    Haddii aad qabtid wax su'aalo ah, fadlan naga soo wac Numbarkan.226-336-1321.`,
+    Somali: `Gacaliye {{patientName}}, Farriintan ayaa ah in lagu ogeysiiyo ballantaada soo socota{{#description}}: {{description}}{{/description}}.
+    Taariikh: {{appointmentDate}}
+    Waqtiga: {{appointmentTime}}
+    Cinwaanka: {{practitionerAddress}}
+    {{#specialNotes}}
+    Ogeysiis gaar ah: {{specialNotes}}
+    {{/specialNotes}}
+    Fadlan xaqiiji imaanshahaaga adoo ku jawaabaya &quot;Haa&quot; ama &quot;Maya&quot;
+    Haddii aad u baahan tahay turjubaan, fadlan ku jawaab ereyga &quot;turjubaan&quot;
+    Haddii aad wax su&#39;aalo ah qabtid, fadlan wac Xarunta Caafimaadka Qaxootiga ee
+    Sanctuary (Dr. Michael Stephenson) lambarka 226-336-1321`,
 
-    Turkish: `Sayin {{patientName}},  {{appointmentDateTime}} tarihinde  {{practitionerAddress}} adresinde bulunan (Consult/ Imaging) ile randevunuz vardir. Sorulariniz icin bizi 226-336-1321'den arayabilirsiniz.
-    Dr Michael Stephensoniun - Sanctuary Refugee Health Centre`,
+    Turkish: `Sayin {{patientName}}, Bu mesaj randevunuz ile ilgili sizi bilgilendirme amacli gonderilmistir.
+    Tarih: {{appointmentDate}}
+    Saat: {{appointmentTime}}
+    Adres: {{practitionerAddress}}
+    {{#specialNotes}}
+    Ozel notlar: {{specialNotes}}
+    {{/specialNotes}}
+    Lutfen randevunuza katilim durumunuzu, bu mesaji “Evet” ya da “Hayir” seklinde
+    yanitlayarak bildiriniz
+    Eger tercumana ihtiyaciniz varsa lutfen bu mesaji &quot;tercuman&quot; yazarak yanitlayiniz.
+    Sorulariniz icin lutfen bizi 226-336-1321 numarali telefondan arayiniz.
+    Sanctuary Refugee Health Centre - Dr Michael Stephenson`,
 
-    Spanish: `Este es un mensaje de la oficina del Dr. Michel Stephenson - Sanctuary Refugee Health Centre para: {{patientName}}. Usted tiene una cita con (Consult)/(Imaging)el {{appointmentDateTime}} en la siguiente dirección: {{practitionerAddress}}.
-    Si usted tiene alguna pregunta, por favor llamenos al 226-336-1321.`,
+    Spanish: `Estimado(a) {{patientName}}, Este mensaje es para informarle que usted tiene una próxima cita{{#description}}: {{description}}{{/description}}.
+    Fecha: {{appointmentDate}}
+    Hora: {{appointmentTime}}
+    Direccion: {{practitionerAddress}}
+    {{#specialNotes}}
+    Notas especiales: {{specialNotes}}
+    {{/specialNotes}}
+    Por favor confirme su asistencia respondiendo “Si” o “No”
+    Si usted necesita un intérprete, por favor responda con la palabra “intérprete”
+    Si usted tiene alguna pregunta, por favor llame a Sanctuary Refugee Health Centre (Dr. Michael
+    Stephenson) al 226-336-1321.`,
+
+    Tigrinya: `ዝኸበርካ/ኪ {{patientName}} እዚ ሓበሬታዚ፡ ናይ ዝመጽእ ቆጸራኻ/ኺ መዘኻኸሪ እዩ {{#description}}: {{description}}{{/description}}.
+    ዕለት {{appointmentDate}}
+    ሰዓት {{appointmentTime}}
+    ኣድራሻ {{practitionerAddress}}
+    {{#specialNotes}}
+    ፍሉይ ሓበሬታ {{specialNotes}}
+    {{/specialNotes}}
+    ኣብ ቆጸራኻ/ኺ ከም እትርከብ/ቢ፡ ሓብሩና “እወ ክርከብ እየ”፤ “ኣይፋለይን”
+    ኣተርጓሚ ዘድልየካ/ኪ እንተኾይኑ፡ “ኣተርጓሚ” ( interpreter ) የድልየኒ እዩ ብምባል መልሱልና ።
+    ሕቶ እንተለኩም፡ ወይ ዝያዳ ሓበሬታ እንተደለኹም፡ ንሳንክቿሪ ረፉጂ ሀልዝ ሰንተር (Sanctuary Refugee Health Centre, Dr.
+    Michael Stephenson )፡ ንዶር. ማይክል ስቲፈንሰን ኣብ 226-336-132 ብምድዋል ክትሓቱ ትኽእሉ።`,
   },
   {
     templateId: 2,
@@ -41,6 +91,7 @@ If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Mich
       Somali: "Mahadsanid!",
       Turkish: "Teşekkür ederim!",
       Spanish: "¡Gracias!",
+      Tigrinya: "የቕንየለይ!",
     },
     no: {
       English: "Thank you. We will call you to arrange another time.",
@@ -51,6 +102,7 @@ If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Mich
       Turkish:
         "Teşekkür ederim. Başka bir zaman ayarlamak için sizi arayacağız.",
       Spanish: "Gracias. Te llamaremos para concertar otro horario.",
+      Tigrinya: "የቕንየለይ. ንሕና ነዘራርበኩም ።",
     },
     interpreter: {
       English: "Thank you. We will ask for an interpreter.",
@@ -59,6 +111,7 @@ If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Mich
       Somali: "Mahadsanid. Waxaan codsan doonaa turjubaan.",
       Turkish: "Teşekkür ederim. Bir tercüman isteyeceğiz.",
       Spanish: "Gracias. Solicitaremos un intérprete.",
+      Tigrinya: "የቕንየለይ. ተርጋሚ ንሓትት ።",
     },
   },
 ];

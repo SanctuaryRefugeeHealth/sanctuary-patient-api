@@ -27,7 +27,11 @@ export default async (req, res) => {
   }
 
   const appointmentsPromises = appointments.map(async (appointment) => {
-    const { appointmentId, patientLanguage, patientPhoneNumber } = appointment;
+    const {
+      appointmentId,
+      language: patientLanguage,
+      patientPhoneNumber,
+    } = appointment;
 
     const language = await LanguagesModel.getByLanguageString(patientLanguage);
     // 1 is reminder template ID, full templated needed for name in message record
@@ -35,7 +39,10 @@ export default async (req, res) => {
     const messageBody = TemplatesModel.generateMessage(1, language.name, {
       patientName: appointment.patientName,
       practitionerAddress: appointment.practitionerAddress,
-      appointmentTime: moment(appointment.appointmentTime).format("LLLL"),
+      appointmentDate: moment(appointment.appointmentTime).format("LL"),
+      appointmentTime: moment(appointment.appointmentTime).format("LTS"),
+      description: appointment.description,
+      specialNotes: appointment.specialNotes,
     });
 
     const message = {
