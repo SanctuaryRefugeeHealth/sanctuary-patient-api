@@ -14,4 +14,8 @@ module.exports = {
     jwtSecret: process.env.JWT_SECRET,
     jwtTokenExpiry: process.env.JWT_TOKEN_EXPIRY || 43200,
   },
+  scheduler: {
+    cron: "0 0 * * * *", // Run every hour
+    timezone: "America/Toronto",
+  },
 };
