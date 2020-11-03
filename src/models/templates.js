@@ -14,7 +14,7 @@ const templates = [
       {{/specialNotes}}
 
       Please confirm your attendance by replying “Yes” or “No”
-      If you need an interpreter, please reply with the word &quot;interpreter&quot;
+      If you need an interpreter, please reply with the word "interpreter"
       If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Michael
       Stephenson) at 226-336-1321
     `,
@@ -44,7 +44,7 @@ const templates = [
       {{/specialNotes}}
 
       በዚህ ቀጠሮ ላይ እገኛለሁ ወይም አልገኝም በማለት እንዲያሳውቁን በትህትና እንጠይቃለን።
-      አስተርጓሚ ካስፈለግዎ፣ እባኮ &quot;አስተርጓሚ&quot; በማለት ይመልሱ።
+      አስተርጓሚ ካስፈለግዎ፣ እባኮ "አስተርጓሚ" በማለት ይመልሱ።
       ጥያቄ ካለዎት፣እባኮ በ 226-336-1321 Sanctuary Refugee Health Centre በመደወል (ዶ/ር ማይክል
       ስቴፈንሰን) ያነጋግሩ።
     `,
@@ -58,9 +58,9 @@ const templates = [
       Ogeysiis gaar ah: {{specialNotes}}
       {{/specialNotes}}
 
-      Fadlan xaqiiji imaanshahaaga adoo ku jawaabaya &quot;Haa&quot; ama &quot;Maya&quot;
-      Haddii aad u baahan tahay turjubaan, fadlan ku jawaab ereyga &quot;turjubaan&quot;
-      Haddii aad wax su&#39;aalo ah qabtid, fadlan wac Xarunta Caafimaadka Qaxootiga ee
+      Fadlan xaqiiji imaanshahaaga adoo ku jawaabaya "Haa" ama "Maya"
+      Haddii aad u baahan tahay turjubaan, fadlan ku jawaab ereyga "turjubaan"
+      Haddii aad wax su'aalo ah qabtid, fadlan wac Xarunta Caafimaadka Qaxootiga ee
       Sanctuary (Dr. Michael Stephenson) lambarka 226-336-1321
     `,
 
@@ -75,7 +75,7 @@ const templates = [
 
       Lutfen randevunuza katilim durumunuzu, bu mesaji “Evet” ya da “Hayir” seklinde
       yanitlayarak bildiriniz
-      Eger tercumana ihtiyaciniz varsa lutfen bu mesaji &quot;tercuman&quot; yazarak yanitlayiniz.
+      Eger tercumana ihtiyaciniz varsa lutfen bu mesaji "tercuman" yazarak yanitlayiniz.
       Sorulariniz icin lutfen bizi 226-336-1321 numarali telefondan arayiniz.
       Sanctuary Refugee Health Centre - Dr Michael Stephenson
     `,
