@@ -59,6 +59,7 @@ export const sendReminders = async () => {
   const appointments = await db("appointments")
     .select(
       "appointmentId as id",
+      "patientName",
       "language",
       "appointmentTime",
       "patientPhoneNumber",
