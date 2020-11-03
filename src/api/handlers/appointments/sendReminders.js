@@ -20,8 +20,8 @@ export const sendReminder = async (appointment) => {
     appointmentDateTime: moment(appointment.appointmentTime).format(
       "YYYY-MM-DD h:mm a"
     ),
-    appointmentDate: moment(appointment.appointmentTime).format("LL"),
-    appointmentTime: moment(appointment.appointmentTime).format("LTS"),
+    appointmentDate: moment(appointment.appointmentTime).format("YYYY-MM-DD"),
+    appointmentTime: moment(appointment.appointmentTime).format("LT"),
   });
 
   const timeSent = new Date();
