@@ -21,7 +21,7 @@ export const sendReminder = async (appointment) => {
       "YYYY-MM-DD h:mm a"
     ),
     appointmentDate: moment(appointment.appointmentTime).format("YYYY-MM-DD"),
-    appointmentTime: moment(appointment.appointmentTime).format("h:mm a"),
+    appointmentTime: moment(appointment.appointmentTime).format("LT"),
   });
 
   const timeSent = new Date();
@@ -59,6 +59,7 @@ export const sendReminders = async () => {
   const appointments = await db("appointments")
     .select(
       "appointmentId as id",
+      "patientName",
       "language",
       "appointmentTime",
       "patientPhoneNumber",
