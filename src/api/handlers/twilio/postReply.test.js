@@ -9,7 +9,7 @@ describe("Sending A Reply", function () {
   let getAppointments;
   let getMessageResponseStub;
   let insertReplyStub;
-  let updateAppointmentStub;
+  let confirmAppointmentStub;
   let transactionStub;
 
   before(() => {
@@ -33,8 +33,8 @@ describe("Sending A Reply", function () {
           return true;
         }
       );
-    updateAppointmentStub = sinon
-      .stub(postReplyDbFunctions, "updateAppointment")
+    confirmAppointmentStub = sinon
+      .stub(postReplyDbFunctions, "confirmAppointment")
       .callsFake((trx, appointmentId, appointmentIsConfirmed) => {
         return true;
       });
@@ -58,7 +58,7 @@ describe("Sending A Reply", function () {
     getAppointments.restore();
     getMessageResponseStub.restore();
     insertReplyStub.restore();
-    updateAppointmentStub.restore();
+    confirmAppointmentStub.restore();
     transactionStub.restore();
   });
 });

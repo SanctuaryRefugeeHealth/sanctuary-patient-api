@@ -10,6 +10,7 @@ const appointmentFields = [
   "description",
   "specialNotes",
   "isDeleted",
+  "translator",
   { patientLanguage: "language" },
 ];
 

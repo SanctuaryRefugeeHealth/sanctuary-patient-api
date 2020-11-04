@@ -4,7 +4,8 @@ import { getMessageResponse } from "../../../services/twilioClient";
 import {
   getAppointments,
   insertReply,
-  updateAppointment,
+  confirmAppointment,
+  requestTranslator,
 } from "./databaseFunctions";
 
 const convertReply = (reply) => {
@@ -38,7 +39,7 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
 
   if (!messageFromPatient || messageFromPatient === "") {
     ourResponse = getMessageResponse(
-      "We are sorry, we could not process your response. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
+      'This system only understands "yes", "no", and "interpreter". For anything else, please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321.'
     );
     return ourResponse;
   }
@@ -48,7 +49,7 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
   const convertedReply = convertReply(formattedMessageFromPatient);
   if (!convertedReply) {
     ourResponse = getMessageResponse(
-      "We are sorry, we could not confirm your appointment. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
+      'This system only understands "yes", "no", and "interpreter". For anything else, please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321.'
     );
     return ourResponse;
   }
@@ -60,14 +61,14 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
     console.log(`Could not get appointment for ${patientPhoneNumber}`, error);
     // Can't store reply without appointmentId
     ourResponse = getMessageResponse(
-      "We are sorry, we could not find an appointment for you. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
+      "We are sorry, our automated system could not find your appointment. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
     );
     return ourResponse;
   }
 
   if (!appointments || appointments.length === 0) {
     ourResponse = getMessageResponse(
-      "We are sorry, we could not find an appointment for you, or your appointment is already confirmed. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
+      "We are sorry, our automated system could not find your appointment. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
     );
     return ourResponse;
   }
@@ -83,7 +84,7 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
             messageFromPatient,
             appointment.appointmentId
           );
-          await updateAppointment(trx, appointment.appointmentId, true);
+          await confirmAppointment(trx, appointment.appointmentId, true);
         }
         break;
       case "no":
@@ -94,10 +95,20 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
             messageFromPatient,
             appointment.appointmentId
           );
-          await updateAppointment(trx, appointment.appointmentId, false);
+          await confirmAppointment(trx, appointment.appointmentId, false);
         }
         break;
-      // Handle interpreter?
+      case "interpreter":
+        for (const appointment of appointments) {
+          await insertReply(
+            trx,
+            patientPhoneNumber,
+            messageFromPatient,
+            appointment.appointmentId
+          );
+          await requestTranslator(trx, appointment.appointmentId, true);
+        }
+        break;
       default:
         break;
     }

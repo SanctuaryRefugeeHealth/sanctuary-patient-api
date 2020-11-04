@@ -14,15 +14,22 @@ export const sendReminder = async (appointment) => {
   const language = await LanguagesModel.getByLanguageString(
     appointment.language
   );
-  const template = TemplatesModel.getById(1);
-  const messageBody = TemplatesModel.generateMessage(1, language.name, {
-    ...appointment,
-    appointmentDateTime: moment(appointment.appointmentTime).format(
-      "YYYY-MM-DD h:mm a"
-    ),
-    appointmentDate: moment(appointment.appointmentTime).format("YYYY-MM-DD"),
-    appointmentTime: moment(appointment.appointmentTime).format("LT"),
-  });
+  let templateId = 1;
+  if (appointment.lastReminderSentAt) {
+    templateId = 3;
+  }
+  const template = TemplatesModel.getById(templateId);
+  const messageBody = TemplatesModel.generateMessage(
+    templateId,
+    language.name,
+    {
+      ...appointment,
+      appointmentDate: moment(appointment.appointmentTime).format(
+        "dddd, MMMM DD"
+      ),
+      appointmentTime: moment(appointment.appointmentTime).format("h:mm a"),
+    }
+  );
 
   const timeSent = new Date();
 
@@ -65,9 +72,12 @@ export const sendReminders = async () => {
       "patientPhoneNumber",
       "practitionerAddress",
       "specialNotes",
-      "description"
+      "description",
+      "lastReminderSentAt"
     )
     .where("isDeleted", false)
+    .where("appointmentIsConfirmed", null) // whereNot ("...", false) does not work
+    .orWhere("appointmentIsConfirmed", true)
     .where("appointmentTime", ">=", start)
     .where("appointmentTime", "<", end)
     .andWhere((db) => {
