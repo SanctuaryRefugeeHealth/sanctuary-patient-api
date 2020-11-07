@@ -76,7 +76,11 @@ export const sendReminders = async () => {
       "lastReminderSentAt"
     )
     .where("isDeleted", false)
-    .whereRaw("`appointmentIsConfirmed` IS NULL OR `appointmentIsConfirmed`")
+    .andWhere((db) => {
+      db.where("appointmentIsConfirmed", true).orWhereNull(
+        "appointmentIsConfirmed"
+      );
+    })
     .where("appointmentTime", ">=", start)
     .where("appointmentTime", "<", end)
     .andWhere((db) => {
