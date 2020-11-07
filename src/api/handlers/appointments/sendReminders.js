@@ -76,8 +76,7 @@ export const sendReminders = async () => {
       "lastReminderSentAt"
     )
     .where("isDeleted", false)
-    .where("appointmentIsConfirmed", null) // whereNot ("...", false) does not work
-    .orWhere("appointmentIsConfirmed", true)
+    .whereRaw("`appointmentIsConfirmed` IS NULL OR `appointmentIsConfirmed`")
     .where("appointmentTime", ">=", start)
     .where("appointmentTime", "<", end)
     .andWhere((db) => {
