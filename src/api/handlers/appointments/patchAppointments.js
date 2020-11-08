@@ -2,10 +2,10 @@ import { db } from "../../../../knex";
 
 export default (req, res) => {
   const { appointmentId } = req.params;
-  const { isConfirmed, isDeleted } = req.body;
+  const { isConfirmed, isDeleted, translator } = req.body;
 
   return db("appointments")
     .where({ appointmentId })
-    .update({ appointmentIsConfirmed: isConfirmed, isDeleted })
+    .update({ appointmentIsConfirmed: isConfirmed, isDeleted, translator })
     .then(() => res.sendStatus(204));
 };
