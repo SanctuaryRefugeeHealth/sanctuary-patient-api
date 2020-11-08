@@ -3,7 +3,7 @@ import { db } from "../../../../knex";
 export const getAppointments = (patientPhoneNumber) =>
   db("appointments")
     .select("appointmentId", "language")
-    .where({ patientPhoneNumber, appointmentIsConfirmed: 0 });
+    .where({ patientPhoneNumber });
 
 export const insertReply = (
   trx,
@@ -20,10 +20,22 @@ export const insertReply = (
     })
     .transacting(trx);
 
-export const updateAppointment = (trx, appointmentId, appointmentIsConfirmed) =>
+export const confirmAppointment = (
+  trx,
+  appointmentId,
+  appointmentIsConfirmed
+) =>
   db("appointments")
     .where({ appointmentId })
     .update({
       appointmentIsConfirmed,
+    })
+    .transacting(trx);
+
+export const requestTranslator = (trx, appointmentId, translator) =>
+  db("appointments")
+    .where({ appointmentId })
+    .update({
+      translator,
     })
     .transacting(trx);

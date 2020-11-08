@@ -44,7 +44,6 @@ export default async (req, res) => {
     language: patientLanguage,
     practitionerAddress,
     appointmentTime: date,
-    appointmentIsConfirmed: false,
     description,
     specialNotes,
   };
