@@ -262,6 +262,48 @@ describe("POST /appointments", () => {
       );
   });
 
+  it("should fail on short phone number", function (done) {
+    const appointment = { ...baseAppointment };
+    appointment.patientPhoneNumber = "555555555";
+    request(app)
+      .post("/api/appointments")
+      .send(appointment)
+      .expect(
+        500,
+        { message: '"patientPhoneNumber" length must be 10 characters long' },
+        done
+      );
+  });
+
+  it("should fail on long phone number", function (done) {
+    const appointment = { ...baseAppointment };
+    appointment.patientPhoneNumber = "55555555555";
+    request(app)
+      .post("/api/appointments")
+      .send(appointment)
+      .expect(
+        500,
+        { message: '"patientPhoneNumber" length must be 10 characters long' },
+        done
+      );
+  });
+
+  it("should fail on letters in phone number", function (done) {
+    const appointment = { ...baseAppointment };
+    appointment.patientPhoneNumber = "A555555555";
+    request(app)
+      .post("/api/appointments")
+      .send(appointment)
+      .expect(
+        500,
+        {
+          message:
+            '"patientPhoneNumber" with value "A555555555" fails to match the required pattern: /^\\d+$/',
+        },
+        done
+      );
+  });
+
   it("should fail on whitespace only phone number", function (done) {
     const appointment = { ...baseAppointment };
     appointment.patientPhoneNumber = "     ";
