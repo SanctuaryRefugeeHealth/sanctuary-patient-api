@@ -1,6 +1,6 @@
 import Joi from "@hapi/joi";
 
-import { db } from "../../../../knex";
+import { createAppointment } from "../../../models/appointments";
 import { sendReminder } from "./sendReminders";
 
 const schema = Joi.object({
@@ -10,21 +10,19 @@ const schema = Joi.object({
     .length(10)
     .pattern(/^\d+$/)
     .required(),
-  date: Joi.string().trim().required(),
+  date: Joi.date().required(),
   patientLanguage: Joi.string().trim().required(),
   practitionerAddress: Joi.string().trim().required(),
-  description: Joi.string().optional().allow(null),
-  specialNotes: Joi.string().optional().allow(null),
+  description: Joi.string().trim().optional().allow(null),
+  specialNotes: Joi.string().trim().optional().allow(null),
 });
 
 export default async (req, res) => {
   try {
     await schema.validateAsync(req.body);
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       message: error.details[0].message,
-      error,
     });
   }
 
@@ -49,7 +47,7 @@ export default async (req, res) => {
   };
 
   try {
-    const inserted = await db("appointments").insert(appointment);
+    const inserted = await createAppointment(appointment);
     appointment.id = inserted[0];
   } catch (error) {
     res.status(500).send({
