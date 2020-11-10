@@ -1,7 +1,6 @@
-import { pbkdf2Sync } from "crypto";
 import jwt from "jsonwebtoken";
-import { db } from "../../../../knex";
 import { jwtConfig } from "../../../config";
+import { getUserByEmail, hashPassword } from "../../../models/users";
 
 /*
  * Create a token for a user.
@@ -11,21 +10,30 @@ export async function getToken(req, res) {
   const { email, password } = req.body;
 
   try {
-    user = await db("users")
-      .select("email", "password", "salt")
-      .where("email", email)
-      .first();
+    user = await getUserByEmail(email);
   } catch (error) {
-    return res.status(500).send({ success: false, message: "Authentication failed. User not found." });
+    return res.status(500).send({
+      message: "Authentication failed. User not found.",
+    });
   }
 
   if (!user) {
-    return res.status(401).send({ success: false, message: "Authentication failed. User not found." });
+    return res.status(401).send({
+      message: "Authentication failed. User not found.",
+    });
+  }
+  let hash;
+
+  try {
+    hash = hashPassword(password, user.salt);
+  } catch (error) {
+    console.error("Failed to hash password", error);
   }
 
-  const hash = pbkdf2Sync(password, user.salt, 1000, 64, "sha512").toString("hex");
   if (hash !== user.password) {
-    return res.status(401).send({ success: false, message: "Authentication failed. Wrong password." });
+    return res.status(401).send({
+      message: "Authentication failed. Wrong password.",
+    });
   }
 
   const payload = {
@@ -35,9 +43,8 @@ export async function getToken(req, res) {
     algorithm: "HS256",
     expiresIn: jwtConfig.jwtTokenExpiry,
   });
-  
+
   return res.json({
-    success: true,
     token,
   });
 }

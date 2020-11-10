@@ -1,23 +1,21 @@
-import { pbkdf2Sync, randomBytes } from "crypto";
+import { randomBytes } from "crypto";
 import { db } from "../../../../knex";
+import {hashPassword} from "../../../models/users";
 
 /*
  * Create a new user.
  */
 export async function createUser(req, res) {
   const { email, password } = req.body;
-  const salt = randomBytes(16).toString("hex");
-  const hash = pbkdf2Sync(password, salt, 1000, 64, "sha512").toString("hex");
   const query = `
     INSERT INTO users
       (email, password, salt)
     VALUES
       (:email, :password, :salt)
-    ON DUPLICATE KEY UPDATE
-      password = :password,
-      salt = :salt;
   `;
   try {
+    const salt = randomBytes(16).toString("hex");
+    const hash = hashPassword(password, salt);
     await db.raw(query, { email, password: hash, salt });
   } catch (error) {
     return res
