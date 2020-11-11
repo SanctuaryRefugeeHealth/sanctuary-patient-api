@@ -26,7 +26,7 @@ const baseAppointment = {
   specialNotes: "This is a special note",
 };
 
-describe("POST /appointments", () => {
+describe("POST /api/appointments", () => {
   before(() => {
     sinon.stub(appointments, "createAppointment").callsFake(() => {
       return [1];

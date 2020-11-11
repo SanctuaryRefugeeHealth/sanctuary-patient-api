@@ -1,43 +1,28 @@
 import sinon from "sinon";
 const postReplyFunctions = require("./postReply.js");
-const postReplyDbFunctions = require("./databaseFunctions");
+import * as appointments from "../../../models/appointments";
+import * as communications from "../../../models/communications";
 import { assert } from "chai";
 const tClient = require("../../../services/twilioClient");
 const db = require("../../../../knex");
 
 describe("Sending A Reply", function () {
-  let getAppointments;
-  let getMessageResponseStub;
-  let insertReplyStub;
-  let confirmAppointmentStub;
-  let transactionStub;
-
   before(() => {
-    transactionStub = sinon.stub(db.db, "transaction").returns({
+    sinon.stub(db.db, "transaction").returns({
       commit: () => {},
     });
-    getMessageResponseStub = sinon
-      .stub(tClient, "getMessageResponse")
-      .callsFake((message) => {
-        return message;
-      });
-    getAppointments = sinon
-      .stub(postReplyDbFunctions, "getAppointments")
-      .callsFake((patientPhoneNumber) => {
-        return [{ language: "English" }];
-      });
-    insertReplyStub = sinon
-      .stub(postReplyDbFunctions, "insertReply")
-      .callsFake(
-        (trx, patientPhoneNumber, messageFromPatient, appointmentId) => {
-          return true;
-        }
-      );
-    confirmAppointmentStub = sinon
-      .stub(postReplyDbFunctions, "confirmAppointment")
-      .callsFake((trx, appointmentId, appointmentIsConfirmed) => {
-        return true;
-      });
+    sinon.stub(tClient, "getMessageResponse").callsFake((message) => {
+      return message;
+    });
+    sinon.stub(appointments, "getAppointments").callsFake(() => {
+      return [{ patientLanguage: "English" }];
+    });
+    sinon.stub(communications, "insertReply").callsFake(() => {
+      return true;
+    });
+    sinon.stub(appointments, "confirmAppointment").callsFake(() => {
+      return true;
+    });
   });
 
   it("Works when they say yes", async function () {
@@ -55,10 +40,6 @@ describe("Sending A Reply", function () {
   });
 
   after(() => {
-    getAppointments.restore();
-    getMessageResponseStub.restore();
-    insertReplyStub.restore();
-    confirmAppointmentStub.restore();
-    transactionStub.restore();
+    sinon.restore();
   });
 });
