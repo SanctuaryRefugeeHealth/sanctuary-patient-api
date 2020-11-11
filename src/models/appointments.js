@@ -40,9 +40,9 @@ export const getAppointments = (patientPhoneNumber) => {
     .where({ isDeleted: false });
 
   if (patientPhoneNumber) {
-    query.andWhere(patientPhoneNumber);
+    query.andWhere({ patientPhoneNumber });
   }
-  
+
   return query;
 };
 
