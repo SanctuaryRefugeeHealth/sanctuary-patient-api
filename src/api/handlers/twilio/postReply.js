@@ -12,9 +12,9 @@ import {
 
 const convertReply = (reply) => {
   const languageConversions = {
-    yes: ["نعم", "አዎ", "haa", "Evet", "si", "yes"],
+    yes: ["نعم", "አዎ", "haa", "Evet", "si", "yes", "እወ"],
     // In spanish and english no is the same
-    no: ["لا", "አይ", "maya", "Hayır", "no"],
+    no: ["لا", "አይ", "maya", "Hayır", "no", "ኣይፋለይን"],
     interpreter: [
       "مترجم",
       "አስተርጓሚ",
@@ -22,6 +22,7 @@ const convertReply = (reply) => {
       "çevirmen",
       "interprete",
       "interpreter",
+      "ኣተርጓሚ",
     ],
   };
   let convertedReply;
