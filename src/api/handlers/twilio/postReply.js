@@ -139,8 +139,6 @@ export async function postReply(req, res) {
   let patientPhoneNumber = req && req.body && req.body.From;
   const messageFromPatient = req && req.body && req.body.Body;
 
-  patientPhoneNumber = patientPhoneNumber.replace("+", "");
-  patientPhoneNumber = patientPhoneNumber.substring(1);
   res.set("Content-Type", "text/xml");
   let ourResponse;
 

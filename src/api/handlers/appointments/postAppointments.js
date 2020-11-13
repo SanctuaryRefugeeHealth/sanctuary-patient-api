@@ -3,6 +3,8 @@ import Joi from "@hapi/joi";
 import { createAppointment } from "../../../models/appointments";
 import { sendReminder } from "./sendReminders";
 
+const countryCode = "+44"
+
 const schema = Joi.object({
   patientName: Joi.string().trim().required(),
   patientPhoneNumber: Joi.string()
@@ -38,7 +40,7 @@ export default async (req, res) => {
 
   const appointment = {
     patientName,
-    patientPhoneNumber,
+    patientPhoneNumber: `${countryCode}${patientPhoneNumber}`,
     language: patientLanguage,
     practitionerAddress,
     appointmentTime: date,
