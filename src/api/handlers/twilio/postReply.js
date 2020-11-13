@@ -20,7 +20,7 @@ const convertReply = (reply) => {
       "çevirmen",
       "interprete",
       "interpreter",
-      "ኣተርጓሚ"
+      "ኣተርጓሚ",
     ],
   };
   let convertedReply;
