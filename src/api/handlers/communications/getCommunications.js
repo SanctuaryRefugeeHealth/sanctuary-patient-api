@@ -1,17 +1,13 @@
-import { getMessagesFromDb } from "../messages";
-import { getRepliesFromDb } from "../replies";
+import { getMessages, getReplies } from "../../../models/communications";
 
-export default (req, res) => {
+export default async (req, res) => {
   const { appointmentId } = req.params;
-  
-  return Promise.all([
-    getMessagesFromDb(appointmentId),
-    getRepliesFromDb(appointmentId)
-  ])
-    .then(([messages, replies]) =>
-      res.status(200).send({
-        messages,
-        replies
-      })
-    );
-}
+
+  const messages = await getMessages(appointmentId);
+  const replies = await getReplies(appointmentId);
+
+  return res.status(200).send({
+    messages,
+    replies,
+  });
+};

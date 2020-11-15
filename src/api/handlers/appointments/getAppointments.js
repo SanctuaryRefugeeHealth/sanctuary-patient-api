@@ -1,48 +1,23 @@
-import { db } from "../../../../knex";
+import {
+  getAppointment as getAppt,
+  getAppointments as getAppts,
+} from "../../../models/appointments";
 
-const appointmentFields = [
-  "appointmentId",
-  "patientName",
-  "patientPhoneNumber",
-  "practitionerAddress",
-  "appointmentTime",
-  "appointmentIsConfirmed",
-  "description",
-  "specialNotes",
-  "isDeleted",
-  "translator",
-  { patientLanguage: "language" },
-];
-
-export function getAppointments(req, res) {
+export async function getAppointments(req, res) {
   const { phoneNumber } = req.query;
 
-  return phoneNumber
-    ? db("appointments")
-        .select(appointmentFields)
-        .where({ patientPhoneNumber: phoneNumber, isDeleted: false })
-        .then((result) => {
-          res.status(200).send(result);
-        })
-    : db("appointments")
-        .select(appointmentFields)
-        .where("isDeleted", false)
-        .then((result) => {
-          res.status(200).send(result);
-        });
+  const appointments = await getAppts(phoneNumber);
+
+  return res.status(200).send(appointments);
 }
 
 export async function getAppointment(req, res) {
   const { appointmentId } = req.params;
 
-  return db("appointments")
-    .select(appointmentFields)
-    .where({ appointmentId: appointmentId, isDeleted: false })
-    .first()
-    .then((result) => {
-      if (result) {
-        return res.status(200).json(result);
-      }
-      return res.status(404).end();
-    });
+  const appointment = await getAppt(appointmentId);
+
+  if (appointment) {
+    return res.status(200).send(appointment);
+  }
+  return res.status(404).end();
 }

@@ -1,12 +1,14 @@
 import { db } from "../../../../knex";
 import TemplatesModel from "../../../models/templates";
 import { getMessageResponse } from "../../../services/twilioClient";
+
+import { insertReply } from "../../../models/communications";
+
 import {
   getAppointments,
-  insertReply,
   confirmAppointment,
   requestTranslator,
-} from "./databaseFunctions";
+} from "../../../models/appointments";
 
 const convertReply = (reply) => {
   const languageConversions = {
@@ -128,7 +130,7 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
   await trx.commit();
 
   const replyText = TemplatesModel.generateReply(
-    appointments[0].language,
+    appointments[0].patientLanguage,
     convertReply(convertedReply)
   );
 
