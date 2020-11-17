@@ -9,7 +9,7 @@ import TemplatesModel from "../models/templates";
 import { sendMessage } from "./twilioClient";
 
 const daysFromNow = (interval) => {
-  return moment().add(interval, "d").format("YYYY-MM-DD hh:mm:ss");
+  return moment().add(interval, "d").format("YYYY-MM-DD HH:mm:ss");
 };
 
 export const sendReminder = async (appointment) => {
@@ -32,7 +32,7 @@ export const sendReminder = async (appointment) => {
   const timeSent = new Date();
 
   const message = {
-    appointmentId: appointment.id,
+    appointmentId: appointment.appointmentId,
     messageBody,
     language: appointment.language,
     templateName: TemplatesModel.getById(templateId).templateName,
@@ -41,7 +41,7 @@ export const sendReminder = async (appointment) => {
 
   await db.transaction(async (trx) => {
     await createMessage(trx, message);
-    await updateLastReminderSentAt(trx, appointment.id, timeSent);
+    await updateLastReminderSentAt(trx, appointment.appointmentId, timeSent);
 
     await sendMessage(appointment.patientPhoneNumber, messageBody);
   });

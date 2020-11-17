@@ -9,7 +9,7 @@ import db from "../../knex";
 import { sendReminder } from "./reminders";
 
 const baseAppointment = {
-  id: 1,
+  appointmentId: 1,
   date: "2020-11-10 21:30",
   practitionerAddress: "123 Fake St",
   language: "English",
