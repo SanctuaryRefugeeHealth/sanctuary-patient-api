@@ -1,29 +1,28 @@
 import moment from "moment";
-import { db } from "../../../../knex";
-import LanguagesModel from "../../../models/languages";
-import TemplatesModel from "../../../models/templates";
-import { sendMessage } from "../../../services/twilioClient";
+import { db } from "../../knex";
+import {
+  getAppointments,
+  updateLastReminderSentAt,
+} from "../models/appointments";
+import { createMessage } from "../models/communications";
+import TemplatesModel from "../models/templates";
+import { sendMessage } from "./twilioClient";
 
 const daysFromNow = (interval) => {
   return moment().add(interval, "d").format("YYYY-MM-DD hh:mm:ss");
 };
 
 export const sendReminder = async (appointment) => {
-  console.log(`Sending reminder for appointment ${appointment.id}`);
+  console.info(`Sending reminder for appointment ${appointment.id}`);
 
-  const language = await LanguagesModel.getByLanguageString(
-    appointment.language
-  );
-  let templateId = 1;
-  if (appointment.lastReminderSentAt) {
-    templateId = 3;
-  }
-  const template = TemplatesModel.getById(templateId);
+  const templateId = 1;
+
   const messageBody = TemplatesModel.generateMessage(
     templateId,
-    language.name,
+    appointment.patientLanguage,
     {
       ...appointment,
+      includeReplySection: appointment.appointmentIsConfirmed === null,
       appointmentDate: moment(appointment.appointmentTime).format(
         "dddd, MMMM DD"
       ),
@@ -36,19 +35,19 @@ export const sendReminder = async (appointment) => {
   const message = {
     appointmentId: appointment.id,
     messageBody,
-    language: language.name,
-    templateName: template.templateName,
+    language: appointment.patientLanguage,
+    templateName: TemplatesModel.getById(templateId).templateName,
     timeSent,
   };
 
   await db.transaction(async (trx) => {
-    await trx("messages").insert(message);
-    await trx("appointments")
-      .update("lastReminderSentAt", timeSent)
-      .where("appointmentId", appointment.id);
+    await createMessage(trx, message);
+    await updateLastReminderSentAt(trx, appointment.id, timeSent);
 
     await sendMessage(appointment.patientPhoneNumber, messageBody);
   });
+
+  return message;
 };
 
 export const sendReminders = async () => {
@@ -63,19 +62,7 @@ export const sendReminders = async () => {
     `Sending reminders for appointments from ${start} to ${end} without reminder after ${notAfter}.`
   );
 
-  const appointments = await db("appointments")
-    .select(
-      "appointmentId as id",
-      "patientName",
-      "language",
-      "appointmentTime",
-      "patientPhoneNumber",
-      "practitionerAddress",
-      "specialNotes",
-      "description",
-      "lastReminderSentAt"
-    )
-    .where("isDeleted", false)
+  const appointments = await getAppointments()
     .andWhere((db) => {
       db.where("appointmentIsConfirmed", true).orWhereNull(
         "appointmentIsConfirmed"
@@ -92,17 +79,4 @@ export const sendReminders = async () => {
   const promises = appointments.map(sendReminder);
 
   await Promise.all(promises);
-};
-
-export default async (req, res) => {
-  try {
-    await sendReminders();
-    return res.status(200).end();
-  } catch (e) {
-    console.error(e);
-    res.status(500).send({
-      e,
-      message: `Could not send reminders for ${daysFromNow(1)}`,
-    });
-  }
 };

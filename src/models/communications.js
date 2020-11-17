@@ -4,6 +4,10 @@ export const getReplies = (appointmentId) => {
   return db("replies").select("*").where("appointmentId", appointmentId);
 };
 
+export const createMessage = (trx, message) => {
+  return trx("messages").insert(message);
+}
+
 export const getMessages = (appointmentId) => {
   return db("messages").select("*").where("appointmentId", appointmentId);
 };

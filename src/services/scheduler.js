@@ -1,6 +1,6 @@
 var CronJob = require("cron").CronJob;
 
-import { sendReminders } from "../api/handlers/appointments/sendReminders";
+import { sendReminders } from "../services/reminders";
 import config from "../config";
 
 const tz = config.scheduler.timezone;

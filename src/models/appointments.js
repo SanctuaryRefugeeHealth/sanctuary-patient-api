@@ -28,6 +28,12 @@ export const confirmAppointment = (
   });
 };
 
+export const updateLastReminderSentAt = (trx, appointmentId, time) => {
+  return trx("appointments")
+    .update("lastReminderSentAt", time)
+    .where("appointmentId", appointmentId);
+};
+
 export const requestTranslator = (trx, appointmentId, translator) => {
   return trx("appointments").where({ appointmentId }).update({
     translator,
