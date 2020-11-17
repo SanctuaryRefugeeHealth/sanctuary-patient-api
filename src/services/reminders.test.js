@@ -12,7 +12,7 @@ const baseAppointment = {
   id: 1,
   date: "2020-11-10 21:30",
   practitionerAddress: "123 Fake St",
-  patientLanguage: "English",
+  language: "English",
   patientName: "John Smith",
   patientPhoneNumber: "5555555555",
   description: "This is a description",

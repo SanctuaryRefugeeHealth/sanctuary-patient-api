@@ -16,10 +16,9 @@ export const sendReminder = async (appointment) => {
   console.info(`Sending reminder for appointment ${appointment.id}`);
 
   const templateId = 1;
-
   const messageBody = TemplatesModel.generateMessage(
     templateId,
-    appointment.patientLanguage,
+    appointment.language,
     {
       ...appointment,
       includeReplySection: appointment.appointmentIsConfirmed === null,
@@ -35,7 +34,7 @@ export const sendReminder = async (appointment) => {
   const message = {
     appointmentId: appointment.id,
     messageBody,
-    language: appointment.patientLanguage,
+    language: appointment.language,
     templateName: TemplatesModel.getById(templateId).templateName,
     timeSent,
   };
