@@ -15,7 +15,7 @@ describe("Sending A Reply", function () {
       return message;
     });
     sinon.stub(appointments, "getAppointments").callsFake(() => {
-      return [{ patientLanguage: "English" }];
+      return [{ language: "English" }];
     });
     sinon.stub(communications, "insertReply").callsFake(() => {
       return true;

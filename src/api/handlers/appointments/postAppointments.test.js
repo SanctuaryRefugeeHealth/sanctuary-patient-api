@@ -4,7 +4,7 @@ import express from "express";
 import bodyParser from "body-parser";
 
 import * as appointments from "../../../models/appointments";
-import * as sendReminders from "./sendReminders";
+import * as sendReminders from "../../../services/reminders";
 import api from "../../../api";
 import config from "../../../config";
 

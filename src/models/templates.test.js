@@ -8,6 +8,7 @@ describe("#generateMessage()", function () {
     appointmentDate: moment("2020-01-02T03:04").format("YYYY-MM-DD"),
     appointmentTime: moment("2020-01-02T03:04").format("h:mm a"),
     practitionerAddress: "123 Fake St.",
+    includeReplySection: true
   };
 
   it("should return formatted message in English", function () {

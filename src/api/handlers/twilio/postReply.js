@@ -130,7 +130,7 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
   await trx.commit();
 
   const replyText = TemplatesModel.generateReply(
-    appointments[0].patientLanguage,
+    appointments[0].language,
     convertReply(convertedReply)
   );
 
