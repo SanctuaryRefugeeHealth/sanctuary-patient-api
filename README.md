@@ -32,6 +32,10 @@ The API will be available on port 8080 (`http://localhost:8080/api/`).
 In subsequent requests, add the token from the response of the above request to your headers:
 
     Authorization: Bearer `token`
+    
+### Add a user
+
+To add a user to the system, manually create an entry in the DB. Use https://repl.it/@KrisBraun/ScrawnyAgitatedBot to generate the password hash.
 
 ### Access the production DB
 
