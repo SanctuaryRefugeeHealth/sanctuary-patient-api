@@ -49,7 +49,7 @@ export default async (req, res) => {
 
   try {
     const inserted = await createAppointment(appointment);
-    appointment.id = inserted[0];
+    appointment.appointmentId = inserted[0];
   } catch (error) {
     res.status(500).send({
       error,
