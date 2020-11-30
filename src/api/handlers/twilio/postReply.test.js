@@ -14,8 +14,27 @@ describe("Sending A Reply", function () {
     sinon.stub(tClient, "getMessageResponse").callsFake((message) => {
       return message;
     });
-    sinon.stub(appointments, "getAppointments").callsFake(() => {
-      return [{ language: "English" }];
+    sinon.stub(appointments, "getAppointments").callsFake((phoneNumber) => {
+      return {
+        orderBy: async (sortBy, order) => {
+          console.log("asfd");
+          return [
+            { appointmentId: 1, phoneNumber: "123", language: "Turkish" },
+            { appointmentId: 2, phoneNumber: "123", language: "English" },
+            { appointmentId: 3, phoneNumber: "321", language: "English" },
+            { appointmentId: 4, phoneNumber: "321", language: "Turkish" },
+          ]
+            .filter((item) => {
+              return item.phoneNumber === phoneNumber;
+            })
+            .sort((a, b) => {
+              if (order === "desc") {
+                return a[sortBy] < b[sortBy] ? 1 : -1;
+              }
+              return a[sortBy] > b[sortBy] ? 1 : -1;
+            });
+        },
+      };
     });
     sinon.stub(communications, "insertReply").callsFake(() => {
       return true;
@@ -29,6 +48,13 @@ describe("Sending A Reply", function () {
     assert.equal(
       await postReplyFunctions.handlePostReply("123", "yes"),
       "Thank you!"
+    );
+  });
+
+  it("Response with Turkish when they say yes", async function () {
+    assert.equal(
+      await postReplyFunctions.handlePostReply("321", "yes"),
+      "Teşekkür ederim!"
     );
   });
 
