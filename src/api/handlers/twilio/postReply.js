@@ -59,7 +59,10 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
 
   let appointments;
   try {
-    appointments = await getAppointments(patientPhoneNumber);
+    appointments = await getAppointments(patientPhoneNumber).orderBy(
+      "appointmentId",
+      "desc"
+    );
   } catch (error) {
     console.log(`Could not get appointment for ${patientPhoneNumber}`, error);
     // Can't store reply without appointmentId
@@ -129,8 +132,10 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
 
   await trx.commit();
 
+  const mostRecentPatientLanguage = appointments[0].language;
+
   const replyText = TemplatesModel.generateReply(
-    appointments[0].language,
+    mostRecentPatientLanguage,
     convertReply(convertedReply)
   );
 
