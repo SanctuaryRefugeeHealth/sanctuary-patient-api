@@ -126,7 +126,10 @@ export default {
   getAll: () => templates,
   getById,
   generateMessage: (templateId, languageName, templateMetadata) => {
-    return Mustache.render(getById(templateId)[languageName.toLowerCase()], templateMetadata);
+    return Mustache.render(
+      getById(templateId)[languageName.toLowerCase()],
+      templateMetadata
+    );
   },
   generateReply: (languageName, patientOption) => {
     const replyTemplate = getById(2)[patientOption];

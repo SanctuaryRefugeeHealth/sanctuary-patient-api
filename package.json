@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon -w src --exec \"babel-node src\"",
     "migrate": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:latest",
-    "lint": "eslint .",
+    "lint": "./node_modules/.bin/eslint --max-warnings 0 .",
+    "pretty": "./node_modules/.bin/prettier --check src/**/*.js",
     "build": "babel src -s -D -d dist",
     "start": "pm2-dev --interpreter babel-node src",
     "start:dev": "npm run migrate && npm start",
@@ -68,10 +69,6 @@
       "node": true,
       "es6": true,
       "mocha": true
-    },
-    "rules": {
-      "no-console": 0,
-      "no-unused-vars": 1
     },
     "overrides": [
       {

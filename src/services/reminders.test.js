@@ -56,8 +56,7 @@ If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Mich
   });
 
   it("should succeed without reply section", async () => {
-
-    const appointment = {...baseAppointment};
+    const appointment = { ...baseAppointment };
     appointment.appointmentIsConfirmed = true;
 
     const actual = await sendReminder(appointment);
@@ -76,7 +75,7 @@ If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Mich
       timeSent: new Date(1483228800000),
     };
 
-    expect(actual).to.eql(expected)
+    expect(actual).to.eql(expected);
   });
 
   after(() => {

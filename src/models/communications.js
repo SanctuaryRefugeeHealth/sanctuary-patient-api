@@ -6,7 +6,7 @@ export const getReplies = (appointmentId) => {
 
 export const createMessage = (trx, message) => {
   return trx("messages").insert(message);
-}
+};
 
 export const getMessages = (appointmentId) => {
   return db("messages").select("*").where("appointmentId", appointmentId);
@@ -18,11 +18,10 @@ export const insertReply = (
   messageFromPatient,
   appointmentId
 ) => {
-  return trx("replies")
-    .insert({
-      phoneNumber: patientPhoneNumber,
-      body: messageFromPatient,
-      appointmentId,
-      time: new Date(),
-    });
+  return trx("replies").insert({
+    phoneNumber: patientPhoneNumber,
+    body: messageFromPatient,
+    appointmentId,
+    time: new Date(),
+  });
 };
