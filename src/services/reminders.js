@@ -15,6 +15,10 @@ const daysFromNow = (interval) => {
 export const sendReminder = async (appointment) => {
   console.info(`Sending reminder for appointment ${appointment.id}`);
 
+  if (!appointment.appointmentTime) {
+    throw Error("appointmentTime is required.");
+  }
+
   const templateId = 1;
   const messageBody = TemplatesModel.generateMessage(
     templateId,
