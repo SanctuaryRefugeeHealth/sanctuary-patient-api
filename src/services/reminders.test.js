@@ -1,5 +1,7 @@
 import sinon from "sinon";
-import { expect } from "chai";
+import * as chai from "chai";
+import promised from "chai-as-promised";
+
 import * as appointments from "../models/appointments";
 import * as communications from "../models/communications";
 import * as twilio from "./twilioClient";
@@ -8,9 +10,12 @@ import db from "../../knex";
 
 import { sendReminder } from "./reminders";
 
+const expect = chai.expect;
+chai.use(promised);
+
 const baseAppointment = {
   appointmentId: 1,
-  date: "2020-11-10 21:30",
+  appointmentTime: "2020-11-10 21:30",
   practitionerAddress: "123 Fake St",
   language: "English",
   patientName: "John Smith",
@@ -33,14 +38,20 @@ describe("#sendReminder", () => {
     });
   });
 
+  it("should fail without appointmentTime", async () => {
+    const appointment = { ...baseAppointment };
+    delete appointment.appointmentTime;
+    expect(sendReminder(appointment)).to.be.rejectedWith(Error);
+  });
+
   it("should succeed with reply section", async () => {
     const actual = await sendReminder(baseAppointment);
     const expected = {
       appointmentId: 1,
       messageBody: `Dear John Smith, this message is to inform you of your upcoming appointment:
 This is a description
-Date: Sunday, January 01
-Time: 12:00 am
+Date: Tuesday, November 10
+Time: 9:30 pm
 Address: 123 Fake St
 Special Notes: This is a special note
 
@@ -64,8 +75,8 @@ If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Mich
       appointmentId: 1,
       messageBody: `Dear John Smith, this message is to inform you of your upcoming appointment:
 This is a description
-Date: Sunday, January 01
-Time: 12:00 am
+Date: Tuesday, November 10
+Time: 9:30 pm
 Address: 123 Fake St
 Special Notes: This is a special note
 
