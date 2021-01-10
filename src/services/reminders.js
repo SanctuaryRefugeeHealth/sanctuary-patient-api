@@ -10,7 +10,10 @@ import { sendMessage } from "./twilioClient";
 import config from "../config";
 
 const daysFromNow = (interval) => {
-  return moment().tz(config.scheduler.timezone).add(interval, "d").format("YYYY-MM-DD HH:mm:ss");
+  return moment()
+    .tz(config.scheduler.timezone)
+    .add(interval, "d")
+    .format("YYYY-MM-DD HH:mm:ss");
 };
 
 export const sendReminder = async (appointment) => {
