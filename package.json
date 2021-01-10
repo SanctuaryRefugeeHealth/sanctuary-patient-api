@@ -28,11 +28,12 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.15",
     "moment": "^2.29.0",
+    "moment-timezone": "^0.5.32",
     "morgan": "^1.10.0",
     "mustache": "^3.2.1",
     "mysql": "^2.1.0",
-    "pm2": "^4.5.0",
     "node-cron": "^2.0.3",
+    "pm2": "^4.5.0",
     "resource-router-middleware": "^0.6.0",
     "twilio": "^3.49.4"
   },
