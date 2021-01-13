@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-timezone";
 import { db } from "../../knex";
 import {
   getAppointments,
@@ -7,9 +7,13 @@ import {
 import { createMessage } from "../models/communications";
 import TemplatesModel from "../models/templates";
 import { sendMessage } from "./twilioClient";
+import config from "../config";
 
 const daysFromNow = (interval) => {
-  return moment().add(interval, "d").format("YYYY-MM-DD HH:mm:ss");
+  return moment()
+    .tz(config.scheduler.timezone)
+    .add(interval, "d")
+    .format("YYYY-MM-DD HH:mm:ss");
 };
 
 export const sendReminder = async (appointment) => {
