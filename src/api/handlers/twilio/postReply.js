@@ -116,7 +116,7 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
         }
         break;
       default:
-        break;
+        throw Error("Unknown reply.")
     }
   } catch (error) {
     await trx.rollback();
