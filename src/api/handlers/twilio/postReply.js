@@ -12,9 +12,9 @@ import {
 
 const convertReply = (reply) => {
   const languageConversions = {
-    yes: ["نعم", "አዎ", "haa", "Evet", "si", "yes", "እወ"],
+    yes: ["نعم", "አዎ", "haa", "evet", "si", "yes", "እወ"],
     // In spanish and english no is the same
-    no: ["لا", "አይ", "maya", "Hayır", "no", "ኣይፋለይን"],
+    no: ["لا", "አይ", "maya", "hayır", "no", "ኣይፋለይን"],
     interpreter: [
       "مترجم",
       "አስተርጓሚ",
@@ -81,7 +81,7 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
 
   const trx = await db.transaction();
   try {
-    switch (formattedMessageFromPatient) {
+    switch (convertedReply) {
       case "yes":
         for (const appointment of appointments) {
           await insertReply(
@@ -116,7 +116,7 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
         }
         break;
       default:
-        break;
+        throw Error("Unknown reply.")
     }
   } catch (error) {
     await trx.rollback();
