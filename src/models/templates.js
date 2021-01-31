@@ -57,7 +57,7 @@ Saat: {{{appointmentTime}}}
 Adres: {{{practitionerAddress}}}{{#specialNotes}}
 Ozel notlar: {{{specialNotes}}}{{/specialNotes}}
 
-{{#includeReplySection}}Lutfen randevunuza katilim durumunuzu, bu mesaji “Evet” ya da "Hayur" seklinde
+{{#includeReplySection}}Lutfen randevunuza katilim durumunuzu, bu mesaji “Evet” ya da "Hayır" seklinde
 yanitlayarak bildiriniz
 Eger tercumana ihtiyaciniz varsa lutfen bu mesaji "tercuman" yazarak yanitlayiniz.
 {{/includeReplySection}}Sorulariniz icin lutfen bizi 226-336-1321 numarali telefondan arayiniz.

@@ -14,7 +14,7 @@ const convertReply = (reply) => {
   const languageConversions = {
     yes: ["نعم", "አዎ", "haa", "evet", "si", "yes", "እወ"],
     // In spanish and english no is the same
-    no: ["لا", "አይ", "maya", "hayur", "no", "ኣይፋለይን"],
+    no: ["لا", "አይ", "maya", "hayır", "no", "ኣይፋለይን"],
     interpreter: [
       "مترجم",
       "አስተርጓሚ",

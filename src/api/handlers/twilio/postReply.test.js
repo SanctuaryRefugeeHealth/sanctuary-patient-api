@@ -112,9 +112,9 @@ describe("Sending A Reply", function () {
     );
   });
 
-  it("Response with cancellation when they say hayur", async function () {
+  it("Response with cancellation when they say hayır", async function () {
     assert.equal(
-      await postReplyFunctions.handlePostReply("321", "hayur"),
+      await postReplyFunctions.handlePostReply("321", "hayır"),
       "Teşekkür ederim. Başka bir zaman ayarlamak için sizi arayacağız."
     );
   });

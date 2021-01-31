@@ -145,7 +145,7 @@ Tarih: 2020-01-02
 Saat: 3:04 am
 Adres: 123 Fake St.
 
-Lutfen randevunuza katilim durumunuzu, bu mesaji “Evet” ya da "Hayur" seklinde
+Lutfen randevunuza katilim durumunuzu, bu mesaji “Evet” ya da "Hayır" seklinde
 yanitlayarak bildiriniz
 Eger tercumana ihtiyaciniz varsa lutfen bu mesaji "tercuman" yazarak yanitlayiniz.
 Sorulariniz icin lutfen bizi 226-336-1321 numarali telefondan arayiniz.
