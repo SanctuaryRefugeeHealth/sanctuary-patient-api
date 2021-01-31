@@ -2,7 +2,7 @@ import sinon from "sinon";
 const postReplyFunctions = require("./postReply.js");
 import * as appointments from "../../../models/appointments";
 import * as communications from "../../../models/communications";
-import { assert, expect } from "chai";
+import { assert } from "chai";
 const tClient = require("../../../services/twilioClient");
 const db = require("../../../../knex");
 
