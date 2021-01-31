@@ -17,7 +17,7 @@ const daysFromNow = (interval) => {
 };
 
 export const sendReminder = async (appointment) => {
-  console.info(`Sending reminder for appointment ${appointment.id}`);
+  console.info(`Sending reminder for appointment ${appointment.appointmentId}`);
 
   if (!appointment.appointmentTime) {
     throw Error("appointmentTime is required.");
