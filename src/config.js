@@ -13,7 +13,7 @@ const config = {
   },
   jwtConfig: {
     jwtSecret: process.env.JWT_SECRET,
-    jwtTokenExpiry: process.env.JWT_TOKEN_EXPIRY || "43200",
+    jwtTokenExpiry: process.env.JWT_TOKEN_EXPIRY || 43200,
   },
   scheduler: {
     cron: "0 0 * * * *", // Run every hour
@@ -36,7 +36,7 @@ module.exports.validateConfig = () => {
     }).required(),
     jwtConfig: Joi.object({
       jwtSecret: Joi.string().required(),
-      jwtTokenExpiry: Joi.string().required(),
+      jwtTokenExpiry: Joi.number().required(),
     }).required(),
     scheduler: Joi.object({
       cron: Joi.string().required(),
