@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { jwtConfig } from "../../../config";
+import { config } from "../../../config";
 import { getUserByEmail, hashPassword } from "../../../models/users";
 
 /*
@@ -39,9 +39,9 @@ export async function getToken(req, res) {
   const payload = {
     userEmail: user.email,
   };
-  const token = jwt.sign(payload, jwtConfig.jwtSecret, {
+  const token = jwt.sign(payload, config.jwtConfig.jwtSecret, {
     algorithm: "HS256",
-    expiresIn: jwtConfig.jwtTokenExpiry,
+    expiresIn: config.jwtConfig.jwtTokenExpiry,
   });
 
   return res.json({

@@ -7,7 +7,7 @@ import {
 import { createMessage } from "../models/communications";
 import TemplatesModel from "../models/templates";
 import { sendMessage } from "./twilioClient";
-import config from "../config";
+import { config } from "../config";
 
 const daysFromNow = (interval) => {
   return moment()

@@ -6,8 +6,8 @@ import jwt from "express-jwt";
 import http from "http";
 import morgan from "morgan";
 import api from "./api";
-import config from "./config";
-import reminderScheduler from './services/scheduler'
+import { config } from "./config";
+import reminderScheduler from "./services/scheduler";
 
 let app = express();
 app.server = http.createServer(app);

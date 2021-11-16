@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 
 import * as users from "../../../models/users";
 import api from "../../../api";
-import config from "../../../config";
+import { config } from "../../../config";
 
 config.jwtConfig.jwtSecret = "secret";
 

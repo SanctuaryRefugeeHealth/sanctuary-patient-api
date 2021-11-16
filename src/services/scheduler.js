@@ -1,7 +1,7 @@
 var CronJob = require("cron").CronJob;
 
 import { sendReminders } from "../services/reminders";
-import config from "../config";
+import { config } from "../config";
 
 const tz = config.scheduler.timezone;
 
