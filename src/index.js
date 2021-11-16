@@ -13,6 +13,7 @@ class Application {
   constructor() {
     this.app = express();
   }
+
   start() {
     this.app.server = http.createServer(this.app);
     this.app.use(morgan("dev"));
@@ -43,7 +44,13 @@ class Application {
       console.log(`Started on port ${this.app.server.address().port}`);
     });
   }
+
+  stop() {
+    this.app.server.close();
+  }
 }
 
 const application = new Application();
 application.start();
+
+export default application;
