@@ -1,7 +1,7 @@
 const Joi = require("@hapi/joi");
 const isDevelopment = process.env.NODE_ENV === "development";
 
-module.exports.config = {
+const config = {
   port: process.env.PORT || 8080,
   protocol: isDevelopment ? "http" : "https",
   bodyLimit: "100kb",
@@ -13,13 +13,15 @@ module.exports.config = {
   },
   jwtConfig: {
     jwtSecret: process.env.JWT_SECRET,
-    jwtTokenExpiry: process.env.JWT_TOKEN_EXPIRY || 43200,
+    jwtTokenExpiry: process.env.JWT_TOKEN_EXPIRY || "43200",
   },
   scheduler: {
     cron: "0 0 * * * *", // Run every hour
     timezone: "America/Toronto",
   },
 };
+
+module.exports.config = config;
 
 module.exports.validateConfig = () => {
   const { error } = Joi.object({

@@ -6,7 +6,7 @@ import jwt from "express-jwt";
 import http from "http";
 import morgan from "morgan";
 import api from "./api";
-import { config } from "./config";
+import { config, validateConfig } from "./config";
 import reminderScheduler from "./services/scheduler";
 
 class Application {
@@ -15,6 +15,7 @@ class Application {
   }
 
   start() {
+    validateConfig();
     this.app.server = http.createServer(this.app);
     this.app.use(morgan("dev"));
     // 3rd party middleware
