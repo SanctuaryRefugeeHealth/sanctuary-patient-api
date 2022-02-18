@@ -22,7 +22,8 @@ services:
     command: sh -c "./wait-for.sh db:3306 -- npm run start:dev"
 
   db:
-    image: mysql:5.6.44
+    platform: linux/x86_64
+    image: mysql:5.6.51
     container_name: db
     restart: unless-stopped
     ports:

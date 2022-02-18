@@ -6,49 +6,53 @@ import jwt from "express-jwt";
 import http from "http";
 import morgan from "morgan";
 import api from "./api";
-import config from "./config";
-import reminderScheduler from './services/scheduler'
+import { config, validateConfig } from "./config";
+import reminderScheduler from "./services/scheduler";
 
-let app = express();
-app.server = http.createServer(app);
+class Application {
+  constructor() {
+    this.app = express();
+  }
 
-// logger
-app.use(morgan("dev"));
+  start() {
+    validateConfig();
 
-// 3rd party middleware
-app.use(
-  cors({
-    exposedHeaders: config.corsHeaders,
-  })
-);
+    this.app.server = http.createServer(this.app);
+    this.app.use(morgan("dev"));
+    // 3rd party middleware
+    this.app.use(cors({ exposedHeaders: config.corsHeaders }));
+    this.app.use(bodyParser.urlencoded({ extended: true }));
+    this.app.use(bodyParser.json({ limit: config.bodyLimit }));
 
-app.use(bodyParser.urlencoded({ extended: true }));
+    // logger
 
-app.use(
-  bodyParser.json({
-    limit: config.bodyLimit,
-  })
-);
+    reminderScheduler.start();
 
-reminderScheduler.start();
+    this.app.use(
+      jwt({ secret: config.jwtConfig.jwtSecret, algorithms: ["HS256"] }).unless(
+        {
+          path: [
+            "/api/twilio/reply", // Authentication handled by Twilio middleware
+            "/api/ping", // Open health check
+            "/api/auth", // Used to login
+          ],
+        }
+      )
+    );
 
-app.use(
-  jwt({
-    secret: config.jwtConfig.jwtSecret,
-    algorithms: ["HS256"],
-  }).unless({
-    path: [
-      "/api/twilio/reply", // Authentication handled by Twilio middleware
-      "/api/ping", // Open health check
-      "/api/auth", // Used to login
-    ],
-  })
-);
+    this.app.use("/api", api({ config }));
 
-app.use("/api", api({ config }));
+    this.app.server.listen(config.port, () => {
+      console.log(`Started on port ${this.app.server.address().port}`);
+    });
+  }
 
-app.server.listen(config.port, () => {
-  console.log(`Started on port ${app.server.address().port}`);
-});
+  stop() {
+    this.app.server.close();
+  }
+}
 
-export default app;
+const application = new Application();
+application.start();
+
+export default application;
