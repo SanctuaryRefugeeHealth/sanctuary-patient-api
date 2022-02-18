@@ -16,6 +16,7 @@ class Application {
 
   start() {
     validateConfig();
+
     this.app.server = http.createServer(this.app);
     this.app.use(morgan("dev"));
     // 3rd party middleware
