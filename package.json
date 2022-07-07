@@ -27,7 +27,7 @@
     "express-jwt": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.15",
-    "moment": "^2.29.0",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.32",
     "morgan": "^1.10.0",
     "mustache": "^3.2.1",
