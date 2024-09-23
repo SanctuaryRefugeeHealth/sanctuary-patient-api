@@ -34,7 +34,7 @@ export default () => {
 
   // -- Ping
   api.get("/ping", (req, res) => {
-    res.json("pong");
+    res.json("Pong");
   });
 
   return api;
