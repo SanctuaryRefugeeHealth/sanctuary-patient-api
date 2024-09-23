@@ -1,4 +1,4 @@
-exports.up = (knex) => {
+export function up(knex) {
   return knex.schema
     .createTable("languages", (table) => {
       table.string("name", 255).primary();
@@ -15,8 +15,8 @@ exports.up = (knex) => {
         { name: "Turkish" },
       ]);
     });
-};
+}
 
-exports.down = (knex) => {
+export function down(knex) {
   return knex.schema.dropTableIfExists("languages");
-};
+}

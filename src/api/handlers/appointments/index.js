@@ -1,10 +1,5 @@
-import { getAppointment, getAppointments } from "./getAppointments";
-import patchAppointments from "./patchAppointments";
-import postAppointments from "./postAppointments";
+import { getAppointment, getAppointments } from "./getAppointments.js";
+import patchAppointments from "./patchAppointments.js";
+import postAppointments from "./postAppointments.js";
 
-export {
-  postAppointments,
-  patchAppointments,
-  getAppointments,
-  getAppointment,
-};
+export { postAppointments, patchAppointments, getAppointments, getAppointment };

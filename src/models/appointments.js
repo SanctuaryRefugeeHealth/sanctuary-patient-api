@@ -1,4 +1,4 @@
-import { db } from "../../knex";
+import { db } from "../../knex.js";
 
 const appointmentFields = [
   "appointmentId",

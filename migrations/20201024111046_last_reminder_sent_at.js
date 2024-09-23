@@ -1,4 +1,4 @@
-exports.up = async function (knex) {
+export async function up(knex) {
   await knex.schema.table("appointments", (table) => {
     table.datetime("lastReminderSentAt");
   });
@@ -6,10 +6,10 @@ exports.up = async function (knex) {
   await knex("appointments").update({
     lastReminderSentAt: knex.fn.now(),
   });
-};
+}
 
-exports.down = function (knex) {
+export function down(knex) {
   return knex.schema.table("appointments", (table) => {
     table.dropColumn("lastReminderSentAt");
   });
-};
+}

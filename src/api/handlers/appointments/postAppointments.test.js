@@ -2,19 +2,18 @@ import sinon from "sinon";
 import request from "supertest";
 import express from "express";
 import bodyParser from "body-parser";
+import * as appointments from "../../../models/appointments.js";
+import * as sendReminders from "../../../services/reminders.js";
+import api from "../../../api/index.js";
+import { jwtConfig } from "../../../config.js";
 
-import * as appointments from "../../../models/appointments";
-import * as sendReminders from "../../../services/reminders";
-import api from "../../../api";
-import config from "../../../config";
-
-config.jwtConfig.jwtSecret = "secret";
+jwtConfig.jwtSecret = "secret";
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/api", api({ config }));
+app.use("/api", api());
 
 const baseAppointment = {
   date: "2020-11-10 21:30",
@@ -291,17 +290,14 @@ describe("POST /api/appointments", () => {
   it("should fail on letters in phone number", function (done) {
     const appointment = { ...baseAppointment };
     appointment.patientPhoneNumber = "A555555555";
-    request(app)
-      .post("/api/appointments")
-      .send(appointment)
-      .expect(
-        500,
-        {
-          message:
-            '"patientPhoneNumber" with value "A555555555" fails to match the required pattern: /^\\d+$/',
-        },
-        done
-      );
+    request(app).post("/api/appointments").send(appointment).expect(
+      500,
+      {
+        message:
+          '"patientPhoneNumber" with value "A555555555" fails to match the required pattern: /^\\d+$/',
+      },
+      done
+    );
   });
 
   it("should fail on whitespace only phone number", function (done) {

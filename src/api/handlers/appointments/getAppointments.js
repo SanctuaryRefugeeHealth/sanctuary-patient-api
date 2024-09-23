@@ -1,7 +1,7 @@
 import {
   getAppointment as getAppt,
   getAppointments as getAppts,
-} from "../../../models/appointments";
+} from "../../../models/appointments.js";
 
 export async function getAppointments(req, res) {
   const { phoneNumber } = req.query;

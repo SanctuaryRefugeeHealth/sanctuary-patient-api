@@ -1,10 +1,10 @@
 import sinon from "sinon";
 const postReplyFunctions = require("./postReply.js");
-import * as appointments from "../../../models/appointments";
-import * as communications from "../../../models/communications";
+import * as appointments from "../../../models/appointments.js";
+import * as communications from "../../../models/communications.js";
 import { assert } from "chai";
-const tClient = require("../../../services/twilioClient");
-const db = require("../../../../knex");
+const tClient = require("../../../services/twilioClient.js");
+const db = require("../../../../knex.js");
 
 describe("Sending A Reply", function () {
   let confirmAppointment;
@@ -13,7 +13,7 @@ describe("Sending A Reply", function () {
   before(() => {
     sinon.stub(db.db, "transaction").returns({
       commit: () => {},
-      rollback: () => {}
+      rollback: () => {},
     });
     sinon.stub(tClient, "getMessageResponse").callsFake((message) => {
       return message;
@@ -43,18 +43,22 @@ describe("Sending A Reply", function () {
     sinon.stub(communications, "insertReply").callsFake(() => {
       return true;
     });
-    confirmAppointment = sinon.stub(appointments, "confirmAppointment").callsFake(() => {
-      return true;
-    });
-    requestTranslator = sinon.stub(appointments, "requestTranslator").callsFake(() => {
-      return true;
-    });
+    confirmAppointment = sinon
+      .stub(appointments, "confirmAppointment")
+      .callsFake(() => {
+        return true;
+      });
+    requestTranslator = sinon
+      .stub(appointments, "requestTranslator")
+      .callsFake(() => {
+        return true;
+      });
   });
 
   beforeEach(() => {
     confirmAppointment.resetHistory();
     requestTranslator.resetHistory();
-  })
+  });
 
   it("Response with confirmation when they say yes", async function () {
     assert.equal(
@@ -91,7 +95,6 @@ describe("Sending A Reply", function () {
     await postReplyFunctions.handlePostReply("123", "interpreter");
     assert.isTrue(requestTranslator.called);
   });
-
 
   it("Requests interpreter when requested in Somali", async function () {
     await postReplyFunctions.handlePostReply("333", "turjubaan");

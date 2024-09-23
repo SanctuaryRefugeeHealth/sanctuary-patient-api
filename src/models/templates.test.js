@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import moment from "moment";
-import TemplatesModel from "../../src/models/templates";
+import TemplatesModel from "../../src/models/templates.js";
 
 describe("#generateMessage()", function () {
   const commonMetadata = {

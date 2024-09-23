@@ -1,4 +1,3 @@
-import getLanguages from "./getLanguages";
+import getLanguages from "./getLanguages.js";
 
 export { getLanguages };
-

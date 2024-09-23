@@ -12,31 +12,32 @@ services:
     environment:
       - MYSQL_HOSTNAME=db
     ports:
-      - "8080:8080"
+      - ${BACKEND_PORT}:${BACKEND_PORT}
     volumes:
       - .:/app
+      - ./node_modules:/app/node_modules
     networks:
       - app-network
     depends_on:
       - db
-    command: sh -c "./wait-for.sh db:3306 -- npm run start:dev"
 
   db:
     platform: linux/amd64
     image: mysql:5.6.44
-    container_name: db
+    container_name: sanctuary-db
     restart: unless-stopped
     ports:
       - "3306:3306"
+    env_file: .env
     expose:
       - "3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=sanctuary_dev
     volumes:
       - dbdata:/data/db
     networks:
       - app-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=sanctuary_dev
 
 networks:
   app-network:

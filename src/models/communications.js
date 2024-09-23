@@ -1,4 +1,4 @@
-import { db } from "../../knex";
+import { db } from "../../knex.js";
 
 export const getReplies = (appointmentId) => {
   return db("replies").select("*").where("appointmentId", appointmentId);

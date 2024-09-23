@@ -3,17 +3,17 @@ import request from "supertest";
 import express from "express";
 import bodyParser from "body-parser";
 
-import * as users from "../../../models/users";
-import api from "../../../api";
-import config from "../../../config";
+import * as users from "../../../models/users.js";
+import api from "../../../api/index.js";
+import { jwtConfig } from "../../../config.js";
 
-config.jwtConfig.jwtSecret = "secret";
+jwtConfig.jwtSecret = "secret";
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/api", api({ config }));
+app.use("/api", api());
 
 describe("POST /api/auth", function () {
   before(() => {

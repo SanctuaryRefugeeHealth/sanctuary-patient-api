@@ -1,6 +1,6 @@
-import { twilioConfig } from "../config";
+import { twilioConfig } from "../config.js";
+import twilio from "twilio";
 
-const twilio = require("twilio");
 const countryCode = "+1";
 
 export const webhook = twilio.webhook;
