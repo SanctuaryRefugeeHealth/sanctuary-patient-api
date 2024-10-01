@@ -8,10 +8,7 @@ export function up(knex) {
 
     table.text("messageBody").notNullable();
 
-    table
-      .timestamp("timeSent", { useTz: false })
-      .nullable()
-      .defaultTo(knex.fn.now());
+    table.timestamp("timeSent", { useTz: false }).nullable().defaultTo(null);
 
     table.enu("language", ["english", "arabic", "spanish"]);
 
