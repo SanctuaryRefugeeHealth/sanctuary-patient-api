@@ -1,4 +1,4 @@
-import { getMessages, getReplies } from "../../../models/communications";
+import { getMessages, getReplies } from "../../../models/communications.js";
 
 export default async (req, res) => {
   const { appointmentId } = req.params;

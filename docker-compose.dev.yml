@@ -4,22 +4,22 @@ services:
   nodejs:
     build:
       context: .
-      target: prod
-    image: sanctuary-api
-    container_name: sanctuary-api
+      target: build 
+    image: sanctuary-api-dev 
+    container_name: sanctuary-api-dev
     restart: unless-stopped
-    env_file: .env
+    env_file: .env 
     environment:
       - MYSQL_HOSTNAME=db
     ports:
       - ${BACKEND_PORT}:${BACKEND_PORT}
     volumes:
-      - .:/app
+      - .:/app 
     networks:
       - app-network
     depends_on:
       - db
-    command: sh -c "./wait-for.sh db:3306 -- npm run start:dev"
+    command: sh -c "npm run migrate && npm run seed && npm run dev" 
 
   db:
     platform: linux/amd64

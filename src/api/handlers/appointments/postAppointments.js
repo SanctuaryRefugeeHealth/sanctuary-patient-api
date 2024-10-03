@@ -1,7 +1,7 @@
 import Joi from "@hapi/joi";
 
-import { createAppointment } from "../../../models/appointments";
-import { sendReminder } from "../../../services/reminders";
+import { createAppointment } from "../../../models/appointments.js";
+import { sendReminder } from "../../../services/reminders.js";
 
 const schema = Joi.object({
   patientName: Joi.string().trim().required(),

@@ -1,11 +1,11 @@
-exports.up = async function (knex) {
+export async function up(knex) {
   await knex.schema.table("appointments", (table) => {
     table.boolean("translator");
   });
-};
+}
 
-exports.down = function (knex) {
+export function down(knex) {
   return knex.schema.table("appointments", (table) => {
     table.dropColumn("translator");
   });
-};
+}

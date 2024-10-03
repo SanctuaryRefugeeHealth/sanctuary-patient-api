@@ -1,4 +1,4 @@
-exports.up = async (knex) => {
+export async function up(knex) {
   await knex.schema.table("appointments", (table) => {
     table.dropColumn("patientLanguage");
   });
@@ -6,9 +6,9 @@ exports.up = async (knex) => {
   await knex.schema.table("messages", (table) => {
     table.dropColumn("patientLanguage");
   });
-};
+}
 
-exports.down = async (knex) => {
+export async function down(knex) {
   await knex.schema.table("appointments", (table) => {
     table
       .enum("patientLanguage", [
@@ -42,4 +42,4 @@ exports.down = async (knex) => {
   await knex("messages").update({
     patientLanguage: knex.ref("language"),
   });
-};
+}

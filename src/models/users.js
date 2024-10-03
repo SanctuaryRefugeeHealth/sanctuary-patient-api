@@ -1,6 +1,6 @@
 import { pbkdf2Sync } from "crypto";
 
-import { db } from "../../knex";
+import { db } from "../../knex.js";
 
 export function getUserByEmail(email) {
   return db("users")

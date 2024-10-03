@@ -1,4 +1,4 @@
-exports.up = async (knex) => {
+export async function up(knex) {
   await knex.schema.alterTable("messages", (table) => {
     table.renameColumn("language", "patientLanguage");
   });
@@ -20,9 +20,9 @@ exports.up = async (knex) => {
       .onUpdate("CASCADE")
       .alter();
   });
-};
+}
 
-exports.down = async (knex) => {
+export async function down(knex) {
   await knex.schema.table("messages", (table) => {
     table.dropForeign("language");
     table.dropColumn("language");
@@ -31,4 +31,4 @@ exports.down = async (knex) => {
   await knex.schema.alterTable("messages", (table) => {
     table.renameColumn("patientLanguage", "language");
   });
-};
+}

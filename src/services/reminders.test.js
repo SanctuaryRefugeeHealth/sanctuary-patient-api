@@ -2,13 +2,13 @@ import sinon from "sinon";
 import * as chai from "chai";
 import promised from "chai-as-promised";
 
-import * as appointments from "../models/appointments";
-import * as communications from "../models/communications";
-import * as twilio from "./twilioClient";
+import * as appointments from "../models/appointments.js";
+import * as communications from "../models/communications.js";
+import * as twilio from "./twilioClient.js";
 
-import db from "../../knex";
+import db from "../../knex.js";
 
-import { sendReminder } from "./reminders";
+import { sendReminder } from "./reminders.js";
 
 const expect = chai.expect;
 chai.use(promised);

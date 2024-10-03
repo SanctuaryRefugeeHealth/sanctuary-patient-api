@@ -1,12 +1,11 @@
-var CronJob = require("cron").CronJob;
+import { CronJob } from "cron";
+import { sendReminders } from "../services/reminders.js";
+import { scheduler } from "../config.js";
 
-import { sendReminders } from "../services/reminders";
-import config from "../config";
+const tz = scheduler.timezone;
 
-const tz = config.scheduler.timezone;
-
-module.exports = new CronJob(
-  config.scheduler.cron,
+const job = new CronJob(
+  scheduler.cron,
   async () => {
     console.info(`Running Send Notifications Worker ${new Date()}`);
     await sendReminders();
@@ -15,3 +14,5 @@ module.exports = new CronJob(
   true,
   tz
 );
+
+export default job;

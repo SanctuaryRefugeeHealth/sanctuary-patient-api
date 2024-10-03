@@ -1,14 +1,12 @@
-import { db } from "../../../../knex";
-import TemplatesModel from "../../../models/templates";
-import { getMessageResponse } from "../../../services/twilioClient";
-
-import { insertReply } from "../../../models/communications";
-
+import { db } from "../../../../knex.js";
+import TemplatesModel from "../../../models/templates.js";
+import { getMessageResponse } from "../../../services/twilioClient.js";
+import { insertReply } from "../../../models/communications.js";
 import {
   getAppointments,
   confirmAppointment,
   requestTranslator,
-} from "../../../models/appointments";
+} from "../../../models/appointments.js";
 
 const convertReply = (reply) => {
   const languageConversions = {
@@ -116,7 +114,7 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
         }
         break;
       default:
-        throw Error("Unknown reply.")
+        throw Error("Unknown reply.");
     }
   } catch (error) {
     await trx.rollback();

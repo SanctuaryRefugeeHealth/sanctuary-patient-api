@@ -2,12 +2,12 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import "dotenv/config";
 import express from "express";
-import jwt from "express-jwt";
+import { expressjwt } from "express-jwt";
 import http from "http";
 import morgan from "morgan";
-import api from "./api";
-import config from "./config";
-import reminderScheduler from './services/scheduler'
+import api from "./api/index.js";
+import { corsHeaders, bodyLimit, port, jwtConfig } from "./config.js";
+import reminderScheduler from "./services/scheduler.js";
 
 let app = express();
 app.server = http.createServer(app);
@@ -18,7 +18,7 @@ app.use(morgan("dev"));
 // 3rd party middleware
 app.use(
   cors({
-    exposedHeaders: config.corsHeaders,
+    exposedHeaders: corsHeaders,
   })
 );
 
@@ -26,15 +26,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   bodyParser.json({
-    limit: config.bodyLimit,
+    limit: bodyLimit,
   })
 );
 
 reminderScheduler.start();
 
 app.use(
-  jwt({
-    secret: config.jwtConfig.jwtSecret,
+  expressjwt({
+    secret: jwtConfig.jwtSecret,
     algorithms: ["HS256"],
   }).unless({
     path: [
@@ -45,9 +45,9 @@ app.use(
   })
 );
 
-app.use("/api", api({ config }));
+app.use("/api", api());
 
-app.server.listen(config.port, () => {
+app.server.listen(port, () => {
   console.log(`Started on port ${app.server.address().port}`);
 });
 

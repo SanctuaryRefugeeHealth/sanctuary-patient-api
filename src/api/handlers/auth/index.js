@@ -1,4 +1,3 @@
-import { getToken } from "./getToken";
+import { getToken } from "./getToken.js";
 
 export { getToken };
-

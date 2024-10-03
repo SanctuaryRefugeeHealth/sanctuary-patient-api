@@ -1,12 +1,11 @@
-
-exports.up = function (knex) {
+export function up(knex) {
   return knex.schema.alterTable("appointments", (table) => {
     table.datetime("appointmentTime").notNullable().alter();
   });
-};
+}
 
-exports.down = function(knex) {
+export function down(knex) {
   return knex.schema.alterTable("appointments", (table) => {
     table.text("appointmentTime").notNullable().alter();
   });
-};
+}

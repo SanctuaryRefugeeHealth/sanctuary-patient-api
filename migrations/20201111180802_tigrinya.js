@@ -1,7 +1,7 @@
-exports.up = async (knex) => {
+export async function up(knex) {
   await knex("languages").insert({ name: "Tigrinya" });
-};
+}
 
-exports.down = async (knex) => {
+export async function down(knex) {
   await knex("languages").where({ name: "Tigrinya" }).del();
-};
+}

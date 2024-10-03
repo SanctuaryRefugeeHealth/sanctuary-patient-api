@@ -1,3 +1,3 @@
-import { handlePostReply, postReply } from "./postReply";
+import { handlePostReply, postReply } from "./postReply.js";
 
 export { postReply, handlePostReply };

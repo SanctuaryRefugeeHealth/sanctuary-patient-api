@@ -1,4 +1,3 @@
-import getCommunications from "./getCommunications";
+import getCommunications from "./getCommunications.js";
 
 export { getCommunications };
-

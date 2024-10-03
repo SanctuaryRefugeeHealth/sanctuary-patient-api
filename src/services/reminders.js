@@ -1,17 +1,17 @@
 import moment from "moment-timezone";
-import { db } from "../../knex";
+import { db } from "../../knex.js";
 import {
   getAppointments,
   updateLastReminderSentAt,
-} from "../models/appointments";
-import { createMessage } from "../models/communications";
-import TemplatesModel from "../models/templates";
-import { sendMessage } from "./twilioClient";
-import config from "../config";
+} from "../models/appointments.js";
+import { createMessage } from "../models/communications.js";
+import TemplatesModel from "../models/templates.js";
+import { sendMessage } from "./twilioClient.js";
+import { scheduler } from "../config.js";
 
 const daysFromNow = (interval) => {
   return moment()
-    .tz(config.scheduler.timezone)
+    .tz(scheduler.timezone)
     .add(interval, "d")
     .format("YYYY-MM-DD HH:mm:ss");
 };

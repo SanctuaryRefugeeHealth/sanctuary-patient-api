@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import { jwtConfig } from "../../../config";
-import { getUserByEmail, hashPassword } from "../../../models/users";
+import { jwtConfig } from "../../../config.js";
+import { getUserByEmail, hashPassword } from "../../../models/users.js";
 
 /*
  * Create a token for a user.
