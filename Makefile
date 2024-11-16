@@ -2,7 +2,7 @@
 # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
 # OR AWS_PROFILE
 
-TAG                        := v1.0.5
+TAG                        := v1.0.7
 CONTAINER_NAME             := sanctuary_api
 IMG_NAME                   := sanctuary/api
 REPOSITORY                 := 990864907642.dkr.ecr.ca-central-1.amazonaws.com
