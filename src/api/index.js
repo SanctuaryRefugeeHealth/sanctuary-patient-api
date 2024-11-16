@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { version } from "../../package.json";
-import { webhook } from "../services/twilioClient";
 import {
   getAppointment,
   getAppointments,
