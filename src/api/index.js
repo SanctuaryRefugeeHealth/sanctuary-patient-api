@@ -10,6 +10,7 @@ import { getToken } from "./handlers/auth";
 import { getCommunications } from "./handlers/communications";
 import { getLanguages } from "./handlers/languages";
 import { postReply } from "./handlers/twilio";
+import getPatients from "./handlers/patients/getPatients";
 
 // eslint-disable-next-line no-unused-vars
 export default ({ config }) => {
@@ -32,6 +33,9 @@ export default ({ config }) => {
   api.get("/appointments/:appointmentId", getAppointment);
   api.post("/appointments", postAppointments);
   api.patch("/appointments/:appointmentId", patchAppointments);
+
+  // -- Patients
+  api.get("/patients", getPatients);
 
   // -- Languages
   api.get("/languages", getLanguages);
