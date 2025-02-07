@@ -21,7 +21,7 @@ Address: 123 Fake St.
 
 Please confirm your attendance by replying “Yes” or “No”.
 If you need an interpreter, please reply with the word "interpreter".
-If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321.`;
+If you have any questions, please call Refugee Health Clinic (Family Doctor) at 519-578-8484.`;
 
     expect(actual).to.equal(expected);
   });
@@ -42,7 +42,7 @@ Address: 123 Fake St.
 
 Please confirm your attendance by replying “Yes” or “No”.
 If you need an interpreter, please reply with the word "interpreter".
-If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321.`;
+If you have any questions, please call Refugee Health Clinic (Family Doctor) at 519-578-8484.`;
 
     expect(actual).to.equal(expected);
   });
@@ -63,7 +63,7 @@ Special Notes: This is a special note
 
 Please confirm your attendance by replying “Yes” or “No”.
 If you need an interpreter, please reply with the word "interpreter".
-If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321.`;
+If you have any questions, please call Refugee Health Clinic (Family Doctor) at 519-578-8484.`;
 
     expect(actual).to.equal(expected);
   });
@@ -86,7 +86,7 @@ Special Notes: This is a special note
 
 Please confirm your attendance by replying “Yes” or “No”.
 If you need an interpreter, please reply with the word "interpreter".
-If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321.`;
+If you have any questions, please call Refugee Health Clinic (Family Doctor) at 519-578-8484.`;
 
     expect(actual).to.equal(expected);
   });
@@ -99,9 +99,9 @@ If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Mich
 الوقت: \u200E3:04 am
 العنوان: \u200E123 Fake St.
 
-يرجى تأكيد الحضور بالإجابة بـِ "نعم" أو "لا".
-إذا كنتم تحتاجون لمترجم، يرجى الرّد بكلمة "مترجم".
-إذا كانت لديكم أيّة استفسارات، يرجى الاتّصال بعيادة السانكتشوري (الدكتور مايكل ستيفنسن) على الرّقم التّالي: \u200E226-336-1321`;
+.يرجى تأكيد الحضور بالاجابة ب "نعم" أو "لا"
+.إذا كنتم تحتاجون لمترجم، يرجى الرّد بكلمة "مترجم"
+إذا كانت لديك أية استفسارات، يرجى الاتصال بعيادة الريفيوجي هيلث (طبيب العائلة) على الرّقم التالي: \u200E519-578-8484`;
 
     expect(actual).to.equal(expected);
   });

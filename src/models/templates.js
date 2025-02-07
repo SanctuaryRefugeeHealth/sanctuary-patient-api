@@ -13,7 +13,7 @@ Special Notes: {{{specialNotes}}}{{/specialNotes}}
 
 {{#includeReplySection}}Please confirm your attendance by replying “Yes” or “No”.
 If you need an interpreter, please reply with the word "interpreter".
-{{/includeReplySection}}If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321.`,
+{{/includeReplySection}}If you have any questions, please call Refugee Health Clinic (Family Doctor) at 519-578-8484.`,
 
     // \u200E is the left-to-right mark and is used to improve mixing LTR text into the RTL message
     arabic: `السّيد(ة) \u200E{{{patientName}}}، هذه رسالة لإعلامك بالموعد:{{#description}}
@@ -23,9 +23,10 @@ If you need an interpreter, please reply with the word "interpreter".
 العنوان: \u200E{{{practitionerAddress}}}{{#specialNotes}}
 تعليمات خاصّة: \u200E{{{specialNotes}}}{{/specialNotes}}
 
-{{#includeReplySection}}يرجى تأكيد الحضور بالإجابة بـِ "نعم" أو "لا".
-إذا كنتم تحتاجون لمترجم، يرجى الرّد بكلمة "مترجم".
-{{/includeReplySection}}إذا كانت لديكم أيّة استفسارات، يرجى الاتّصال بعيادة السانكتشوري (الدكتور مايكل ستيفنسن) على الرّقم التّالي: \u200E226-336-1321`,
+{{#includeReplySection}}.يرجى تأكيد الحضور بالاجابة ب "نعم" أو "لا"
+.إذا كنتم تحتاجون لمترجم، يرجى الرّد بكلمة "مترجم"
+{{/includeReplySection}}إذا كانت لديك أية استفسارات، يرجى الاتصال بعيادة الريفيوجي هيلث (طبيب العائلة) على الرّقم التالي: \u200E519-578-8484`,
+
 
     amharic: `ለ {{{patientName}}}፣ ይህ መልእክት የሚከተለው ቀጠሮ እንዳለዎት ለማሳወቅ ነው፥:{{#description}}
 {{{description}}}{{/description}}

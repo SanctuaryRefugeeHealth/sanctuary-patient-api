@@ -57,7 +57,7 @@ Special Notes: This is a special note
 
 Please confirm your attendance by replying “Yes” or “No”.
 If you need an interpreter, please reply with the word "interpreter".
-If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321.`,
+If you have any questions, please call Refugee Health Clinic (Family Doctor) at 519-578-8484.`,
       language: "English",
       templateName: "Appointment Reminder",
       timeSent: new Date(1483228800000),
@@ -80,7 +80,7 @@ Time: 9:30 pm
 Address: 123 Fake St
 Special Notes: This is a special note
 
-If you have any questions, please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321.`,
+If you have any questions, please call Refugee Health Clinic (Family Doctor) at 519-578-8484.`,
       language: "English",
       templateName: "Appointment Reminder",
       timeSent: new Date(1483228800000),
