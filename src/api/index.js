@@ -25,7 +25,7 @@ export default ({ config }) => {
 
   api.get("/communications/:appointmentId", getCommunications);
 
-  api.post("/twilio/reply", postReply);
+  api.post("/twilio/reply", webhook({ protocol: config.protocol }), postReply);
 
   // -- Appointments
   api.get("/appointments", getAppointments);
