@@ -42,7 +42,7 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
 
   if (!messageFromPatient || messageFromPatient === "") {
     ourResponse = getMessageResponse(
-      'This system only understands "yes", "no", and "interpreter". For anything else, please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321.'
+      'This system only understands "yes", "no", and "interpreter". For anything else, please call Refugee Health Clinic (Family Doctor) at 519-578-8484.'
     );
     return ourResponse;
   }
@@ -52,7 +52,7 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
   const convertedReply = convertReply(formattedMessageFromPatient);
   if (!convertedReply) {
     ourResponse = getMessageResponse(
-      'This system only understands "yes", "no", and "interpreter". For anything else, please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321.'
+      'This system only understands "yes", "no", and "interpreter". For anything else, please call Refugee Health Clinic (Family Doctor) at 519-578-8484.'
     );
     return ourResponse;
   }
@@ -67,14 +67,14 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
     console.log(`Could not get appointment for ${patientPhoneNumber}`, error);
     // Can't store reply without appointmentId
     ourResponse = getMessageResponse(
-      "We are sorry, our automated system could not find your appointment. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
+      "We are sorry, our automated system could not find your appointment. Please call Refugee Health Clinic (Family Doctor) at 519-578-8484."
     );
     return ourResponse;
   }
 
   if (!appointments || appointments.length === 0) {
     ourResponse = getMessageResponse(
-      "We are sorry, our automated system could not find your appointment. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
+      "We are sorry, our automated system could not find your appointment. Please call Refugee Health Clinic (Family Doctor) at 519-578-8484."
     );
     return ourResponse;
   }
@@ -125,7 +125,7 @@ export async function handlePostReply(patientPhoneNumber, messageFromPatient) {
       error
     );
     ourResponse = getMessageResponse(
-      "We are sorry, we could not confirm your appointment. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
+      "We are sorry, we could not confirm your appointment. Please call Refugee Health Clinic (Family Doctor) at 519-587-8484."
     );
     return ourResponse;
   }
@@ -160,7 +160,7 @@ export async function postReply(req, res) {
       error
     );
     ourResponse = getMessageResponse(
-      "We are sorry, we could not confirm your appointment. Please call Sanctuary Refugee Health Centre (Dr. Michael Stephenson) at 226-336-1321"
+      "We are sorry, we could not confirm your appointment. Please call Refugee Health Clinic (Family Doctor) at 519-587-8484"
     );
   }
 
